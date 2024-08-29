@@ -1,7 +1,7 @@
 const HomePage = async () => {
     return (
         <div>
-
+            Hi
         </div>
     )
 }
