@@ -20,7 +20,7 @@ export default function RootLayout({
             <div className="h-screen bg-gray-200 w-fit">
                 <NavSideBar />
             </div>
-            <div className="h-screen bg-slate-100 w-screen">
+            <div className="h-screen bg-slate-100 w-screen p-[20px]">
                 {children}
             </div>
         </main>

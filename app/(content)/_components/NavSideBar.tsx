@@ -8,9 +8,16 @@ const NavSideBar = () => {
     const router = useRouter();
     return (
         <div className="flex flex-col h-[100%] w-max gap-2 px-[25px]">
-            <div className="flex flex-row items-center m-[30px]">
-                <NotebookPen />
-                JotItDown
+            <div>
+                <Button 
+                variant={'link'} 
+                onClick={() => {
+                    router.push('/home');  
+                }}
+                className="flex flex-row items-center m-[30px] text-2xl">
+                    <NotebookPen className="w-10 h-10" />
+                    JotItDown
+                </Button>
             </div>
             <Button
                 onClick={() => {

@@ -12,7 +12,6 @@ enum TaskInfoStatus {
     Pending
     Running
     Done
-    OverDue
 }
 
 enum UserStatus {
