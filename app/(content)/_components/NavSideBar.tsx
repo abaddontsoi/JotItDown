@@ -28,6 +28,13 @@ const NavSideBar = () => {
             </Button>
             <Button
                 onClick={() => {
+                    router.push('/home/tasks');
+                }}
+            >
+                Tasks
+            </Button>
+            <Button
+                onClick={() => {
                     router.push('/home/categories');
                 }}
             >

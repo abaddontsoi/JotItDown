@@ -28,7 +28,7 @@ const UrgentTasksContextCard = (
                 <CardTitle>
                     {
                         urgentTasks.length > 0 ?
-                            `Your top ${urgentTasks.length} urgent tasks` :
+                            `Your top ${urgentTasks.length} urgent task(s)` :
                             'Nothing urgent, Yeah!!'
                     }
                 </CardTitle>

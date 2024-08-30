@@ -14,10 +14,10 @@ export type UrgentCard = {
 }
 
 export type DetailedNote = Note & {
-    category?: Category,
-    parentNote?: DetailedNote,
+    category: Category | null,
+    parentNote?: DetailedNote | null,
     contentBlocks?: (ContentBlock & {
-        TaskInfo?: TaskInfo[]
+        taskInfo: TaskInfo[]
     })[]
     childrenNotes?: DetailedNote[]
 }

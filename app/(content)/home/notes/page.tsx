@@ -1,11 +1,31 @@
 import { db } from "@/lib/db";
 import { TaskInfoStatus } from "@prisma/client";
 import NotesMainPage from "./_components/NotesMainPage";
+import { DetailedNote, UrgentTasks } from "./_components/types";
 
 const NotesPage = async () => {
-    const allNotes = await db.note.findMany();
+    const allNotes: DetailedNote[] = await db.note.findMany({
+        include: {
+            category: true,
+            parentNote: {
+                include: {
+                    category: true,
+                }
+            },
+            childrenNotes: {
+                include: {
+                    category: true,
+                }
+            },
+            contentBlocks: {
+                include: {
+                    taskInfo: true
+                }
+            }
+        }
+    });
 
-    const fiveMostUrgentTaskInfo = await db.taskInfo.findMany({
+    const fiveMostUrgentTaskInfo: UrgentTasks[] = await db.taskInfo.findMany({
         orderBy: {
             // sort by ascending date
             deadline: 'asc'
@@ -45,7 +65,6 @@ const NotesPage = async () => {
             }
         },
     });
-    console.log(overduedTasksInfo);
 
     return (
         <>

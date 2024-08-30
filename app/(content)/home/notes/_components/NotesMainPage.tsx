@@ -4,12 +4,13 @@ import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import UrgentTasksContextCard from "./UrgentTasksContextCard";
 import { Note } from "@prisma/client";
-import { UrgentTasks } from "./types";
+import { DetailedNote, UrgentTasks } from "./types";
 import NoteDialog from "./NoteDialog";
 import { useState } from "react";
+import ImportantNotesContextCard from "./ImportantNotesContextCard";
 
 const NotesMainPage = ({ allNotes, fiveMostUrgentTaskInfo }: {
-    allNotes: Note[],
+    allNotes: DetailedNote[],
     fiveMostUrgentTaskInfo: UrgentTasks[],
 }) => {
     const [mode, setMode] = useState<'Edit' | 'Create' | 'Close'>('Close');
@@ -31,6 +32,9 @@ const NotesMainPage = ({ allNotes, fiveMostUrgentTaskInfo }: {
 
                 {/* First list out 5 most urgent tasks */}
                 <UrgentTasksContextCard allNotes={allNotes} urgentTasks={fiveMostUrgentTaskInfo} />
+
+                {/* Display Newest Star Notes * 5 */}
+                <ImportantNotesContextCard notes={allNotes} />
             </div>
         </>
     )
