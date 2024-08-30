@@ -1,4 +1,4 @@
-import { ContentBlock, Note, TaskInfo } from "@prisma/client";
+import { Category, ContentBlock, Note, TaskInfo } from "@prisma/client";
 
 export type UrgentTasks = TaskInfo & {
     parentContentBlock: ContentBlock & {
@@ -11,4 +11,13 @@ export type UrgentCard = {
     description: string,
     deadline: Date,
     parentNote: Note
+}
+
+export type DetailedNote = Note & {
+    category?: Category,
+    parentNote?: DetailedNote,
+    contentBlocks?: (ContentBlock & {
+        TaskInfo?: TaskInfo[]
+    })[]
+    childrenNotes?: DetailedNote[]
 }

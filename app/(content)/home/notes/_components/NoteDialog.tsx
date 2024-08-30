@@ -12,9 +12,11 @@ import {
     DialogTitle,
     DialogDescription,
 } from "@/components/ui/dialog";
+import { Note } from "@prisma/client";
 import { Dispatch, SetStateAction } from "react";
 
-const NoteDialog = ({ mode, setMode }: {
+const NoteDialog = ({existingNote, mode, setMode }: {
+    existingNote?: Note, 
     mode: 'Edit' | 'Create' | 'Close'
     setMode: Dispatch<SetStateAction<"Edit" | "Create" | "Close">>
 }) => {
