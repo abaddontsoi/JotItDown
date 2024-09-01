@@ -12,11 +12,12 @@ import {
     DialogTitle,
     DialogDescription,
 } from "@/components/ui/dialog";
-import { Note } from "@prisma/client";
 import { Dispatch, SetStateAction } from "react";
+import NoteForm from "./NoteForm";
+import { DetailedNote } from "./types";
 
 const NoteDialog = ({existingNote, mode, setMode }: {
-    existingNote?: Note, 
+    existingNote?: DetailedNote, 
     mode: 'Edit' | 'Create' | 'Close'
     setMode: Dispatch<SetStateAction<"Edit" | "Create" | "Close">>
 }) => {
@@ -27,9 +28,11 @@ const NoteDialog = ({existingNote, mode, setMode }: {
             <DialogContent>
                 <DialogHeader>
                     <DialogTitle className="text-center">
-                        {mode.toWellFormed()} Note
+                        {mode} Note
                     </DialogTitle>
                 </DialogHeader>
+
+                <NoteForm existingNote={existingNote} mode={mode} setMode={setMode}></NoteForm>
             </DialogContent>
         </Dialog>
     )

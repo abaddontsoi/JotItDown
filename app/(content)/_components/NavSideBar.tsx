@@ -38,7 +38,19 @@ const NavSideBar = () => {
                     router.push('/home/categories');
                 }}
             >
-                Categories
+                Note Categories
+            </Button>
+            <Button
+                onClick={() => {
+                }}
+            >
+                Content Blocks
+            </Button>
+            <Button
+                onClick={() => {
+                }}
+            >
+                Budget
             </Button>
         </div>
     )

@@ -2,9 +2,9 @@
 
 import { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
 import { Note } from "@prisma/client";
-import { UrgentTasks } from "./types";
+import { UrgentTasks } from "../../notes/_components/types";
 import { useRouter } from "next/navigation";
-import UrgentTaskCard from "./UrgentTaskCard";
+import UrgentTaskCard from "../../notes/_components/UrgentTaskCard";
 
 const UrgentTasksContextCard = (
     { urgentTasks, allNotes }: {

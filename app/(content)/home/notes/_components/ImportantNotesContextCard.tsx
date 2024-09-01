@@ -17,6 +17,7 @@ const ImportantNotesContextCard = (
         <Card>
             <CardHeader>
                 <CardTitle>
+                    Important Notes
                 </CardTitle>
             </CardHeader>
             <CardContent>

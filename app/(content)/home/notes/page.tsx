@@ -25,25 +25,6 @@ const NotesPage = async () => {
         }
     });
 
-    const fiveMostUrgentTaskInfo: UrgentTasks[] = await db.taskInfo.findMany({
-        orderBy: {
-            // sort by ascending date
-            deadline: 'asc'
-        },
-        where: {
-            deadline: {
-                gt: new Date()
-            }
-        },
-        include: {
-            parentContentBlock: {
-                include: {
-                    parentNote: true,
-                }
-            }
-        },
-        take: 5,
-    })
     const overduedTasksInfo = await db.taskInfo.findMany({
         orderBy: {
             // sort by ascending date
@@ -68,7 +49,7 @@ const NotesPage = async () => {
 
     return (
         <>
-            <NotesMainPage allNotes={allNotes} fiveMostUrgentTaskInfo={fiveMostUrgentTaskInfo}/>
+            <NotesMainPage allNotes={allNotes}/>
         </>
     )
 }

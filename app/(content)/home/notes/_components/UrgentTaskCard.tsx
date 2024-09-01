@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { MoveRight } from "lucide-react";
+import { MoveRight, Target } from "lucide-react";
 import { UrgentCard } from "./types";
 import { useRouter } from "next/navigation";
 
@@ -21,7 +21,8 @@ const UrgentTaskCard = (
                 <CardTitle>
                     {urgentCard.title}
                 </CardTitle>
-                <CardDescription>
+                <CardDescription className="flex flex-row gap-1 items-center">
+                    <Target />
                     {urgentCard.deadline.toDateString()}
                 </CardDescription>
             </CardHeader>
