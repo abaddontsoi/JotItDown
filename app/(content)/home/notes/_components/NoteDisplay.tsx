@@ -14,15 +14,15 @@ const NoteDisplay = ({ note }: {
 
     return (
         <Card className="max-w-[500px] hover:scale-[1.1] duration-200">
-            <CardHeader className="flex flex-row justify-between">
-                <CardTitle className="flex flex-row gap-1 items-baseline">
-                    {note.title}
+            <CardHeader className="flex flex-row gap-4 justify-between text-nowrap items-center">
+                <CardTitle className="flex flex-row items-center">
                     <Button
+                        className="text-2xl font-bold p-0"
                         onClick={() => {
                             router.push('/home/notes/' + note.id);
                         }}
                         variant={'link'}>
-                        Details
+                        {note.title}
                     </Button>
                 </CardTitle>
                 <CardDescription>Created at {note.createdAt.toDateString()}</CardDescription>

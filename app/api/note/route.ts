@@ -1,12 +1,16 @@
+import { db } from "@/lib/db";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
     try {
         const data = await req.json();
-        console.log(data);
+
+        const insertNoteId = await db.note.create({
+            data: data,
+        })
 
         return new NextResponse(JSON.stringify({
-            message: 'OK'
+            message: 'Note Created'
         }), {
             status: 200
         });

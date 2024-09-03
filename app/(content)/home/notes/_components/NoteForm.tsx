@@ -13,6 +13,7 @@ import { Combobox } from "@/components/ui/combobox";
 import { NoteStatus } from "@prisma/client";
 import { Switch } from "@/components/ui/switch";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 
 function extractLevelOneKeys<T extends object>(obj: T): Array<keyof T> {
@@ -46,13 +47,19 @@ const NoteForm = ({existingNote, mode, setMode}: {
             hidden: existingNote?.hidden || false
         }
     });
-
+    const router = useRouter();
     const {isSubmitting, isValid} = form.formState;
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
             const noteResponse = await axios.post('/api/note', values);
-            console.log(noteResponse.data)
+
+            if (noteResponse.status == 200) {
+                console.log(noteResponse);
+                toast.success(noteResponse.data.message);
+                router.refresh();
+                setMode('Close');
+            }
         } catch (error) {
             console.log(error);
             toast.error('Something Went Wrong')
@@ -65,6 +72,7 @@ const NoteForm = ({existingNote, mode, setMode}: {
                 <FormField
                     name='title'
                     control={form.control}
+                    disabled={isSubmitting}
                     render={({field}) => {
                         return (
                             <FormItem>
@@ -85,6 +93,7 @@ const NoteForm = ({existingNote, mode, setMode}: {
                 <FormField
                     name='status'
                     control={form.control}
+                    disabled={isSubmitting}
                     render={({field}) => {
                         return (
                             <FormItem>
@@ -107,6 +116,7 @@ const NoteForm = ({existingNote, mode, setMode}: {
                 <FormField
                     name='stared'
                     control={form.control}
+                    disabled={isSubmitting}
                     render={({field}) => {
                         return (
                             <FormItem className="flex flex-row justify-between items-center">
@@ -130,6 +140,7 @@ const NoteForm = ({existingNote, mode, setMode}: {
                 <FormField
                     name='hidden'
                     control={form.control}
+                    disabled={isSubmitting}
                     render={({field}) => {
                         return (
                             <FormItem className="flex flex-row justify-between items-center">
