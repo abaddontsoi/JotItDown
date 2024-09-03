@@ -23,7 +23,7 @@ const ImportantNotesContextCard = (
             <CardContent>
                 {
                     notes?.filter( n => n.stared).map( n => (
-                        <NoteDisplay note={n}></NoteDisplay>
+                        <NoteDisplay key={n.id} note={n}></NoteDisplay>
                     ))
                 }
             </CardContent>

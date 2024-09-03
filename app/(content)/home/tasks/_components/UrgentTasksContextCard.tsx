@@ -2,9 +2,9 @@
 
 import { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
 import { Note } from "@prisma/client";
-import { UrgentTasks } from "../../notes/_components/types";
+import { UrgentTasks } from "./types";
 import { useRouter } from "next/navigation";
-import UrgentTaskCard from "../../notes/_components/UrgentTaskCard";
+import UrgentTaskCard from "./UrgentTaskCard";
 
 const UrgentTasksContextCard = (
     { urgentTasks, allNotes }: {
@@ -40,7 +40,7 @@ const UrgentTasksContextCard = (
                         {
                             urgentCards.map(uC => {
                                 return (
-                                    <UrgentTaskCard key={uC.parentNote.id} urgentCard={uC}  />
+                                    <UrgentTaskCard key={uC.parentNote?.id} urgentCard={uC}  />
                                 )
                             })
                         }

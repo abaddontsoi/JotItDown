@@ -33,11 +33,11 @@ const UrgentTaskCard = (
                 <Button
                     variant={'link'}
                     onClick={() => {
-                        router.push('/home/notes/' + urgentCard.parentNote.id.toString());
+                        router.push('/home/notes/' + urgentCard.parentNote?.id.toString());
                     }}
                     className="underline flex flex-row gap-1"
                 >
-                    {urgentCard.parentNote.title}
+                    {urgentCard.parentNote?.title}
                     <MoveRight className="w-4 h-4" />
                 </Button>
             </CardContent>

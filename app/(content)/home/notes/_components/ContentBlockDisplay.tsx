@@ -31,7 +31,7 @@ const ContentBlockDisplay = (
                 {
                     contentBlock.content.split('\n').map(
                         s => (
-                            <p>
+                            <p key={s}>
                                 {s}
                             </p>
                         )
