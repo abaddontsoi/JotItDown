@@ -20,7 +20,7 @@ const ImportantNotesContextCard = (
                     Important Notes
                 </CardTitle>
             </CardHeader>
-            <CardContent className="flex flex-row gap-2">
+            <CardContent className="flex flex-row gap-2 flex-wrap">
                 {
                     notes?.filter( n => n.stared && !n.hidden).map( n => (
                         <NoteDisplay key={n.id} note={n}></NoteDisplay>
