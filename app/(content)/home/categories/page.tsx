@@ -1,8 +1,10 @@
+import CategoriesMainPage from "./_components/CategoriesMainPage";
+
 const CategoriesPage = async () => {
     return (
-        <div>
-            Categories
-        </div>
+        <>
+            <CategoriesMainPage />
+        </>
     )
 }
 

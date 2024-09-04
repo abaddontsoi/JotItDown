@@ -29,8 +29,11 @@ const NoteDisplay = ({ note }: {
             </CardHeader>
 
             <CardContent>
+                {/* display maximum 4 categories here */}
+
                 {
                     note.contentBlocks?.map(cB => (
+                        // should be short, perheps only content blocks title?
                         <ContentBlockDisplay key={cB.id} contentBlock={cB} />
                     ))
                 }

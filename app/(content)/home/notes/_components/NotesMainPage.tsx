@@ -4,8 +4,16 @@ import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { DetailedNote } from "./types";
 import NoteDialog from "./NoteDialog";
-import { useState } from "react";
-import ImportantNotesContextCard from "./ImportantNotesContextCard";
+import { Suspense, useState } from "react";
+import StaredNotesContextCard from "./StaredNotesContextCard";
+
+const FallBack = () => {
+    return (
+        <div>
+            Loading
+        </div>
+    )
+}
 
 const NotesMainPage = ({ allNotes }: {
     allNotes: DetailedNote[],
@@ -26,9 +34,12 @@ const NotesMainPage = ({ allNotes }: {
                         Create new
                     </Button>
                 </div>
+                
 
-                {/* Display Newest Star Notes * 5 */}
-                <ImportantNotesContextCard notes={allNotes} />
+                <Suspense fallback={<FallBack />}>
+                    {/* Display Newest Star Notes * 5 */}
+                    <StaredNotesContextCard notes={allNotes} />
+                </Suspense>
             </div>
         </>
     )
