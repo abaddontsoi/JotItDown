@@ -2,7 +2,7 @@ import { Category, ContentBlock, Note, TaskInfo } from "@prisma/client";
 
 export type UrgentTasks = TaskInfo & {
     parentContentBlock: ContentBlock & {
-        parentNote: Note,
+        parentNote: Note | null,
     }
 }
 
@@ -20,4 +20,9 @@ export type DetailedNote = Note & {
         taskInfo: TaskInfo[]
     })[]
     childrenNotes?: DetailedNote[]
+}
+
+export type DetailedCategory = Category & {
+    parentCategory?: DetailedCategory
+    // category: DetailedCategory[] | null
 }

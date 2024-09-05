@@ -1,6 +1,7 @@
 import { db } from "@/lib/db";
-import TasksMainPage from "./_components/TasksMainPage"
-import { DetailedNote, UrgentTasks } from "./_components/types"
+import { DetailedNote, UrgentTasks } from "@/components/self-defined/types";
+import TasksMainPage from "@/components/self-defined/TasksMainPage";
+
 
 const TasksPage = async () => {
     const allNotes: DetailedNote[] = await db.note.findMany({

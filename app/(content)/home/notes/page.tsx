@@ -1,7 +1,7 @@
 import { db } from "@/lib/db";
 import { TaskInfoStatus } from "@prisma/client";
-import NotesMainPage from "./_components/NotesMainPage";
-import { DetailedNote, UrgentTasks } from "./_components/types";
+import NotesMainPage from "../../../../components/self-defined/NotesMainPage";
+import { DetailedNote, UrgentTasks } from "../../../../components/self-defined/types";
 
 const NotesPage = async () => {
     const allNotes: DetailedNote[] = await db.note.findMany({

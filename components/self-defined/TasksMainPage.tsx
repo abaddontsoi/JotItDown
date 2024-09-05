@@ -1,7 +1,6 @@
 'use client';
 
-import { DetailedNote } from "../../notes/_components/types";
-import { UrgentTasks } from "./types";
+import { UrgentTasks, DetailedNote } from "./types";
 import UrgentTasksContextCard from "./UrgentTasksContextCard";
 
 const TasksMainPage = (
