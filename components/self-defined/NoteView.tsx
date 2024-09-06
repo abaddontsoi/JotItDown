@@ -1,11 +1,12 @@
 'use client';
 
-import { DetailedNote } from "./types";
+import { DetailedContentBlock, DetailedNote } from "./types";
 import ContentBlockView from "./ContentBlockView";
 import { Button } from "../ui/button";
 import { Plus } from "lucide-react";
-import CreateContentBlockDialog from "./CreateContentBlockDialog";
+import ContentBlockDialog from "./ContentBlockDialog";
 import { useState } from "react";
+import { ScrollArea } from "../ui/scroll-area";
 
 const NoteView = ({ note }:
     {
@@ -13,13 +14,17 @@ const NoteView = ({ note }:
     }
 ) => {
     const [contentBlockDialogMode, setMode] = useState<'Edit'|'Create'|'Close'>('Close');
+    const [selectedContentBlock, setSelectedContentBlock] = useState<DetailedContentBlock>();
 
     return (
         <>
             {/* hidden content block adder dialog */}
-            <CreateContentBlockDialog 
+            <ContentBlockDialog 
             mode={contentBlockDialogMode}
+            existingContentBlock={selectedContentBlock}
+            defaultParentNodeId={note.id}
             setMode={setMode}
+            setContentBlock={setSelectedContentBlock}
             />
 
             {/* Title */}
@@ -37,15 +42,24 @@ const NoteView = ({ note }:
                     Content Block
                 </Button>
             </div>
+            
 
-            {/* Content Blocks */}
-            {
-                note.contentBlocks?.map(block => {
-                    return (
-                        <ContentBlockView contentBlock={block} />
-                    )
-                })
-            }
+            <ScrollArea className="h-[1000px]">
+                {/* Content Blocks */}
+                <div className="flex flex-col gap-2">
+                    {
+                        note.contentBlocks?.map(block => {
+                            return (
+                                <ContentBlockView 
+                                contentBlock={block} 
+                                setMode={setMode}
+                                setContentBlock={setSelectedContentBlock}
+                                />
+                            )
+                        })
+                    }
+                </div>
+            </ScrollArea>
         </>
     )
 }

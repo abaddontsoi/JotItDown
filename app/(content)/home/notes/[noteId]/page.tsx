@@ -3,6 +3,12 @@ import { db } from "@/lib/db";
 import { Suspense } from "react";
 import NoteView from "../../../../../components/self-defined/NoteView";
 
+const FallBack = () => {
+    return (
+        <div>Loading</div>
+    )
+}
+
 const NoteViewPage = async ({ params }: {
     params: {
         noteId: string
@@ -28,7 +34,7 @@ const NoteViewPage = async ({ params }: {
     });
 
     return (
-        <Suspense>
+        <Suspense fallback={<FallBack />}>
             {
                 note &&
                 <NoteView note={note} />

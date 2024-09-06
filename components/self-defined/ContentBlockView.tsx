@@ -6,19 +6,21 @@ import { ContentBlock, TaskInfo } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Pen, PenLine } from "lucide-react";
+import { Dispatch, SetStateAction } from "react";
+import { DetailedContentBlock } from "./types";
 
 const ContentBlockView = (
-    { contentBlock }: {
-        contentBlock: ContentBlock & {
-            taskInfo?: TaskInfo[]
-        },
+    { contentBlock, setMode, setContentBlock }: {
+        contentBlock: DetailedContentBlock,
+        setMode: Dispatch<SetStateAction<"Edit" | "Create" | "Close">>,
+        setContentBlock: Dispatch<SetStateAction<DetailedContentBlock | undefined>>
     }
 ) => {
     const router = useRouter();
     const tasks: TaskInfo[] | undefined = contentBlock.taskInfo;
 
     return (
-        <Card>
+        <Card className="hover:bg-slate-200 duration-1000">
             <CardHeader>
                 <CardTitle className="flex flex-row justify-between items-center">
                     {
@@ -26,7 +28,12 @@ const ContentBlockView = (
                     }
 
                     {/* click this button to edit the content block */}
-                    <Button variant={'ghost'}>
+                    <Button 
+                        onClick={() => {
+                            setMode('Edit');
+                            setContentBlock(contentBlock);
+                        }}
+                    variant={'ghost'}>
                         <PenLine />
                     </Button>
                 </CardTitle>

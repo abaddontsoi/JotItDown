@@ -2,6 +2,7 @@ import { db } from "@/lib/db";
 import { TaskInfoStatus } from "@prisma/client";
 import NotesMainPage from "../../../../components/self-defined/NotesMainPage";
 import { DetailedNote, UrgentTasks } from "../../../../components/self-defined/types";
+import { Suspense } from "react";
 
 const NotesPage = async () => {
     const allNotes: DetailedNote[] = await db.note.findMany({
@@ -25,32 +26,21 @@ const NotesPage = async () => {
         }
     });
 
-    const overduedTasksInfo = await db.taskInfo.findMany({
-        orderBy: {
-            // sort by ascending date
-            deadline: 'asc'
-        },
-        where: {
-            deadline: {
-                lt: new Date()
-            },
-            status: {
-                not: TaskInfoStatus.Done
-            }
-        },
-        include: {
-            parentContentBlock: {
-                include: {
-                    parentNote: true,
-                }
-            }
-        },
-    });
 
     return (
         <>
-            <NotesMainPage allNotes={allNotes}/>
+            <Suspense fallback={<Fallback />}>
+                <NotesMainPage allNotes={allNotes} />
+            </Suspense>
         </>
+    )
+}
+
+const Fallback = () => {
+    return (
+        <div>
+            Loading
+        </div>
     )
 }
 
