@@ -1,8 +1,20 @@
+import { Button } from "@/components/ui/button";
+import { ArrowRight } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-    </main>
-  );
+	return (
+		<main className="flex flex-col items-center w-screen h-screen justify-center">
+			<div
+			className="text-9xl"
+			>Welcome</div>
+			<Link href={'/home'} className="">
+				<Button className="hover:underline">
+					Jot It Down
+					<ArrowRight className="ml-2 w-4 h-4" />
+				</Button>
+			</Link>
+		</main>
+	);
 }
