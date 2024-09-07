@@ -51,7 +51,7 @@ const HighestViewCountNotesContextCard = (
                                 </CardTitle>
                             </CardHeader>
                         </AccordionTrigger>
-                        <AccordionContent>
+                        <AccordionContent className="p-2">
                             <CardContent className="flex flex-row gap-2 flex-wrap">
                                 {
                                     notes?.filter(n => n.stared && !n.hidden).map(n => (

@@ -1,7 +1,7 @@
 'use client';
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { DetailedNote } from "./types";
 import { Form, FormField, FormItem, FormLabel } from "@/components/ui/form";
 import { z } from "zod";
@@ -32,7 +32,7 @@ const formSchema = z.object({
     hidden: z.boolean(),
 })
 
-const NoteForm = ({existingNote, mode, setMode}: {
+const NoteForm = ({ existingNote, mode, setMode }: {
     existingNote?: DetailedNote,
     mode: 'Edit' | 'Create' | 'Close'
     setMode: Dispatch<SetStateAction<"Edit" | "Create" | "Close">>
@@ -48,11 +48,20 @@ const NoteForm = ({existingNote, mode, setMode}: {
         }
     });
     const router = useRouter();
-    const {isSubmitting, isValid} = form.formState;
-
+    const { isSubmitting, isValid } = form.formState;
+    const [categoryForCreate, setCategoryForCreate] = useState<string>();
+    
+    
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
-            const noteResponse = await axios.post('/api/note', values);
+            const data = {
+                basic: values,
+                extra: {
+                    category: categoryForCreate,
+                }
+            }
+
+            const noteResponse = await axios.post('/api/note', data);
 
             if (noteResponse.status == 200) {
                 console.log(noteResponse);
@@ -65,7 +74,6 @@ const NoteForm = ({existingNote, mode, setMode}: {
             toast.error('Something Went Wrong')
         }
     }
-
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-2">
@@ -73,7 +81,7 @@ const NoteForm = ({existingNote, mode, setMode}: {
                     name='title'
                     control={form.control}
                     disabled={isSubmitting}
-                    render={({field}) => {
+                    render={({ field }) => {
                         return (
                             <FormItem>
                                 <FormLabel>
@@ -88,17 +96,17 @@ const NoteForm = ({existingNote, mode, setMode}: {
                     }}
                 >
                 </FormField>
-                
-                
+
+
                 <FormField
                     name='status'
                     control={form.control}
                     disabled={isSubmitting}
-                    render={({field}) => {
+                    render={({ field }) => {
                         return (
                             <FormItem>
                                 <FormLabel>
-                                    Title
+                                    Status
                                 </FormLabel>
                                 <Combobox
                                     options={(extractLevelOneKeys(NoteStatus) as [string, ...string[]]).map(status => ({
@@ -117,7 +125,7 @@ const NoteForm = ({existingNote, mode, setMode}: {
                     name='stared'
                     control={form.control}
                     disabled={isSubmitting}
-                    render={({field}) => {
+                    render={({ field }) => {
                         return (
                             <FormItem className="flex flex-row justify-between items-center">
                                 <FormLabel>
@@ -127,7 +135,7 @@ const NoteForm = ({existingNote, mode, setMode}: {
                                     checked={form.watch('stared')}
                                     onCheckedChange={(event) => {
                                         console.log(event);
-                                        form.setValue('stared', event )
+                                        form.setValue('stared', event)
                                     }}
                                 >
                                 </Switch>
@@ -141,7 +149,7 @@ const NoteForm = ({existingNote, mode, setMode}: {
                     name='hidden'
                     control={form.control}
                     disabled={isSubmitting}
-                    render={({field}) => {
+                    render={({ field }) => {
                         return (
                             <FormItem className="flex flex-row justify-between items-center">
                                 <FormLabel>
@@ -151,7 +159,7 @@ const NoteForm = ({existingNote, mode, setMode}: {
                                     checked={form.watch('hidden')}
                                     onCheckedChange={(event) => {
                                         console.log(event);
-                                        form.setValue('hidden', event )
+                                        form.setValue('hidden', event)
                                     }}
                                 >
                                 </Switch>
@@ -161,14 +169,30 @@ const NoteForm = ({existingNote, mode, setMode}: {
                 >
                 </FormField>
 
+                {
+                    mode == 'Create' &&
+                    <FormItem className="">
+                        <FormLabel>
+                            Category
+                        </FormLabel>
+                        <Input
+                            onChange={(event) => {
+                                setCategoryForCreate(event.target.value);
+                            }}
+                        />
+                    </FormItem>
+                }
+
                 <div className="flex flex-row gap-2 justify-end">
-                    <Button type="submit">Submit</Button>
-                    <Button 
-                    className="bg-white border-2 border-gray-900 text-red-600 hover:bg-slate-100"
-                    type={'button'}
-                    onClick={() => {
-                        setMode('Close');
-                    }}>Cancel</Button>
+                    <Button
+                        className="bg-white border-2 border-gray-900 text-red-600 hover:bg-slate-100 basis-1/2"
+                        type={'button'}
+                        onClick={() => {
+                            setMode('Close');
+                        }}>Cancel</Button>
+                    <Button
+                        className="basis-1/2"
+                        type="submit">Submit</Button>
                 </div>
             </form>
         </Form>

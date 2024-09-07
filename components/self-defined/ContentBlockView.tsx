@@ -5,7 +5,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { ContentBlock, TaskInfo } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
-import { Pen, PenLine } from "lucide-react";
+import { MessageSquareDiff, Pen, PenLine } from "lucide-react";
 import { Dispatch, SetStateAction } from "react";
 import { DetailedContentBlock } from "./types";
 
@@ -27,15 +27,26 @@ const ContentBlockView = (
                         contentBlock.title
                     }
 
-                    {/* click this button to edit the content block */}
-                    <Button 
-                        onClick={() => {
-                            setMode('Edit');
-                            setContentBlock(contentBlock);
-                        }}
-                    variant={'ghost'}>
-                        <PenLine />
-                    </Button>
+                    <div className="flex flex-row">
+                        {/* click this button to edit the content block */}
+                        <Button
+                            onClick={() => {
+                                setMode('Edit');
+                                setContentBlock(contentBlock);
+                            }}
+                            variant={'ghost'}>
+                            <PenLine />
+                        </Button>
+
+                        {/* click this button to add a new task */}
+                        <Button
+                            onClick={() => {
+
+                            }}
+                            variant={'ghost'}>
+                            <MessageSquareDiff />
+                        </Button>
+                    </div>
                 </CardTitle>
             </CardHeader>
 
@@ -54,7 +65,7 @@ const ContentBlockView = (
 
                 <div className="flex flex-row justify-end">
                     {
-                        tasks &&
+                        tasks.length > 0 &&
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                                 <Button variant={'link'}>

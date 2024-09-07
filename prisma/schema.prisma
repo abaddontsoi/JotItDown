@@ -83,6 +83,7 @@ model Note {
     id String @id @default(auto()) @map("_id") @db.ObjectId
 
     title String
+    description String?
 
     categoryId String?   @db.ObjectId
     category   Category? @relation(fields: [categoryId], references: [id])
@@ -112,7 +113,7 @@ model Note {
 model Category {
     id String @id @default(auto()) @map("_id") @db.ObjectId
 
-    name String
+    name String @unique
 
     parentCategoryId String?   @db.ObjectId
     parentCategory   Category? @relation(name: "CategoryParentChildrenRelation", fields: [parentCategoryId], references: [id], onDelete: NoAction, onUpdate: NoAction)
@@ -124,5 +125,5 @@ model Category {
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
-    @@unique([name])
+    // @@unique([name])
 }

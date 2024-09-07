@@ -13,19 +13,21 @@ const NoteView = ({ note }:
         note: DetailedNote,
     }
 ) => {
-    const [contentBlockDialogMode, setMode] = useState<'Edit'|'Create'|'Close'>('Close');
+    const [contentBlockDialogMode, setMode] = useState<'Edit' | 'Create' | 'Close'>('Close');
     const [selectedContentBlock, setSelectedContentBlock] = useState<DetailedContentBlock>();
 
     return (
         <>
             {/* hidden content block adder dialog */}
-            <ContentBlockDialog 
-            mode={contentBlockDialogMode}
-            existingContentBlock={selectedContentBlock}
-            defaultParentNodeId={note.id}
-            setMode={setMode}
-            setContentBlock={setSelectedContentBlock}
+            <ContentBlockDialog
+                mode={contentBlockDialogMode}
+                existingContentBlock={selectedContentBlock}
+                defaultParentNodeId={note.id}
+                setMode={setMode}
+                setContentBlock={setSelectedContentBlock}
             />
+
+            {/* Task dialog */}
 
             {/* Title */}
             <div className="flex flex-row justify-between">
@@ -33,27 +35,28 @@ const NoteView = ({ note }:
                     {note.title || 'No title'}
                 </p>
 
-                <Button 
-                onClick={() => {
-                    setMode('Create');
-                }}
-                className="flex flex-row items-center gap-1">
-                    <Plus className="w-5 h-5"/>
+                <Button
+                    onClick={() => {
+                        setMode('Create');
+                    }}
+                    className="flex flex-row items-center gap-1">
+                    <Plus className="w-5 h-5" />
                     Content Block
                 </Button>
             </div>
-            
 
-            <ScrollArea className="h-[1000px]">
+
+            <ScrollArea className="h-[1000px] mt-4">
                 {/* Content Blocks */}
                 <div className="flex flex-col gap-2">
                     {
                         note.contentBlocks?.map(block => {
                             return (
-                                <ContentBlockView 
-                                contentBlock={block} 
-                                setMode={setMode}
-                                setContentBlock={setSelectedContentBlock}
+                                <ContentBlockView
+                                    key={block.id}
+                                    contentBlock={block}
+                                    setMode={setMode}
+                                    setContentBlock={setSelectedContentBlock}
                                 />
                             )
                         })

@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { MoveRight, Target } from "lucide-react";
-import { UrgentCard } from "../../app/(content)/home/tasks/_components/types";
+import { UrgentCard } from "./types";
 import { useRouter } from "next/navigation";
 
 

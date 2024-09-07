@@ -10,7 +10,7 @@ export type UrgentCard = {
     title: string | null,
     description: string,
     deadline: Date,
-    parentNote: Note
+    parentNote: Note | null
 }
 
 export type DetailedContentBlock = (ContentBlock & {
