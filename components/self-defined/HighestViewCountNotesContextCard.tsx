@@ -28,9 +28,9 @@ const HighestViewCountNotesContextCard = (
     const [accordionOpen, setOpen] = useState<boolean>(true);
 
     // sort notes by read count
-    notes?.sort((a, b) => {
-        return a.readCount - b.readCount;
-    })
+    notes = notes?.filter(n => !n.hidden).sort((a, b) => {
+        return b.readCount - a.readCount;
+    }).filter((_, index) => index < 5);
 
     return (
         <>
@@ -54,7 +54,7 @@ const HighestViewCountNotesContextCard = (
                         <AccordionContent className="p-2">
                             <CardContent className="flex flex-row gap-2 flex-wrap">
                                 {
-                                    notes?.filter(n => n.stared && !n.hidden).map(n => (
+                                    notes?.map(n => (
                                         <Suspense key={n.id} fallback={<FallBack />}>
                                             <NoteDisplay key={n.id} note={n}></NoteDisplay>
                                         </Suspense>

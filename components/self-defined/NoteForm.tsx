@@ -14,6 +14,7 @@ import { NoteStatus } from "@prisma/client";
 import { Switch } from "@/components/ui/switch";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { Textarea } from "../ui/textarea";
 
 
 function extractLevelOneKeys<T extends object>(obj: T): Array<keyof T> {
@@ -24,6 +25,8 @@ const formSchema = z.object({
     id: z.string().optional(),
     title: z.string(),
     status: z.enum(['Draft', 'Pending', 'Running', 'Done']),
+
+    description: z.string().optional(),
 
     categoryId: z.string().optional(), // need passed from parent
     parentNoteId: z.string().optional(),
@@ -44,14 +47,15 @@ const NoteForm = ({ existingNote, mode, setMode }: {
             id: existingNote?.id,
             status: existingNote?.status || 'Draft',
             stared: existingNote?.stared || false,
-            hidden: existingNote?.hidden || false
+            hidden: existingNote?.hidden || false,
+            description: existingNote?.description || '',
         }
     });
     const router = useRouter();
     const { isSubmitting, isValid } = form.formState;
     const [categoryForCreate, setCategoryForCreate] = useState<string>();
-    
-    
+
+
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
             const data = {
@@ -77,26 +81,73 @@ const NoteForm = ({ existingNote, mode, setMode }: {
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-2">
+                
+                <div className="flex flex-row gap-2">
+                    <FormField
+                        name='title'
+                        control={form.control}
+                        disabled={isSubmitting}
+                        render={({ field }) => {
+                            return (
+                                <FormItem>
+                                    <FormLabel>
+                                        Title
+                                    </FormLabel>
+                                    <Input
+                                        {...field}
+                                    >
+                                    </Input>
+                                </FormItem>
+                            )
+                        }}
+                    >
+                    </FormField>
+
+                    {
+                        mode == 'Create' &&
+                        <FormItem>
+                            <FormLabel>
+                                Category
+                            </FormLabel>
+                            <Input
+                                onChange={(event) => {
+                                    setCategoryForCreate(event.target.value.toUpperCase());
+                                }}
+                            />
+                        </FormItem>
+                    }
+                    {
+                        mode == 'Edit' &&
+                        <FormItem>
+                            <FormLabel>
+                                Category
+                            </FormLabel>
+                            <Input
+                                defaultValue={existingNote?.category?.name}
+                                onChange={(event) => {
+                                    setCategoryForCreate(event.target.value);
+                                }}
+                            />
+                        </FormItem>
+                    }
+                </div>
+
                 <FormField
-                    name='title'
+                    name={'description'}
                     control={form.control}
-                    disabled={isSubmitting}
                     render={({ field }) => {
                         return (
                             <FormItem>
                                 <FormLabel>
-                                    Title
+                                    Description
                                 </FormLabel>
-                                <Input
+                                <Textarea
                                     {...field}
-                                >
-                                </Input>
+                                />
                             </FormItem>
                         )
                     }}
-                >
-                </FormField>
-
+                />
 
                 <FormField
                     name='status'
@@ -168,20 +219,6 @@ const NoteForm = ({ existingNote, mode, setMode }: {
                     }}
                 >
                 </FormField>
-
-                {
-                    mode == 'Create' &&
-                    <FormItem className="">
-                        <FormLabel>
-                            Category
-                        </FormLabel>
-                        <Input
-                            onChange={(event) => {
-                                setCategoryForCreate(event.target.value);
-                            }}
-                        />
-                    </FormItem>
-                }
 
                 <div className="flex flex-row gap-2 justify-end">
                     <Button

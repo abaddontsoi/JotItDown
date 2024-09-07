@@ -33,6 +33,19 @@ const NoteViewPage = async ({ params }: {
         }
     });
 
+    if (note != null) {
+        await db.note.update({
+            where: {
+                id: params.noteId,
+            },
+            data: {
+                readCount: {
+                    increment: 1
+                }
+            }
+        });
+    }
+
     return (
         <Suspense fallback={<FallBack />}>
             {

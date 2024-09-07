@@ -1,7 +1,7 @@
 'use client';
 
 import { DetailedContentBlock, DetailedNote } from "./types";
-import ContentBlockView from "./ContentBlockView";
+import ContentBlockViewContent from "./ContentBlockViewContent";
 import { Button } from "../ui/button";
 import { Plus } from "lucide-react";
 import ContentBlockDialog from "./ContentBlockDialog";
@@ -46,13 +46,13 @@ const NoteView = ({ note }:
             </div>
 
 
-            <ScrollArea className="h-[1000px] mt-4">
+            <ScrollArea className="h-[800px] mt-4">
                 {/* Content Blocks */}
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-2 p-4">
                     {
                         note.contentBlocks?.map(block => {
                             return (
-                                <ContentBlockView
+                                <ContentBlockViewContent
                                     key={block.id}
                                     contentBlock={block}
                                     setMode={setMode}
