@@ -7,6 +7,7 @@ import NoteDialog from "./NoteDialog";
 import { Suspense, useState } from "react";
 import StaredNotesContextCard from "./StaredNotesContextCard";
 import HighestViewCountNotesContextCard from "./HighestViewCountNotesContextCard";
+import AllNotes from "./AllNotes";
 
 const FallBack = () => {
     return (
@@ -45,6 +46,11 @@ const NotesMainPage = ({ allNotes }: {
                 <Suspense fallback={<FallBack />}>
                     {/* Display Highest Viewcout Notes * 5 */}
                     <HighestViewCountNotesContextCard notes={allNotes} />
+                </Suspense>
+
+                <Suspense fallback={<FallBack />}>
+                    {/* Display Highest Viewcout Notes * 5 */}
+                    <AllNotes notes={allNotes} />
                 </Suspense>
             </div>
         </>
