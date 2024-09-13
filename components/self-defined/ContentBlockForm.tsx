@@ -19,6 +19,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
+    id: z.string().optional(),
     title: z.string().optional(),
     content: z.string(),
     parentNoteId: z.string().optional()
@@ -34,9 +35,10 @@ const ContentBlockForm = ({ mode, existingContentBlock, defaultParentNodeId, set
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
+            id: existingContentBlock?.id || undefined,
             title: existingContentBlock?.title || undefined,
             parentNoteId: defaultParentNodeId,
-            content: existingContentBlock?.content
+            content: existingContentBlock?.content,
         }
     })
 
@@ -44,13 +46,25 @@ const ContentBlockForm = ({ mode, existingContentBlock, defaultParentNodeId, set
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
-            const response = await axios.post('/api/content-block', values);
-            console.log(response);
-            if (response.status == 200) {
-                toast.success('Inserted');
-                setContentBlock(undefined);
-                router.refresh();
-                setMode('Close');
+
+            if (mode == 'Create') {
+                const response = await axios.post('/api/content-block', values);
+                console.log(response);
+                if (response.status == 200) {
+                    toast.success('Inserted');
+                    setContentBlock(undefined);
+                    router.refresh();
+                    setMode('Close');
+                }
+            } else if (mode == 'Edit') {
+                const response = await axios.patch('/api/content-block', values);
+                console.log(response);
+                if (response.status == 200) {
+                    toast.success('Updated');
+                    setContentBlock(undefined);
+                    router.refresh();
+                    setMode('Close');
+                }
             }
         } catch (error) {
             console.log(error);
@@ -100,7 +114,7 @@ const ContentBlockForm = ({ mode, existingContentBlock, defaultParentNodeId, set
 
                     {/* Submit Button */}
                     <div className="w-full flex flex-row-reverse mt-3 gap-1">
-                        <Button className="basis-1/2">Save</Button>
+                        <Button className="basis-1/2" type="submit">Save</Button>
                         <Button className="basis-1/2 border-2 border-gray-900 bg-white text-red-500 hover:bg-slate-100"
                             type='reset'
                             onClick={() => {
