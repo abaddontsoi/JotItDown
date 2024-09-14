@@ -5,7 +5,6 @@ import { DetailedNote, UrgentTasks } from "../../../../components/self-defined/t
 import { Suspense } from "react";
 
 const NotesPage = async () => {
-    await db.$connect();
 
     const allNotes: DetailedNote[] = await db.note.findMany({
         include: {
@@ -27,9 +26,6 @@ const NotesPage = async () => {
             }
         }
     });
-
-    await db.$disconnect();
-
 
     return (
         <>

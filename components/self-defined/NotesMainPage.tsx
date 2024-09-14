@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { DetailedNote } from "./types";
 import NoteDialog from "./NoteDialog";
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import StaredNotesContextCard from "./StaredNotesContextCard";
 import HighestViewCountNotesContextCard from "./HighestViewCountNotesContextCard";
 import AllNotes from "./AllNotes";
@@ -21,6 +21,8 @@ const NotesMainPage = ({ allNotes }: {
     allNotes: DetailedNote[],
 }) => {
     const [mode, setMode] = useState<'Edit' | 'Create' | 'Close'>('Close');
+
+    useEffect(() => {}, [allNotes]);
 
     return (
         <>
