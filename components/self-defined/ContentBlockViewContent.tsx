@@ -30,6 +30,7 @@ const ContentBlockViewContent = (
                 data: data
             });
             console.log(respose);
+            router.refresh();
         } catch (error) {
             console.log(error);
         }
