@@ -5,6 +5,7 @@ import { DetailedNote, UrgentTasks } from "../../../../components/self-defined/t
 import { Suspense } from "react";
 
 const NotesPage = async () => {
+
     const allNotes: DetailedNote[] = await db.note.findMany({
         include: {
             category: true,
@@ -26,7 +27,6 @@ const NotesPage = async () => {
         }
     });
 
-
     return (
         <>
             <Suspense fallback={<Fallback />}>
@@ -43,5 +43,5 @@ const Fallback = () => {
         </div>
     )
 }
-
+export const dynamic = 'force-dynamic';
 export default NotesPage;
