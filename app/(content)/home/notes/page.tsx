@@ -28,8 +28,6 @@ const NotesPage = async () => {
         }
     });
 
-    await db.$disconnect();
-
 
     return (
         <>
