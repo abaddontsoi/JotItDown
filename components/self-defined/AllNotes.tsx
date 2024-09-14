@@ -25,7 +25,7 @@ const AllNotes = (
     }
 ) => {
     const router = useRouter();
-    const [accordionOpen, setOpen] = useState<boolean>(true);
+    const [accordionOpen, setOpen] = useState<boolean>(false);
 
     return (
         <>
