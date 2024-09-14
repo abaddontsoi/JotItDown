@@ -21,8 +21,9 @@ const NavSideBar = () => {
                 </Button>
             </div>
             {
-                navRoutes.map(button => (
+                navRoutes.map((button, index) => (
                     <Button
+                    key={'nav-'+index}
                     className="transition duration-200 hover:scale-[1.05] 
                     hover:translate-x-[5px]
                     "
