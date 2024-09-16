@@ -12,9 +12,10 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import axios from "axios";
 
 const ContentBlockViewContent = (
-    { contentBlock, setMode, setContentBlock }: {
+    { contentBlock, setMode, setTaskInfoDialogMode, setContentBlock }: {
         contentBlock: DetailedContentBlock,
         setMode: Dispatch<SetStateAction<"Edit" | "Create" | "Close">>,
+        setTaskInfoDialogMode: Dispatch<SetStateAction<"Edit" | "Create" | "Close">>,
         setContentBlock: Dispatch<SetStateAction<DetailedContentBlock | undefined>>
     }
 ) => {
@@ -65,7 +66,7 @@ const ContentBlockViewContent = (
                             {/* click this button to add a new task */}
                             <Button
                                 onClick={() => {
-
+                                    setTaskInfoDialogMode('Create');
                                 }}
                                 variant={'ghost'}>
                                 <MessageSquareDiff />

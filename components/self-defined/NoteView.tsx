@@ -7,6 +7,7 @@ import { Plus } from "lucide-react";
 import ContentBlockDialog from "./ContentBlockDialog";
 import { useState } from "react";
 import { ScrollArea } from "../ui/scroll-area";
+import TaskInfoDialog from "./TaskInfoDialog";
 
 const NoteView = ({ note }:
     {
@@ -14,6 +15,7 @@ const NoteView = ({ note }:
     }
 ) => {
     const [contentBlockDialogMode, setMode] = useState<'Edit' | 'Create' | 'Close'>('Close');
+    const [taskInfoDialogMode, setTaskInfoDialogMode] = useState<'Edit' | 'Create' | 'Close'>('Close');
     const [selectedContentBlock, setSelectedContentBlock] = useState<DetailedContentBlock>();
 
     return (
@@ -28,6 +30,10 @@ const NoteView = ({ note }:
             />
 
             {/* Task dialog */}
+            <TaskInfoDialog 
+            mode={taskInfoDialogMode}
+            setMode={setTaskInfoDialogMode}
+            />
 
             {/* Title */}
             <div className="flex flex-row justify-between">
@@ -56,6 +62,7 @@ const NoteView = ({ note }:
                                     key={block.id}
                                     contentBlock={block}
                                     setMode={setMode}
+                                    setTaskInfoDialogMode={setTaskInfoDialogMode}
                                     setContentBlock={setSelectedContentBlock}
                                 />
                             )
