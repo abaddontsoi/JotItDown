@@ -89,7 +89,7 @@ const NoteForm = ({ existingNote, mode, setMode }: {
                         disabled={isSubmitting}
                         render={({ field }) => {
                             return (
-                                <FormItem>
+                                <FormItem className="w-full">
                                     <FormLabel>
                                         Title
                                     </FormLabel>
@@ -105,7 +105,7 @@ const NoteForm = ({ existingNote, mode, setMode }: {
 
                     {
                         mode == 'Create' &&
-                        <FormItem>
+                        <FormItem className="w-full">
                             <FormLabel>
                                 Category
                             </FormLabel>
@@ -118,7 +118,7 @@ const NoteForm = ({ existingNote, mode, setMode }: {
                     }
                     {
                         mode == 'Edit' &&
-                        <FormItem>
+                        <FormItem className="w-full">
                             <FormLabel>
                                 Category
                             </FormLabel>
@@ -142,6 +142,7 @@ const NoteForm = ({ existingNote, mode, setMode }: {
                                     Description
                                 </FormLabel>
                                 <Textarea
+                                // className="w-fit"
                                     {...field}
                                 />
                             </FormItem>
