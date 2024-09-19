@@ -6,6 +6,7 @@ import TaskInfoForm from "./TaskInfoForm";
 interface TaskInfoDialogProp {
     existingTaskInfo?: TaskInfo,
     mode: 'Edit' | 'Create' | 'Close',
+    parentContentBlockid?: string,
     setTargetTaskInfo?: Dispatch<SetStateAction<TaskInfo>>,
     setMode: Dispatch<SetStateAction<"Edit" | "Create" | "Close">>,
 }
@@ -13,6 +14,7 @@ interface TaskInfoDialogProp {
 const TaskInfoDialog = ({
     mode,
     existingTaskInfo,
+    parentContentBlockid,
     setMode,
     setTargetTaskInfo
 }: TaskInfoDialogProp) => {
@@ -33,6 +35,7 @@ const TaskInfoDialog = ({
                 <TaskInfoForm
                     mode={mode}
                     existingTaskInfo={existingTaskInfo}
+                    parentContentBlockid={parentContentBlockid}
                     setMode={setMode}
                     setTargetTaskInfo={setTargetTaskInfo}
                 />

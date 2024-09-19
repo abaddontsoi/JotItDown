@@ -67,6 +67,7 @@ const ContentBlockViewContent = (
                             <Button
                                 onClick={() => {
                                     setTaskInfoDialogMode('Create');
+                                    setContentBlock(contentBlock);
                                 }}
                                 variant={'ghost'}>
                                 <MessageSquareDiff />
