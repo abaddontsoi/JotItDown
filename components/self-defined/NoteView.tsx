@@ -31,6 +31,7 @@ const NoteView = ({ note }:
 
             {/* Task dialog */}
             <TaskInfoDialog 
+            parentContentBlockid={selectedContentBlock?.id}
             mode={taskInfoDialogMode}
             setMode={setTaskInfoDialogMode}
             />

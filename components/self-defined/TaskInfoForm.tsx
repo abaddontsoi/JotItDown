@@ -24,6 +24,7 @@ const formSchema = z.object({
 
 interface TaskInfoFormProp {
     existingTaskInfo?: TaskInfo,
+    parentContentBlockid?: string,
     mode: 'Edit' | 'Create' | 'Close',
     setTargetTaskInfo?: Dispatch<SetStateAction<TaskInfo>>,
     setMode: Dispatch<SetStateAction<"Edit" | "Create" | "Close">>,
@@ -37,13 +38,14 @@ function enumToArray<T extends object>(enumObject: T): (keyof T)[] {
 const TaskInfoForm = ({
     mode,
     existingTaskInfo,
+    parentContentBlockid,
     setMode,
     setTargetTaskInfo
 }: TaskInfoFormProp) => {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            parentContentBlockid: existingTaskInfo?.parentContentBlockid || 'abcdef', 
+            parentContentBlockid: existingTaskInfo?.parentContentBlockid || parentContentBlockid, 
         }
     });
 
