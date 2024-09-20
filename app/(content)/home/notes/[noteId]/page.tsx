@@ -2,19 +2,14 @@ import { DetailedNote } from "../../../../../components/self-defined/types";
 import { db } from "@/lib/db";
 import { Suspense } from "react";
 import NoteView from "../../../../../components/self-defined/NoteView";
-
-const FallBack = () => {
-    return (
-        <div>Loading</div>
-    )
-}
+import ContextCardFallBack from "@/components/self-defined/ContextCardFallBack";
 
 const NoteViewPage = async ({ params }: {
     params: {
         noteId: string
     }
 }) => {
-    const note: DetailedNote | null = await db.note.findFirst({
+    const note: Promise<DetailedNote | null> = db.note.findFirst({
         where: {
             id: params.noteId
         },
@@ -33,25 +28,23 @@ const NoteViewPage = async ({ params }: {
         }
     });
 
-    if (note != null) {
-        await db.note.update({
-            where: {
-                id: params.noteId,
-            },
-            data: {
-                readCount: {
-                    increment: 1
-                }
-            }
-        });
-    }
+    // move to client component using API ?
+    // if (note != null) {
+    //     db.note.update({
+    //         where: {
+    //             id: params.noteId,
+    //         },
+    //         data: {
+    //             readCount: {
+    //                 increment: 1
+    //             }
+    //         }
+    //     });
+    // }
 
     return (
-        <Suspense fallback={<FallBack />}>
-            {
-                note &&
-                <NoteView note={note} />
-            }
+        <Suspense fallback={<ContextCardFallBack />}>
+            <NoteView note={await note} />
         </Suspense>
     )
 }

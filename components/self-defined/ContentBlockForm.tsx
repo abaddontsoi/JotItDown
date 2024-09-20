@@ -48,23 +48,25 @@ const ContentBlockForm = ({ mode, existingContentBlock, defaultParentNodeId, set
         try {
 
             if (mode == 'Create') {
-                const response = await axios.post('/api/content-block', values);
-                console.log(response);
-                if (response.status == 200) {
-                    toast.success('Inserted');
-                    setContentBlock(undefined);
-                    router.refresh();
-                    setMode('Close');
-                }
+                const postRequest = axios.post('/api/content-block', values).then((value) => {
+                    if (value.status == 200) {
+                        toast.success('Content block created');
+                        router.refresh();
+                    }
+                });
+                toast.loading('Creating new content block ...');
+                setContentBlock(undefined);
+                setMode('Close');
             } else if (mode == 'Edit') {
-                const response = await axios.patch('/api/content-block', values);
-                console.log(response);
-                if (response.status == 200) {
-                    toast.success('Updated');
-                    setContentBlock(undefined);
-                    router.refresh();
-                    setMode('Close');
-                }
+                const postRequest = await axios.patch('/api/content-block', values).then(value => {
+                    if (value.status == 200) {
+                        toast.success('Updated content block');
+                        router.refresh();
+                    }
+                });
+                toast.loading('Updating content block ...');
+                setContentBlock(undefined);
+                setMode('Close');
             }
         } catch (error) {
             console.log(error);
