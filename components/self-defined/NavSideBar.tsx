@@ -8,7 +8,7 @@ import { navRoutes } from "./NavSideBarRoutes";
 const NavSideBar = () => {
     const router = useRouter();
     return (
-        <div className="flex flex-col h-[100%] w-max gap-2 px-[25px] sticky">
+        <div className="flex flex-col bg-gray-200 w-fit fixed top-0 h-screen gap-2 px-[25px] sticky">
             <div>
                 <Button
                     variant={'link'}
