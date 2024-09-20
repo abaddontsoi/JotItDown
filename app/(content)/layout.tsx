@@ -17,7 +17,7 @@ export default function RootLayout({
     return (
         <main className="flex flex-row">
             {/* this is the navigation side bar */}
-            <div className="bg-gray-200 w-fit float h-screen">
+            <div className="bg-gray-200 w-fit sticky h-screen">
                 <NavSideBar />
             </div>
             <div className="bg-slate-100 w-screen p-[20px]">
