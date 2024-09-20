@@ -1,5 +1,3 @@
-'use client';
-
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { DetailedNote } from "./types";
@@ -17,12 +15,12 @@ const FallBack = () => {
     )
 }
 
-const NotesMainPage = ({ allNotes }: {
-    allNotes: DetailedNote[],
+const NotesMainPage = ({ PromiseAllNotes }: {
+    PromiseAllNotes: Promise<DetailedNote[]>,
 }) => {
     const [mode, setMode] = useState<'Edit' | 'Create' | 'Close'>('Close');
 
-    useEffect(() => {}, [allNotes]);
+    useEffect(() => {}, [PromiseAllNotes]);
 
     return (
         <>
@@ -42,17 +40,17 @@ const NotesMainPage = ({ allNotes }: {
 
                 <Suspense fallback={<FallBack />}>
                     {/* Display Newest Star Notes * 5 */}
-                    <StaredNotesContextCard notes={allNotes} />
+                    {/* <StaredNotesContextCard PromiseAllNotes={PromiseAllNotes} /> */}
                 </Suspense>
 
                 <Suspense fallback={<FallBack />}>
                     {/* Display Highest Viewcout Notes * 5 */}
-                    <HighestViewCountNotesContextCard notes={allNotes} />
+                    {/* <HighestViewCountNotesContextCard notes={PromiseAllNotes} /> */}
                 </Suspense>
 
                 <Suspense fallback={<FallBack />}>
                     {/* Display Highest Viewcout Notes * 5 */}
-                    <AllNotes notes={allNotes} />
+                    {/* <AllNotes notes={PromiseAllNotes} /> */}
                 </Suspense>
             </div>
         </>
