@@ -8,6 +8,8 @@ import { Plus } from "lucide-react";
 import StaredNotesContextCard from "@/components/self-defined/StaredNotesContextCard";
 import HighestViewCountNotesContextCard from "@/components/self-defined/HighestViewCountNotesContextCard";
 import AllNotes from "@/components/self-defined/AllNotes";
+import NotesMainPageHeader from "@/components/self-defined/NotesMainPageHeader";
+import ContextCardFallBack from "@/components/self-defined/ContextCardFallBack";
 
 const NotesPage = async () => {
 
@@ -34,33 +36,22 @@ const NotesPage = async () => {
 
     return (
         <>
-            <Suspense fallback={<FallBack />}>
-                {/* <NotesMainPage PromiseAllNotes={allNotes} /> */}
+            <Suspense fallback={<ContextCardFallBack />}>
+                <NotesMainPageHeader />
 
-                <div className="flex flex-col gap-4">
-                    <div className="flex flex-row text-5xl items-end justify-between">
-                        Notes
+                <div className="flex flex-col gap-4 mt-4">
 
-                        {/* <Button className="" onClick={() => {
-                            setMode('Create');
-                        }}>
-                            <Plus></Plus>
-                            Create new
-                        </Button> */}
-                    </div>
-
-
-                    <Suspense fallback={<FallBack />}>
+                    <Suspense fallback={<ContextCardFallBack />}>
                         {/* Display Newest Star Notes * 5 */}
                         <StaredNotesContextCard notes={await allNotes} />
                     </Suspense>
 
-                    <Suspense fallback={<FallBack />}>
+                    <Suspense fallback={<ContextCardFallBack />}>
                         {/* Display Highest Viewcout Notes * 5 */}
                         <HighestViewCountNotesContextCard notes={await allNotes} />
                     </Suspense>
 
-                    <Suspense fallback={<FallBack />}>
+                    <Suspense fallback={<ContextCardFallBack />}>
                         {/* Display Highest Viewcout Notes * 5 */}
                         <AllNotes notes={await allNotes} />
                     </Suspense>
@@ -71,12 +62,12 @@ const NotesPage = async () => {
     )
 }
 
-const FallBack = () => {
-    return (
-        <div>
-            Loading
-        </div>
-    )
-}
+// const FallBack = () => {
+//     return (
+//         <div>
+//             Loading
+//         </div>
+//     )
+// }
 export const dynamic = 'force-dynamic';
 export default NotesPage;
