@@ -15,7 +15,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <main className="flex flex-row">
+        <main className="flex flex-row bg-gray-200">
             {/* this is the navigation side bar */}
             <div className="bg-gray-200 w-fit sticky h-screen">
                 <NavSideBar />
