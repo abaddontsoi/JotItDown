@@ -27,3 +27,6 @@ export type DetailedCategory = Category & {
     parentCategory?: DetailedCategory
     // category: DetailedCategory[] | null
 }
+
+
+export type PromiseDetailedNotes = Promise<DetailedNote[]>
