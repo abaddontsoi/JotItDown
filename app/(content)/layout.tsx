@@ -15,12 +15,12 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <main className="flex flex-row">
+        <main className="flex flex-row bg-gray-200">
             {/* this is the navigation side bar */}
-            <div className="h-screen bg-gray-200 w-fit">
                 <NavSideBar />
-            </div>
-            <div className="h-screen bg-slate-100 w-screen p-[20px]">
+            {/* <div className="bg-gray-200 w-fit sticky h-screen">
+            </div> */}
+            <div className="bg-slate-100 w-screen p-[20px]">
                 {children}
             </div>
         </main>
