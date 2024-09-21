@@ -3,6 +3,7 @@ import { db } from "@/lib/db";
 import { Suspense } from "react";
 import NoteView from "../../../../../components/self-defined/NoteView";
 import ContextCardFallBack from "@/components/self-defined/ContextCardFallBack";
+import NoteViewContainer from "@/components/self-defined/NoteViewContainer";
 
 const NoteViewPage = async ({ params }: {
     params: {
@@ -44,7 +45,7 @@ const NoteViewPage = async ({ params }: {
 
     return (
         <Suspense fallback={<ContextCardFallBack />}>
-            <NoteView note={await note} />
+            <NoteViewContainer PromiseNote={note} />
         </Suspense>
     )
 }

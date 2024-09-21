@@ -1,3 +1,5 @@
+'use client';
+
 import { Dispatch, SetStateAction } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 import { TaskInfo } from "@prisma/client";
@@ -7,7 +9,7 @@ interface TaskInfoDialogProp {
     existingTaskInfo?: TaskInfo,
     mode: 'Edit' | 'Create' | 'Close',
     parentContentBlockid?: string,
-    setTargetTaskInfo?: Dispatch<SetStateAction<TaskInfo>>,
+    setTargetTaskInfo: Dispatch<SetStateAction<TaskInfo | undefined>>,
     setMode: Dispatch<SetStateAction<"Edit" | "Create" | "Close">>,
 }
 

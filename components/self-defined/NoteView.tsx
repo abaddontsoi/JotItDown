@@ -8,6 +8,8 @@ import ContentBlockDialog from "./ContentBlockDialog";
 import { useState } from "react";
 import { ScrollArea } from "../ui/scroll-area";
 import TaskInfoDialog from "./TaskInfoDialog";
+import { TaskInfo } from "@prisma/client";
+import toast from "react-hot-toast";
 
 const NoteView = ({ note }:
     {
@@ -17,6 +19,7 @@ const NoteView = ({ note }:
     const [contentBlockDialogMode, setMode] = useState<'Edit' | 'Create' | 'Close'>('Close');
     const [taskInfoDialogMode, setTaskInfoDialogMode] = useState<'Edit' | 'Create' | 'Close'>('Close');
     const [selectedContentBlock, setSelectedContentBlock] = useState<DetailedContentBlock>();
+    const [targetTaskInfo, setTargetTaskInfo] = useState<TaskInfo | undefined>();
     if (note != null) {
         return (
             <>
@@ -33,7 +36,9 @@ const NoteView = ({ note }:
                 <TaskInfoDialog 
                 parentContentBlockid={selectedContentBlock?.id}
                 mode={taskInfoDialogMode}
+                existingTaskInfo={targetTaskInfo}
                 setMode={setTaskInfoDialogMode}
+                setTargetTaskInfo={setTargetTaskInfo}
                 />
     
                 {/* Title */}
@@ -45,6 +50,8 @@ const NoteView = ({ note }:
                     <Button
                         onClick={() => {
                             setMode('Create');
+                            // toast.success('create Content Block');
+                            // toast('create Content Block');
                         }}
                         className="flex flex-row items-center gap-1">
                         <Plus className="w-5 h-5" />
@@ -71,11 +78,6 @@ const NoteView = ({ note }:
                         }
                     </div>
                 </ScrollArea>
-            </>
-        )
-        return (
-            <>
-            <div></div>
             </>
         )
     }

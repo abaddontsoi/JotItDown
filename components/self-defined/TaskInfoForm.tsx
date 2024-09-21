@@ -1,3 +1,5 @@
+'use client';
+
 import { Dispatch, SetStateAction } from "react";
 import { Dialog, DialogContent } from "../ui/dialog";
 import { TaskInfo, TaskInfoStatus } from "@prisma/client";
@@ -26,7 +28,7 @@ interface TaskInfoFormProp {
     existingTaskInfo?: TaskInfo,
     parentContentBlockid?: string,
     mode: 'Edit' | 'Create' | 'Close',
-    setTargetTaskInfo?: Dispatch<SetStateAction<TaskInfo>>,
+    setTargetTaskInfo: Dispatch<SetStateAction<TaskInfo | undefined>>,
     setMode: Dispatch<SetStateAction<"Edit" | "Create" | "Close">>,
 }
 
@@ -57,12 +59,20 @@ const TaskInfoForm = ({
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
-            const response = await axios.post('/api/task', values);
-            console.log(response);
+            const response = axios.post('/api/task', values).then(response => {
+                if (response.status == 200) {
+                    toast.success('Task Created');
+                }
+            }).finally(() => {
+                // toast.success('Task Created');
+            });
+            setTargetTaskInfo(undefined);
+            setMode('Close');
         } catch (error) {
             console.log(error);
             toast.error('Something Went Wrong');
         }
+        await toast.success('Task Created');
     }
 
     return (
