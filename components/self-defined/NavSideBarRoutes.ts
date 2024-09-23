@@ -13,7 +13,7 @@ const navRoutes = [
     },
     {
         label: 'Content Blocks',
-        route: '/home/',
+        route: '/home/content-blocks',
     },
     {
         label: 'Budget',

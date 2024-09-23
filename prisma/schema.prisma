@@ -133,7 +133,7 @@ model Category {
     // @@unique([name])
 }
 
-model ChashFlow {
+model CashFlow {
     id String @id @default(auto()) @map("_id") @db.ObjectId
 
     value       Float
@@ -146,28 +146,26 @@ model ChashFlow {
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
-    ChashFlowMtoMCategory ChashFlowMtoMCategory[]
+    CashFlowMtoMCategory CashFlowMtoMCategory[]
 }
 
-model ChashFlowCategory {
+model CashFlowCategory {
     id String @id @default(auto()) @map("_id") @db.ObjectId
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
-    chashFlowId String? @db.ObjectId
-
-    ChashFlowMtoMCategory ChashFlowMtoMCategory[]
+    CashFlowMtoMCategory CashFlowMtoMCategory[]
 }
 
-model ChashFlowMtoMCategory {
+model CashFlowMtoMCategory {
     id String @id @default(auto()) @map("_id") @db.ObjectId
 
     cashFlowRecordId String    @db.ObjectId
-    cashFlowRecord   ChashFlow @relation(fields: [cashFlowRecordId], references: [id])
+    cashFlowRecord   CashFlow @relation(fields: [cashFlowRecordId], references: [id])
 
     cashFlowCategoryId String            @map("cashFlowCategoryid") @db.ObjectId
-    cashFlowCategory   ChashFlowCategory @relation(fields: [cashFlowCategoryId], references: [id])
+    cashFlowCategory   CashFlowCategory @relation(fields: [cashFlowCategoryId], references: [id])
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
