@@ -65,14 +65,15 @@ const NoteForm = ({ existingNote, mode, setMode }: {
                 }
             }
 
-            const noteResponse = await axios.post('/api/note', data);
-
-            if (noteResponse.status == 200) {
-                console.log(noteResponse);
-                toast.success(noteResponse.data.message);
-                router.refresh();
-                setMode('Close');
-            }
+            const noteResponse = axios.post('/api/note', data).then(value => {
+                if (value.status == 200) {
+                    console.log(value);
+                    toast.success(value.data.message);
+                    router.refresh();
+                }
+            })
+            
+            setMode('Close');
         } catch (error) {
             console.log(error);
             toast.error('Something Went Wrong')
