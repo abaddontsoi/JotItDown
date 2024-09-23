@@ -26,14 +26,19 @@ enum NoteStatus {
     Done
 }
 
+enum CashFlowType {
+    Income
+    Expense
+}
+
 // should discover more on user authentication
 model User {
     id String @id @default(auto()) @map("_id") @db.ObjectId
 
     // allows duplicated user display name
-    userName String
-    userLoginName String @unique
-    userPwdHash String
+    userName          String
+    userLoginName     String @unique
+    userPwdHash       String
     userHashtagNumber Int
 
     // deleting account will actually remove their related record in database, not setting a field to false
@@ -82,7 +87,7 @@ model ContentBlock {
 model Note {
     id String @id @default(auto()) @map("_id") @db.ObjectId
 
-    title String
+    title       String
     description String?
 
     categoryId String?   @db.ObjectId
@@ -126,4 +131,44 @@ model Category {
     updatedAt DateTime @updatedAt
 
     // @@unique([name])
+}
+
+model ChashFlow {
+    id String @id @default(auto()) @map("_id") @db.ObjectId
+
+    value       Float
+    description String?
+    type        CashFlowType
+    category    String?
+
+    isLongTermUsage Boolean @default(false)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    ChashFlowMtoMCategory ChashFlowMtoMCategory[]
+}
+
+model ChashFlowCategory {
+    id String @id @default(auto()) @map("_id") @db.ObjectId
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    chashFlowId String? @db.ObjectId
+
+    ChashFlowMtoMCategory ChashFlowMtoMCategory[]
+}
+
+model ChashFlowMtoMCategory {
+    id String @id @default(auto()) @map("_id") @db.ObjectId
+
+    cashFlowRecordId String    @db.ObjectId
+    cashFlowRecord   ChashFlow @relation(fields: [cashFlowRecordId], references: [id])
+
+    cashFlowCategoryId String            @map("cashFlowCategoryid") @db.ObjectId
+    cashFlowCategory   ChashFlowCategory @relation(fields: [cashFlowCategoryId], references: [id])
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }
