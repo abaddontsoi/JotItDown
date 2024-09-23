@@ -1,4 +1,4 @@
-import { Category, ContentBlock, Note, TaskInfo } from "@prisma/client";
+import { CashFlow, CashFlowCategory, CashFlowMtoMCategory, Category, ContentBlock, Note, TaskInfo } from "@prisma/client";
 
 export type UrgentTasks = TaskInfo & {
     parentContentBlock: ContentBlock & {
@@ -41,3 +41,11 @@ export type OverduedTasksInfo = (
 )
 
 export type PromiseOverduedTasksInfos = Promise<OverduedTasksInfo[]>
+
+export type DetailedCashFlowRecord = CashFlow & {
+    CashFlowMtoMCategory: (CashFlowMtoMCategory & {
+        cashFlowCategory: CashFlowCategory
+    })[] | null
+}
+
+export type PromiseDetailedCashFlowRecords = Promise<DetailedCashFlowRecord[]>
