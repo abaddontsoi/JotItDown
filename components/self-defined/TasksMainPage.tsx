@@ -1,17 +1,24 @@
 'use client';
 
-import { UrgentTasks, DetailedNote } from "./types";
+import { Suspense } from "react";
+import { UrgentTasks, DetailedNote, OverduedTasksInfo } from "./types";
 import UrgentTasksContextCard from "./UrgentTasksContextCard";
+import ContextCardFallBack from "./ContextCardFallBack";
+
+interface TasksMainPageProp {
+    allNotes: DetailedNote[],
+    fiveMostUrgentTaskInfo: UrgentTasks[],
+    overduedTasksInfo?: OverduedTasksInfo[]
+}
 
 const TasksMainPage = (
-    {allNotes, fiveMostUrgentTaskInfo}: {
-        allNotes: DetailedNote[],
-        fiveMostUrgentTaskInfo: UrgentTasks[],
-        }
+    { allNotes, fiveMostUrgentTaskInfo }: TasksMainPageProp
 ) => {
     return (
         <>
-            <UrgentTasksContextCard allNotes={allNotes} urgentTasks={fiveMostUrgentTaskInfo} />
+            <Suspense fallback={<ContextCardFallBack />}>
+                <UrgentTasksContextCard allNotes={allNotes} urgentTasks={fiveMostUrgentTaskInfo} />
+            </Suspense>
         </>
     )
 }

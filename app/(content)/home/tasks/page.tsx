@@ -1,11 +1,14 @@
 import { db } from "@/lib/db";
-import { DetailedNote, UrgentTasks } from "@/components/self-defined/types";
+import { DetailedNote, PromiseDetailedNotes, PromiseUrgentTasks, UrgentTasks } from "@/components/self-defined/types";
 import TasksMainPage from "@/components/self-defined/TasksMainPage";
 import { TaskInfoStatus } from "@prisma/client";
+import { Suspense } from "react";
+import TaskMainPageContainer from "@/components/self-defined/TaskMainPageContainer";
+import ContextCardFallBack from "@/components/self-defined/ContextCardFallBack";
 
 
 const TasksPage = async () => {
-    const allNotes: DetailedNote[] = await db.note.findMany({
+    const allNotes: PromiseDetailedNotes = db.note.findMany({
         include: {
             category: true,
             parentNote: {
@@ -26,7 +29,7 @@ const TasksPage = async () => {
         }
     });
 
-    const fiveMostUrgentTaskInfo: UrgentTasks[] = await db.taskInfo.findMany({
+    const fiveMostUrgentTaskInfo: PromiseUrgentTasks = db.taskInfo.findMany({
         orderBy: {
             // sort by ascending date
             deadline: 'asc'
@@ -46,7 +49,7 @@ const TasksPage = async () => {
         take: 5,
     });
 
-    const overduedTasksInfo = await db.taskInfo.findMany({
+    const overduedTasksInfo = db.taskInfo.findMany({
         orderBy: {
             // sort by ascending date
             deadline: 'asc'
@@ -71,7 +74,11 @@ const TasksPage = async () => {
 
     return (
         <>
-            <TasksMainPage allNotes={allNotes} fiveMostUrgentTaskInfo={fiveMostUrgentTaskInfo}></TasksMainPage>
+            <Suspense fallback={<ContextCardFallBack />}>
+                <TaskMainPageContainer allNotes={allNotes} 
+                fiveMostUrgentTaskInfo={fiveMostUrgentTaskInfo} 
+                overduedTasksInfo={overduedTasksInfo} />
+            </Suspense>
         </>
     )
 }

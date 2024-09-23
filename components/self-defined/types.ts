@@ -6,6 +6,8 @@ export type UrgentTasks = TaskInfo & {
     }
 }
 
+export type PromiseUrgentTasks = Promise<UrgentTasks[]>
+
 export type UrgentCard = {
     title: string | null,
     description: string,
@@ -28,5 +30,14 @@ export type DetailedCategory = Category & {
     // category: DetailedCategory[] | null
 }
 
-
 export type PromiseDetailedNotes = Promise<DetailedNote[]>
+
+export type OverduedTasksInfo = (
+    TaskInfo & {
+        parentContentBlock: (ContentBlock & {
+            parentNote: Note | null
+        })
+    }
+)
+
+export type PromiseOverduedTasksInfos = Promise<OverduedTasksInfo[]>

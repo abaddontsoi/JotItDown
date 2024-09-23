@@ -15,6 +15,7 @@ import { Combobox } from "../ui/combobox";
 import { Button } from "../ui/button";
 import toast from "react-hot-toast";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
     title: z.string().optional(),
@@ -57,11 +58,14 @@ const TaskInfoForm = ({
     // TaskInfoStatus
     // console.dir(TaskInfoStatus, { depth: null });
 
+    const router = useRouter();
+
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
             const response = axios.post('/api/task', values).then(response => {
                 if (response.status == 200) {
                     toast.success('Task Created');
+                    router.refresh();
                 }
             }).finally(() => {
                 // toast.success('Task Created');
@@ -72,7 +76,7 @@ const TaskInfoForm = ({
             console.log(error);
             toast.error('Something Went Wrong');
         }
-        await toast.success('Task Created');
+        toast.success('Task Created');
     }
 
     return (
