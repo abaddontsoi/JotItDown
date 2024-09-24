@@ -136,6 +136,7 @@ model Category {
 model CashFlow {
     id String @id @default(auto()) @map("_id") @db.ObjectId
 
+    title String
     value       Float
     description String?
     type        CashFlowType
@@ -147,6 +148,8 @@ model CashFlow {
     updatedAt DateTime @updatedAt
 
     CashFlowMtoMCategory CashFlowMtoMCategory[]
+
+    Property Property[]
 }
 
 model CashFlowCategory {
@@ -161,11 +164,21 @@ model CashFlowCategory {
 model CashFlowMtoMCategory {
     id String @id @default(auto()) @map("_id") @db.ObjectId
 
-    cashFlowRecordId String    @db.ObjectId
+    cashFlowRecordId String   @db.ObjectId
     cashFlowRecord   CashFlow @relation(fields: [cashFlowRecordId], references: [id])
 
-    cashFlowCategoryId String            @map("cashFlowCategoryid") @db.ObjectId
+    cashFlowCategoryId String           @map("cashFlowCategoryid") @db.ObjectId
     cashFlowCategory   CashFlowCategory @relation(fields: [cashFlowCategoryId], references: [id])
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Property {
+    id String @id @default(auto()) @map("_id") @db.ObjectId
+
+    relatedCashRecordId String   @map("relatedCashRecordid") @db.ObjectId
+    relatedCashRecord   CashFlow @relation(fields: [relatedCashRecordId], references: [id])
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
