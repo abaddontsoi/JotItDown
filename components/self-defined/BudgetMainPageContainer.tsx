@@ -10,10 +10,12 @@ interface BudgetMainPageContainerProp {
 const BudgetMainPageContainer = async ({
     allDetailedCashFlow
 }: BudgetMainPageContainerProp) => {
+    const cashFlowRecords = await allDetailedCashFlow;
+
     return (
         <>
         <Suspense fallback={<ContextCardFallBack />}>
-        <BudgetMainPage allDetailedCashFlow={await allDetailedCashFlow} />
+        <BudgetMainPage allDetailedCashFlow={cashFlowRecords} />
         </Suspense>
         </>
     )

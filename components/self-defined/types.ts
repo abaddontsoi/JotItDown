@@ -1,5 +1,7 @@
 import { CashFlow, CashFlowCategory, CashFlowMtoMCategory, Category, ContentBlock, Note, TaskInfo } from "@prisma/client";
 
+export type DialogModes = 'Create' | 'Edit' | 'Close';
+
 export type UrgentTasks = TaskInfo & {
     parentContentBlock: ContentBlock & {
         parentNote: Note | null,
