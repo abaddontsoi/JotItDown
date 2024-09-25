@@ -101,7 +101,7 @@ const CashFlowRecordForm = (
                 description: (
                     <>
                         <X />
-                        {mode} + ' failed. '
+                        {mode + ' failed. '}
                     </>
                 ),
             });
