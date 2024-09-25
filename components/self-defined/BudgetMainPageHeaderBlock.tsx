@@ -10,7 +10,7 @@ interface BudgetMainPageProp {
     allDetailedCashFlow: DetailedCashFlowRecord[]
 }
 
-const BudgetMainPage = (
+const BudgetMainPageHeaderBlock = (
     {
         allDetailedCashFlow
     }: BudgetMainPageProp
@@ -34,10 +34,8 @@ const BudgetMainPage = (
                 setRecordType={setRecordType}
                 setMode={setMode}
             />
-
-            {/* Main page */}
         </>
     )
 }
 
-export default BudgetMainPage;
+export default BudgetMainPageHeaderBlock;
