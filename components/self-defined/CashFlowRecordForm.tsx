@@ -12,6 +12,8 @@ import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { Switch } from "../ui/switch";
 import axios from "axios";
+import { useToast } from "../ui/use-toast";
+import { TicketCheck, X } from "lucide-react";
 
 interface CashFlowRecordFormProp {
     mode: DialogModes,
@@ -44,6 +46,7 @@ const CashFlowRecordForm = (
             isLongTermUsage: existingDetailedCashFlowRecord?.isLongTermUsage,
         }
     });
+    const { toast } = useToast();
 
     const onSubmit = async (values: z.infer<typeof CashFlowRecordFormSchmea>) => {
         try {
@@ -51,25 +54,57 @@ const CashFlowRecordForm = (
             if (mode == 'Create') {
                 const response = axios.post('/api/budget/cash-flow-record', values).then(response => {
                     if (response.status == 200) {
-                        console.dir(response, {
-                            depth: null
+                        toast({
+                            title: 'Success',
+                            description: (
+                                <>
+                                    <div className="flex flex-row gap-2 items-center">
+                                        <TicketCheck />
+                                        The record has been added
+                                    </div>
+                                </>
+                            ),
                         });
+                        // console.dir(response, {
+                        //     depth: null
+                        // });
                     }
+                });
+                toast({
+                    description: 'Creating new record ...',
                 });
                 setMode('Close');
             } else if (mode == 'Edit') {
                 const response = axios.patch('/api/budget/cash-flow-record', values).then(response => {
                     if (response.status == 200) {
-                        console.dir(response, {
-                            depth: null
+                        toast({
+                            title: 'Success',
+                            description: (
+                                <>
+                                    <div className="flex flex-row gap-2">
+                                        <TicketCheck />
+                                        The record has been updated
+                                    </div>
+                                </>
+                            )
                         });
+                        // console.dir(response, {
+                        //     depth: null
+                        // });
                     }
                 });
                 setDetailedCashFlowRecord(undefined);
                 setMode('Close');
             }
         } catch (error) {
-
+            toast({
+                description: (
+                    <>
+                        <X />
+                        {mode} + ' failed. '
+                    </>
+                ),
+            });
         }
     }
 
@@ -116,7 +151,7 @@ const CashFlowRecordForm = (
                                         <FormLabel>Value</FormLabel>
                                         <FormControl>
                                             <Input
-                                                // type='number'
+                                                type='number'
                                                 {...field}
                                             />
                                         </FormControl>

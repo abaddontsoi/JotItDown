@@ -34,6 +34,8 @@ const BudgetMainPage = (
                 setRecordType={setRecordType}
                 setMode={setMode}
             />
+
+            {/* Main page */}
         </>
     )
 }
