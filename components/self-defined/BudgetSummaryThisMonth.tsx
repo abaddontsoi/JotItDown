@@ -73,7 +73,7 @@ const BudgetSummaryThisMonth = (
                             {
                                 thisMonthDetailedCashFlow.map((record, index) => (
                                     <>
-                                        <TableRow className="text-center">
+                                        <TableRow className="text-center" key={record.id}>
                                             <TableCell>
                                                 {
                                                     index > 0 &&
