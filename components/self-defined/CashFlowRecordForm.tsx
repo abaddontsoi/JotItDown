@@ -14,6 +14,7 @@ import { Switch } from "../ui/switch";
 import axios from "axios";
 import { useToast } from "../ui/use-toast";
 import { TicketCheck, X } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface CashFlowRecordFormProp {
     mode: DialogModes,
@@ -47,6 +48,7 @@ const CashFlowRecordForm = (
         }
     });
     const { toast } = useToast();
+    const router = useRouter();
 
     const onSubmit = async (values: z.infer<typeof CashFlowRecordFormSchmea>) => {
         try {
@@ -68,6 +70,7 @@ const CashFlowRecordForm = (
                         // console.dir(response, {
                         //     depth: null
                         // });
+                        router.refresh();
                     }
                 });
                 toast({
@@ -91,6 +94,7 @@ const CashFlowRecordForm = (
                         // console.dir(response, {
                         //     depth: null
                         // });
+                        router.refresh();
                     }
                 });
                 setDetailedCashFlowRecord(undefined);
