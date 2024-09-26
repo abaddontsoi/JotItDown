@@ -13,6 +13,9 @@ const BudgetPage = async () => {
                     cashFlowCategory: true
                 }
             }
+        },
+        orderBy: {
+            createdAt: 'asc',
         }
     });
 
