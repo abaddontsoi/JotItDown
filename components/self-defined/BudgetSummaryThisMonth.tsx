@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { DetailedCashFlowRecord } from "./types";
 
 interface BudgetSummaryThisMonthProp {
-    thisMonthDetailedCashFlow:  DetailedCashFlowRecord[]
+    thisMonthDetailedCashFlow: DetailedCashFlowRecord[]
 }
 
 
@@ -18,7 +18,7 @@ const BudgetSummaryThisMonth = (
             <Card>
                 <CardHeader>
                     <CardTitle>
-                        This month's in/out
+                        {'This month\'s in/out'}
                     </CardTitle>
                 </CardHeader>
                 <CardContent>
