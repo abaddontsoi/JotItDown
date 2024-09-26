@@ -62,7 +62,7 @@ const BudgetSummaryThisMonth = (
                             <TableRow>
                                 {
                                     headers.map(h =>
-                                        <TableHead className="text-center">
+                                        <TableHead className="text-center"  key={h}>
                                             {h}
                                         </TableHead>
                                     )
