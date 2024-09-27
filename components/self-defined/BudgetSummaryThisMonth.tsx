@@ -76,8 +76,8 @@ const BudgetSummaryThisMonth = (
                                         <TableRow className="text-center" key={record.id}>
                                             <TableCell>
                                                 {
-                                                    index > 0 &&
-                                                        record.createdAt.toDateString() <= thisMonthDetailedCashFlow[index - 1].createdAt.toDateString() ?
+                                                    (index > 0 &&
+                                                        record.createdAt.toDateString() == thisMonthDetailedCashFlow[index - 1].createdAt.toDateString() )?
                                                         '' : toDDMMYYYY(record.createdAt)
                                                 }
                                             </TableCell>
@@ -121,7 +121,6 @@ const BudgetSummaryThisMonth = (
                                 <TableCell className="border-t-4">Remaining: </TableCell>
                                 <TableCell className="border-t-4"></TableCell>
                                 <TableCell className="text-center border-t-4 border-t-green-400">
-                                    {/* {allInCome} */}
                                 </TableCell>
                                 <TableCell className={clsx(
                                     "text-center border-t-4",
