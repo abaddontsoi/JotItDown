@@ -5,7 +5,6 @@ import { DetailedContentBlock } from "./types";
 import { Form, FormField, FormItem, FormLabel } from "../ui/form";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import toast from "react-hot-toast";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
@@ -14,9 +13,11 @@ import { TaskInfo, TaskInfoStatus } from "@prisma/client";
 import { Label } from "../ui/label";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../ui/accordion";
 import { ScrollArea } from "../ui/scroll-area";
-import { Plus } from "lucide-react";
+import { Check, Plus } from "lucide-react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { toast } from "../ui/use-toast";
+import { ToastConfirm, ToastError, ToastLoading } from "./toast-object";
 
 const formSchema = z.object({
     id: z.string().optional(),
@@ -50,27 +51,30 @@ const ContentBlockForm = ({ mode, existingContentBlock, defaultParentNodeId, set
             if (mode == 'Create') {
                 const postRequest = axios.post('/api/content-block', values).then((value) => {
                     if (value.status == 200) {
-                        toast.success('Content block created');
+                        toast(ToastConfirm);
                         router.refresh();
                     }
                 });
-                toast.loading('Creating new content block ...');
+                toast(ToastLoading);
                 setContentBlock(undefined);
                 setMode('Close');
             } else if (mode == 'Edit') {
                 const postRequest = await axios.patch('/api/content-block', values).then(value => {
                     if (value.status == 200) {
-                        toast.success('Updated content block');
+                        toast(ToastConfirm);
                         router.refresh();
                     }
                 });
-                toast.loading('Updating content block ...');
+                toast(ToastLoading);
                 setContentBlock(undefined);
                 setMode('Close');
             }
         } catch (error) {
             console.log(error);
-            toast.error('Something Went Wrong');
+            toast({
+                ...ToastError,
+                variant: "destructive",
+            });
         }
     }
 
