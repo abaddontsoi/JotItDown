@@ -59,7 +59,7 @@ const ContentBlockForm = ({ mode, existingContentBlock, defaultParentNodeId, set
                 setContentBlock(undefined);
                 setMode('Close');
             } else if (mode == 'Edit') {
-                const postRequest = await axios.patch('/api/content-block', values).then(value => {
+                const postRequest = axios.patch('/api/content-block', values).then(value => {
                     if (value.status == 200) {
                         toast(ToastConfirm);
                         router.refresh();
