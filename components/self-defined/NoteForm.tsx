@@ -7,7 +7,7 @@ import { Form, FormField, FormItem, FormLabel } from "@/components/ui/form";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
-import toast from 'react-hot-toast';
+// import toast from 'react-hot-toast';
 import { Input } from "@/components/ui/input";
 import { Combobox } from "@/components/ui/combobox";
 import { NoteStatus } from "@prisma/client";
@@ -15,6 +15,8 @@ import { Switch } from "@/components/ui/switch";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { Textarea } from "../ui/textarea";
+import { toast } from "../ui/use-toast";
+import { ToastConfirm, ToastError, ToastLoading } from "./toast-object";
 
 
 function extractLevelOneKeys<T extends object>(obj: T): Array<keyof T> {
@@ -68,15 +70,17 @@ const NoteForm = ({ existingNote, mode, setMode }: {
             const noteResponse = axios.post('/api/note', data).then(value => {
                 if (value.status == 200) {
                     console.log(value);
-                    toast.success(value.data.message);
+                    // toast.success(value.data.message);
+                    toast(ToastConfirm);
                     router.refresh();
                 }
             })
-            
+            toast(ToastLoading);
             setMode('Close');
         } catch (error) {
             console.log(error);
-            toast.error('Something Went Wrong')
+            // toast.error('Something Went Wrong');
+            toast(ToastError);
         }
     }
     return (

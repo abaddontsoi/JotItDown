@@ -10,6 +10,7 @@ import HighestViewCountNotesContextCard from "@/components/self-defined/HighestV
 import AllNotes from "@/components/self-defined/AllNotes";
 import NotesMainPageHeader from "@/components/self-defined/NotesMainPageHeader";
 import ContextCardFallBack from "@/components/self-defined/ContextCardFallBack";
+import { Toaster } from "@/components/ui/toaster";
 
 const NotesPage = async () => {
 
@@ -38,7 +39,7 @@ const NotesPage = async () => {
         <>
             <Suspense fallback={<ContextCardFallBack />}>
                 <NotesMainPageHeader />
-
+                <Toaster />
                 <div className="flex flex-col gap-4 mt-4">
 
                     <Suspense fallback={<ContextCardFallBack />}>
