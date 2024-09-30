@@ -47,10 +47,16 @@ const NoteForm = ({ existingNote, mode, setMode }: {
         resolver: zodResolver(formSchema),
         defaultValues: {
             id: existingNote?.id,
+            title: existingNote?.title,
             status: existingNote?.status || 'Draft',
+
+            description: existingNote?.description || '',
+            
+            categoryId: existingNote?.categoryId || undefined,
+            parentNoteId: existingNote?.parentNoteId || undefined,
+            
             stared: existingNote?.stared || false,
             hidden: existingNote?.hidden || false,
-            description: existingNote?.description || '',
         }
     });
     const router = useRouter();
@@ -60,21 +66,41 @@ const NoteForm = ({ existingNote, mode, setMode }: {
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
-            const data = {
-                basic: values,
-                extra: {
-                    category: categoryForCreate,
+            if (mode == 'Create') {
+                const data = {
+                    basic: values,
+                    extra: {
+                        category: categoryForCreate?.toUpperCase(),
+                    }
                 }
+    
+                const noteResponse = axios.post('/api/note', data).then(value => {
+                    if (value.status == 200) {
+                        console.log(value);
+                        // toast.success(value.data.message);
+                        toast(ToastConfirm);
+                        router.refresh();
+                    }
+                })
             }
-
-            const noteResponse = axios.post('/api/note', data).then(value => {
-                if (value.status == 200) {
-                    console.log(value);
-                    // toast.success(value.data.message);
-                    toast(ToastConfirm);
-                    router.refresh();
+            
+            if (mode == 'Edit') {
+                const data = {
+                    basic: values,
+                    extra: {
+                        category: categoryForCreate?.toUpperCase(),
+                    }
                 }
-            })
+    
+                const noteResponse = axios.patch('/api/note', data).then(value => {
+                    if (value.status == 200) {
+                        console.log(value);
+                        // toast.success(value.data.message);
+                        toast(ToastConfirm);
+                        router.refresh();
+                    }
+                })
+            }
             toast(ToastLoading);
             setMode('Close');
         } catch (error) {
@@ -115,6 +141,7 @@ const NoteForm = ({ existingNote, mode, setMode }: {
                                 Category
                             </FormLabel>
                             <Input
+                                defaultValue={existingNote?.category?.name}
                                 onChange={(event) => {
                                     setCategoryForCreate(event.target.value.toUpperCase());
                                 }}
