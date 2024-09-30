@@ -8,6 +8,7 @@ import { Suspense, useState } from "react";
 import { Accordion, AccordionContent, AccordionItem } from "@/components/ui/accordion";
 import { AccordionHeader, AccordionTrigger } from "@radix-ui/react-accordion";
 import { ArrowDown, ArrowUp } from "lucide-react";
+import NoteDialog from "./NoteDialog";
 
 const FallBack = () => {
     return (
@@ -32,10 +33,18 @@ const HighestViewCountNotesContextCard = (
         return b.readCount - a.readCount;
     }).filter((_, index) => index < 5);
 
+    const [mode, setMode] = useState<'Edit' | 'Create' | 'Close'>('Close');
+    const [targetNote, setTargetNote] = useState<DetailedNote | undefined>();
+
     return (
         <>
+            <NoteDialog
+                mode={mode}
+                setMode={setMode}
+                existingNote={targetNote}
+            />
             <Card>
-                <Accordion value={[accordionOpen ? 'list': '']} type="multiple">
+                <Accordion value={[accordionOpen ? 'list' : '']} type="multiple">
                     <AccordionItem value="list">
                         <AccordionTrigger className="w-full" onClick={() => setOpen(!accordionOpen)}>
                             <CardHeader>
@@ -44,7 +53,7 @@ const HighestViewCountNotesContextCard = (
                                     {
                                         accordionOpen ? (
                                             <ArrowUp></ArrowUp>
-                                        ): (
+                                        ) : (
                                             <ArrowDown></ArrowDown>
                                         )
                                     }
@@ -55,9 +64,11 @@ const HighestViewCountNotesContextCard = (
                             <CardContent className="flex flex-row gap-2 flex-wrap">
                                 {
                                     notes?.map(n => (
-                                        <Suspense key={n.id} fallback={<FallBack />}>
-                                            <NoteDisplay key={n.id} note={n}></NoteDisplay>
-                                        </Suspense>
+                                        <NoteDisplay 
+                                        key={n.id} note={n}
+                                        setNote={setTargetNote}
+                                        setMode={setMode}
+                                        />
                                     ))
                                 }
                             </CardContent>

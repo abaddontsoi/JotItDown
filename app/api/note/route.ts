@@ -17,7 +17,19 @@ export async function POST(req: Request) {
             });
 
             if (!found) {
-                
+                const createCategory = await db.category.create({
+                    data: {
+                        name: data.extra?.category
+                    }
+                })
+                const updateResponse = await db.note.update({
+                    where: {
+                        id: insertNoteId.id
+                    },
+                    data: {
+                        categoryId: createCategory.id
+                    }
+                });
             } else {
                 const updateResponse = await db.note.update({
                     where: {
@@ -45,5 +57,72 @@ export async function POST(req: Request) {
 }
 
 export async function PATCH(req: Request) {
+    try {
+        const data = await req.json();
 
+        // see if the submitted category is found
+        const { basic, extra } = data;
+
+        // update the actual note
+        const { id, ...values } = basic;
+        const updateNoteId = await db.note.update({
+            where: {
+                id: id
+            },
+            data: {
+                ...values
+            }
+        })
+
+        // proccess the categoty
+        if (extra?.category) {
+            const categoryFound = await db.category.findFirst(
+                {
+                    where: {
+                        name: extra?.category,
+                    }
+                }
+            )
+            if (!categoryFound) {
+                const newCateId = await db.category.create({
+                    data: {
+                        name: extra?.category
+                    }
+                });
+                await db.note.update(
+                    {
+                        where: {
+                            id: updateNoteId.id,
+                        },
+                        data: {
+                            categoryId: newCateId.id
+                        }
+                    }
+                );
+            } else {
+                await db.note.update(
+                    {
+                        where: {
+                            id: updateNoteId.id,
+                        },
+                        data: {
+                            categoryId: categoryFound.id
+                        }
+                    }
+                );
+            }
+        }
+
+        return new NextResponse(JSON.stringify({
+            message: 'Note Created'
+        }), {
+            status: 200
+        });
+    } catch (error) {
+        return new NextResponse(JSON.stringify({
+            message: 'Failed'
+        }), {
+            status: 500
+        })
+    }
 }

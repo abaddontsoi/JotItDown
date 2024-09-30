@@ -1,15 +1,20 @@
 'use client';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { DetailedNote } from "./types";
+import { DetailedNote, DialogModes } from "./types";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { TaskInfo } from "@prisma/client";
 import Link from "next/link";
+import { Settings } from "lucide-react";
 
-const NoteDisplay = ({ note }: {
-    note: DetailedNote
-}) => {
+interface NoteDisplayProp {
+    note: DetailedNote;
+    setMode: (mode: DialogModes) => void;
+    setNote: (note: DetailedNote) => void;
+}
+
+const NoteDisplay = ({ note, setMode, setNote }: NoteDisplayProp) => {
 
     const router = useRouter();
     const totalNumberOfTasks: number = note.contentBlocks?.reduce((total, tasks) => {
@@ -41,22 +46,35 @@ const NoteDisplay = ({ note }: {
                     }
                 </CardDescription>
 
-                {/* Count the total number of tasks, give a link to task page */}
-                {
-                    totalNumberOfTasks == 0 ? (
-                        <Link
-                            className="text-right"
-                            href={'/home/tasks'}>
-                            No task
-                        </Link>
-                    ) : (
-                        <Link
-                            className="text-right"
-                            href={'/home/tasks'}>
-                            {totalNumberOfTasks} task(s)
-                        </Link>
-                    )
-                }
+                <div className="flex flex-row items-center justify-between">
+                    <Button
+                        variant={'ghost'}
+                        className="w-fit"
+                        type='button'
+                        onClick={() => {
+                            setNote(note);
+                            setMode('Edit');
+                        }}
+                    >
+                        <Settings />
+                    </Button>
+                    {/* Count the total number of tasks, give a link to task page */}
+                    {
+                        totalNumberOfTasks == 0 ? (
+                            <Link
+                                className="text-right"
+                                href={'/home/tasks'}>
+                                No task
+                            </Link>
+                        ) : (
+                            <Link
+                                className="text-right"
+                                href={'/home/tasks'}>
+                                {totalNumberOfTasks} task(s)
+                            </Link>
+                        )
+                    }
+                </div>
             </CardContent>
         </Card>
     )
