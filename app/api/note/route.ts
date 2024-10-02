@@ -126,3 +126,31 @@ export async function PATCH(req: Request) {
         })
     }
 }
+
+export async function DELETE(req: Request) {
+    try {
+        const data = await req.json();
+
+        // console.log(data);
+        // { target: '66de5d41cafa0fe9daf43828' }
+
+        const deleteResponse = await db.note.update(
+            {
+                where: {
+                    id: data.target
+                },
+                data: {
+                    hidden: true
+                }
+            }
+        );
+        return new NextResponse(JSON.stringify({
+            message: 'OK',
+            extraInfo: deleteResponse
+        }), {status: 200})
+    } catch (error) {
+        return new NextResponse(JSON.stringify({
+            message: 'Something Went Wrong',
+        }), {status: 500});
+    }
+}
