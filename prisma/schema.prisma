@@ -27,8 +27,8 @@ enum NoteStatus {
 }
 
 enum CashFlowType {
-    Debit
-    Credit
+    Income
+    Expense
 }
 
 // should discover more on user authentication
@@ -133,24 +133,10 @@ model Category {
     // @@unique([name])
 }
 
-model Account {
-    id String @id @default(auto()) @map("_id") @db.ObjectId
-
-    title String
-    description String?
-
-    disabled Boolean @default(false)
-
-    CashFlow CashFlow[]
- 
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-}
-
 model CashFlow {
     id String @id @default(auto()) @map("_id") @db.ObjectId
 
-    title       String
+    title String
     value       Float
     description String?
     type        CashFlowType
@@ -158,14 +144,12 @@ model CashFlow {
 
     isLongTermUsage Boolean @default(false)
 
-    CashFlowMtoMCategory CashFlowMtoMCategory[]
-    Property             Property[]
-
-    accountId String @db.ObjectId
-    account   Account @relation(fields: [accountId], references: [id])
-
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+
+    CashFlowMtoMCategory CashFlowMtoMCategory[]
+
+    Property Property[]
 }
 
 model CashFlowCategory {
