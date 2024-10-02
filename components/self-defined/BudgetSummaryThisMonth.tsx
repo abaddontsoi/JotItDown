@@ -6,6 +6,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from ".
 import { DetailedCashFlowRecord } from "./types";
 import { Separator } from "../ui/separator";
 import clsx from "clsx";
+import { CashFlowType } from "@prisma/client";
 
 interface BudgetSummaryThisMonthProp {
     thisMonthDetailedCashFlow: DetailedCashFlowRecord[]
@@ -25,7 +26,7 @@ const BudgetSummaryThisMonth = (
     ]
 
     const allInCome: number = thisMonthDetailedCashFlow
-        .filter(record => record.type == 'Income')
+        .filter(record => record.type == CashFlowType.Debit)
         .reduce(
             (
                 acc: number,
@@ -37,7 +38,7 @@ const BudgetSummaryThisMonth = (
         )
 
     const allExpense: number = thisMonthDetailedCashFlow
-        .filter(record => record.type == 'Expense')
+        .filter(record => record.type == CashFlowType.Credit)
         .reduce(
             (
                 acc: number,
@@ -84,12 +85,12 @@ const BudgetSummaryThisMonth = (
                                             <TableCell>{record.title}</TableCell>
                                             <TableCell>
                                                 {
-                                                    record.type == 'Income' && record.value
+                                                    record.type == CashFlowType.Debit && record.value
                                                 }
                                             </TableCell>
                                             <TableCell>
                                                 {
-                                                    record.type == 'Expense' && record.value
+                                                    record.type == CashFlowType.Credit && record.value
                                                 }
                                             </TableCell>
                                         </TableRow>

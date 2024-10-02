@@ -10,7 +10,7 @@ export async function POST(req: Request) {
         const response = await db.cashFlow.create({
             data: {
                 title: value.title,
-                value: parseInt(value.value),
+                value: parseFloat(value.value),
                 description: value.description,
                 type: value.type,
                 category: value.category,

@@ -27,8 +27,8 @@ enum NoteStatus {
 }
 
 enum CashFlowType {
-    Income
-    Expense
+    Debit @map("Income")
+    Credit @map("Expense")
 }
 
 // should discover more on user authentication

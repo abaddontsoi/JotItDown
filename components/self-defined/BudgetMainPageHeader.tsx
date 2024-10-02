@@ -22,14 +22,14 @@ const BudgetMainPageHeader = ({
                 Budget
                 <div className="flex flex-row gap-2">
                     <Button className="" onClick={() => {
-                        setRecordType('Income');
+                        setRecordType(CashFlowType.Debit);
                         setMode('Create');
                     }}>
                         <Plus></Plus>
                         Create Income
                     </Button>
                     <Button className="" onClick={() => {
-                        setRecordType('Expense');
+                        setRecordType(CashFlowType.Credit);
                         setMode('Create');
                     }}>
                         <Plus></Plus>
@@ -37,7 +37,6 @@ const BudgetMainPageHeader = ({
                     </Button>
                 </div>
             </div>
-
         </>
     )
 }
