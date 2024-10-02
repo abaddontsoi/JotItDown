@@ -1,6 +1,6 @@
 import BudgetMainPageContainer from "@/components/self-defined/BudgetMainPageContainer";
 import ContextCardFallBack from "@/components/self-defined/ContextCardFallBack";
-import { PromiseDetailedCashFlowRecords } from "@/components/self-defined/types";
+import { PromiseDetailedAccountRecords, PromiseDetailedCashFlowRecords } from "@/components/self-defined/types";
 import { Toaster } from "@/components/ui/toaster";
 import { db } from "@/lib/db";
 import { Suspense } from "react";
@@ -19,11 +19,29 @@ const BudgetPage = async () => {
         }
     });
 
+    const allAccountsRecords: PromiseDetailedAccountRecords = db.account.findMany({
+        include: {
+            CashFlow: {
+                include: {
+                    CashFlowMtoMCategory: {
+                        include: {
+                            cashFlowCategory: true
+                        }
+                    }
+                },
+                orderBy: {
+                    createdAt: 'asc'
+                }
+            }
+        }
+    })
+
     return (
         <>
             <Suspense fallback={<ContextCardFallBack />}>
                 <BudgetMainPageContainer
                     allDetailedCashFlow={allDetailedCashFlow}
+                    allAccountsRecords={allAccountsRecords}
                 />
             </Suspense>
             <Toaster />

@@ -26,14 +26,14 @@ const BudgetMainPageHeader = ({
                         setMode('Create');
                     }}>
                         <Plus></Plus>
-                        Create Income
+                        Debit
                     </Button>
                     <Button className="" onClick={() => {
                         setRecordType(CashFlowType.Credit);
                         setMode('Create');
                     }}>
                         <Plus></Plus>
-                        Create Expenses
+                        Credit
                     </Button>
                 </div>
             </div>
