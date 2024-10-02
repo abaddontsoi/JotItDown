@@ -27,7 +27,7 @@ enum NoteStatus {
 }
 
 enum CashFlowType {
-    Debit @map("Income")
+    Debit  @map("Income")
     Credit @map("Expense")
 }
 
@@ -133,16 +133,31 @@ model Category {
     // @@unique([name])
 }
 
+model Account {
+    id String @id @default(auto()) @map("_id") @db.ObjectId
+
+    title       String
+    description String?
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    CashFlow CashFlow[]
+}
+
 model CashFlow {
     id String @id @default(auto()) @map("_id") @db.ObjectId
 
-    title String
+    title       String
     value       Float
     description String?
     type        CashFlowType
     category    String?
 
     isLongTermUsage Boolean @default(false)
+
+    accountid String?  @db.ObjectId
+    account   Account? @relation(fields: [accountid], references: [id])
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
