@@ -37,6 +37,9 @@ const TasksPage = async () => {
         where: {
             deadline: {
                 gt: new Date()
+            },
+            status: {
+                not: TaskInfoStatus.Done,
             }
         },
         include: {
