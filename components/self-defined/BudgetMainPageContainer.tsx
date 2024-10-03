@@ -26,13 +26,13 @@ const BudgetMainPageContainer = async ({
                 </Suspense>
 
                 {/* Main page */}
-                <Suspense fallback={<ContextCardFallBack />}>
+                {/* <Suspense fallback={<ContextCardFallBack />}>
                     <BudgetSummaryThisMonthContainer
                         thisMonthDetailedCashFlow={cashFlowRecords
                             .filter(record => record.createdAt.getFullYear() == currentYear && record.createdAt.getMonth() == currentMonth)
                         }
                     />
-                </Suspense>
+                </Suspense> */}
 
                 <Suspense fallback={<ContextCardFallBack />}>
                     <AccountCardsContainer records={accountRecords} />

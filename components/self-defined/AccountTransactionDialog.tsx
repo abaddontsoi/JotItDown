@@ -17,20 +17,21 @@ export function AccountTransactionDialog(
     }: AccountTransactionDialogProps
 ) {
     return (
-        <Dialog open={mode != 'Close'}>
-            <DialogContent className="sm:max-w-[425px]">
-                <DialogHeader>
-                    <DialogTitle>Account Transaction</DialogTitle>
-                    <DialogDescription>
-                        Enter the details of your transaction below.
-                    </DialogDescription>
-                </DialogHeader>
+        <Dialog
+            open={mode != 'Close'}
+            onOpenChange={() => setMode('Close')}
+        >
+            <DialogContent className="">
+                <DialogTitle>Account Transaction</DialogTitle>
+                <DialogDescription>
+                    Enter the details of your transaction below.
+                </DialogDescription>
 
                 {/* Transaction Form */}
-                <AccountTransactionForm 
-                allAccounts={allAccounts}
-                mode={mode}
-                setMode={setMode}
+                <AccountTransactionForm
+                    allAccounts={allAccounts}
+                    mode={mode}
+                    setMode={setMode}
                 />
             </DialogContent>
         </Dialog>
