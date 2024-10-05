@@ -2,13 +2,13 @@ import { Account, CashFlow, CashFlowCategory, CashFlowMtoMCategory, Category, Co
 
 export type DialogModes = 'Create' | 'Edit' | 'Close';
 
-export type UrgentTasks = TaskInfo & {
+export type DetailedTaskInfo = TaskInfo & {
     parentContentBlock: ContentBlock & {
         parentNote: Note | null,
     }
 }
 
-export type PromiseUrgentTasks = Promise<UrgentTasks[]>
+export type PromiseUrgentTasks = Promise<DetailedTaskInfo[]>
 
 export type UrgentCard = {
     title: string | null,

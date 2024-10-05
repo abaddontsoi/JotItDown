@@ -30,12 +30,23 @@ export async function PATCH(req: Request) {
 
 
         const value = await req.json();
+
+        const {id, ...others} = value;
+
+        await db.taskInfo.update({
+            where: {
+                id: id
+            },
+            data: others
+        })
+
         return new NextResponse(JSON.stringify({
             message: 'Success'
         }), {
             status: 200
         });
     } catch (error) {
+        console.log(error);
         return new NextResponse(JSON.stringify({
             message: 'Internal Error'
         }), {

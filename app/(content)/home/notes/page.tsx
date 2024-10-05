@@ -1,7 +1,7 @@
 import { db } from "@/lib/db";
 import { TaskInfoStatus } from "@prisma/client";
 import NotesMainPage from "../../../../components/self-defined/NotesMainPage";
-import { DetailedNote, UrgentTasks } from "../../../../components/self-defined/types";
+import { DetailedNote, DetailedTaskInfo } from "../../../../components/self-defined/types";
 import { Suspense } from "react";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";

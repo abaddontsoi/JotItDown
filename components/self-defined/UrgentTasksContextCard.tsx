@@ -4,24 +4,27 @@ import { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent }
 import { Note } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import UrgentTaskCard from "./UrgentTaskCard";
-import { UrgentTasks } from "./types";
-
+import { DetailedTaskInfo } from "./types";
+import TaskCard from "./TaskCard";
+import { useState } from "react";
+interface UrgentTasksContextCardProp {
+    urgentTasks: DetailedTaskInfo[],
+    allNotes?: Note[],
+    setViewMode: () => void,
+    setTaskInfoInView: (task: DetailedTaskInfo | undefined) => void
+}
 const UrgentTasksContextCard = (
-    { urgentTasks, allNotes }: {
-        urgentTasks: UrgentTasks[],
-        allNotes?: Note[],
-        
-    }
+    { urgentTasks, allNotes, setViewMode, setTaskInfoInView }: UrgentTasksContextCardProp
 ) => {
     const router = useRouter();
-    const urgentCards = urgentTasks.map(uT => {
-        return {
-            title: uT.title,
-            description: uT.description,
-            deadline: uT.deadline,
-            parentNote: uT.parentContentBlock.parentNote
-        }
-    })
+    // const urgentCards = urgentTasks.map(uT => {
+    //     return {
+    //         title: uT.title,
+    //         description: uT.description,
+    //         deadline: uT.deadline,
+    //         parentNote: uT.parentContentBlock.parentNote
+    //     }
+    // })
 
     return (
         <Card>
@@ -34,14 +37,18 @@ const UrgentTasksContextCard = (
                     }
                 </CardTitle>
             </CardHeader>
-
+            
             {
-                urgentCards.length > 0 && (
+                urgentTasks.length > 0 && (
                     <CardContent className="flex flex-row gap-4 flex-wrap">
                         {
-                            urgentCards.map(uC => {
+                            urgentTasks.map(uC => {
                                 return (
-                                    <UrgentTaskCard key={uC.parentNote?.id} urgentCard={uC}  />
+                                    <TaskCard 
+                                    key={uC.parentContentBlock.parentNote?.id} 
+                                    task={uC}
+                                    setTaskInfoInView={setTaskInfoInView}
+                                    />
                                 )
                             })
                         }

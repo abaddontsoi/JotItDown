@@ -1,10 +1,10 @@
 import { Suspense } from "react";
-import { DetailedNote, PromiseOverduedTasksInfos, UrgentTasks } from "./types";
+import { DetailedNote, PromiseOverduedTasksInfos, DetailedTaskInfo } from "./types";
 import TasksMainPage from "./TasksMainPage";
 import ContextCardFallBack from "./ContextCardFallBack";
 interface TaskMainPageContainerProp {
     allNotes: Promise<DetailedNote[]>,
-    fiveMostUrgentTaskInfo: Promise<UrgentTasks[]>,
+    fiveMostUrgentTaskInfo: Promise<DetailedTaskInfo[]>,
     overduedTasksInfo?: PromiseOverduedTasksInfos
 }
 const TaskMainPageContainer = async (
