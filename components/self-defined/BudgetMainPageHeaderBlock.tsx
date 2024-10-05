@@ -17,7 +17,7 @@ const BudgetMainPageHeaderBlock = (
 ) => {
 
     const [mode, setMode] = useState<DialogModes>('Close');
-    const [recordType, setRecordType] = useState<CashFlowType>('Income');
+    const [recordType, setRecordType] = useState<CashFlowType>(CashFlowType.Debit);
     const [cashFlowRecord, setExistingCashFlowRecord] = useState<DetailedCashFlowRecord | undefined>();
 
     return (
