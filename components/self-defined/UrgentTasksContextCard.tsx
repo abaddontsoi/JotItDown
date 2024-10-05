@@ -6,22 +6,25 @@ import { useRouter } from "next/navigation";
 import UrgentTaskCard from "./UrgentTaskCard";
 import { DetailedTaskInfo } from "./types";
 import TaskCard from "./TaskCard";
-
+import { useState } from "react";
+interface UrgentTasksContextCardProp {
+    urgentTasks: DetailedTaskInfo[],
+    allNotes?: Note[],
+    setViewMode: () => void,
+    setTaskInfoInView: (task: DetailedTaskInfo | undefined) => void
+}
 const UrgentTasksContextCard = (
-    { urgentTasks, allNotes }: {
-        urgentTasks: DetailedTaskInfo[],
-        allNotes?: Note[],
-    }
+    { urgentTasks, allNotes, setViewMode, setTaskInfoInView }: UrgentTasksContextCardProp
 ) => {
     const router = useRouter();
-    const urgentCards = urgentTasks.map(uT => {
-        return {
-            title: uT.title,
-            description: uT.description,
-            deadline: uT.deadline,
-            parentNote: uT.parentContentBlock.parentNote
-        }
-    })
+    // const urgentCards = urgentTasks.map(uT => {
+    //     return {
+    //         title: uT.title,
+    //         description: uT.description,
+    //         deadline: uT.deadline,
+    //         parentNote: uT.parentContentBlock.parentNote
+    //     }
+    // })
 
     return (
         <Card>
@@ -36,12 +39,16 @@ const UrgentTasksContextCard = (
             </CardHeader>
             
             {
-                urgentCards.length > 0 && (
+                urgentTasks.length > 0 && (
                     <CardContent className="flex flex-row gap-4 flex-wrap">
                         {
                             urgentTasks.map(uC => {
                                 return (
-                                    <TaskCard key={uC.parentContentBlock.parentNote?.id} task={uC}  />
+                                    <TaskCard 
+                                    key={uC.parentContentBlock.parentNote?.id} 
+                                    task={uC}
+                                    setTaskInfoInView={setTaskInfoInView}
+                                    />
                                 )
                             })
                         }

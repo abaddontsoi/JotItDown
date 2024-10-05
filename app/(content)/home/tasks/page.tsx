@@ -5,6 +5,7 @@ import { TaskInfoStatus } from "@prisma/client";
 import { Suspense } from "react";
 import TaskMainPageContainer from "@/components/self-defined/TaskMainPageContainer";
 import ContextCardFallBack from "@/components/self-defined/ContextCardFallBack";
+import { Toaster } from "@/components/ui/toaster";
 
 
 const TasksPage = async () => {
@@ -82,8 +83,11 @@ const TasksPage = async () => {
                 fiveMostUrgentTaskInfo={fiveMostUrgentTaskInfo} 
                 overduedTasksInfo={overduedTasksInfo} />
             </Suspense>
+            <Toaster />
         </>
     )
 }
+
+export const dynamic = 'force-dynamic';
 
 export default TasksPage;
