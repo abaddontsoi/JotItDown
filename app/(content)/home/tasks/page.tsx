@@ -1,5 +1,5 @@
 import { db } from "@/lib/db";
-import { DetailedNote, PromiseDetailedNotes, PromiseUrgentTasks, UrgentTasks } from "@/components/self-defined/types";
+import { DetailedNote, PromiseDetailedNotes, PromiseUrgentTasks, DetailedTaskInfo } from "@/components/self-defined/types";
 import TasksMainPage from "@/components/self-defined/TasksMainPage";
 import { TaskInfoStatus } from "@prisma/client";
 import { Suspense } from "react";

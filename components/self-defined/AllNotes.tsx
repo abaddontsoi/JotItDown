@@ -1,7 +1,7 @@
 'use client';
 
 import { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
-import { DetailedNote, UrgentTasks } from "./types";
+import { DetailedNote, DetailedTaskInfo } from "./types";
 import { useRouter } from "next/navigation";
 import NoteDisplay from "./NoteDisplay";
 import { Suspense, useState } from "react";

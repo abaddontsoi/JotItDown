@@ -4,13 +4,13 @@ import { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent }
 import { Note } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import UrgentTaskCard from "./UrgentTaskCard";
-import { UrgentTasks } from "./types";
+import { DetailedTaskInfo } from "./types";
+import TaskCard from "./TaskCard";
 
 const UrgentTasksContextCard = (
     { urgentTasks, allNotes }: {
-        urgentTasks: UrgentTasks[],
+        urgentTasks: DetailedTaskInfo[],
         allNotes?: Note[],
-        
     }
 ) => {
     const router = useRouter();
@@ -34,14 +34,14 @@ const UrgentTasksContextCard = (
                     }
                 </CardTitle>
             </CardHeader>
-
+            
             {
                 urgentCards.length > 0 && (
                     <CardContent className="flex flex-row gap-4 flex-wrap">
                         {
-                            urgentCards.map(uC => {
+                            urgentTasks.map(uC => {
                                 return (
-                                    <UrgentTaskCard key={uC.parentNote?.id} urgentCard={uC}  />
+                                    <TaskCard key={uC.parentContentBlock.parentNote?.id} task={uC}  />
                                 )
                             })
                         }
