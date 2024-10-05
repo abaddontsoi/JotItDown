@@ -104,7 +104,7 @@ const TaskInfoViewModeDialog = (
                                 }}
                                 >
                                     {
-                                        option == taskStatus && <Check className="w-5 h-5"/>
+                                        option == task?.status && <Check className="w-5 h-5"/>
                                     }
                                     {option.toUpperCase()}
                                 </Button>
