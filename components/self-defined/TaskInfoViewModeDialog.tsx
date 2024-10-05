@@ -26,7 +26,7 @@ const TaskInfoViewModeDialog = (
     }: TaskInfoViewModeDialogProp
 ) => {
     const router = useRouter();
-    const statusOptions = Object.values(TaskInfoStatus);
+    const statusOptions: string[] = Object.values(TaskInfoStatus);
     const [taskStatus, setNewTaskStatus] = useState<string | undefined>(task?.status || TaskInfoStatus.Draft);
 
     const handleSave = async (taskStatus: string | undefined, taskId: string) => {
