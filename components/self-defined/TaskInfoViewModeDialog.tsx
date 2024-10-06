@@ -67,9 +67,11 @@ const TaskInfoViewModeDialog = (
                     </DialogHeader>
 
                     <div>
-                        {
-                            task?.description
-                        }
+                        <pre>
+                            {
+                                task?.description
+                            }
+                        </pre>
                     </div>
 
                     {/* <div>
