@@ -4,7 +4,7 @@ import { TaskInfo, TaskInfoStatus } from "@prisma/client";
 import { DetailedTaskInfo } from "./types";
 import { Dialog, DialogHeader, DialogContent, DialogTitle } from "../ui/dialog";
 import { Combobox } from "../ui/combobox";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Label } from "../ui/label";
 import { Button } from "../ui/button";
 import { Check, Save } from "lucide-react";
@@ -26,10 +26,10 @@ const TaskInfoViewModeDialog = (
     }: TaskInfoViewModeDialogProp
 ) => {
     const router = useRouter();
-    const statusOptions: string[] = Object.values(TaskInfoStatus);
-    const [taskStatus, setNewTaskStatus] = useState<string | undefined>(task?.status || TaskInfoStatus.Draft);
+    // const statusOptions: string[] = Object.values(TaskInfoStatus);
+    const [taskStatus, setNewTaskStatus] = useState<TaskInfoStatus | undefined>(task?.status);
 
-    const handleSave = async (taskStatus: string | undefined, taskId: string) => {
+    const handleSave = async (taskStatus: string | undefined, taskId: string | undefined) => {
         try {
             const value = {
                 id: taskId,
@@ -39,8 +39,8 @@ const TaskInfoViewModeDialog = (
                 if (response.status == 200) {
                     toast(ToastConfirm);
                     router.refresh();
-                    setTaskInfoInView(undefined);
-                    setNewTaskStatus(undefined);
+                    // setTaskInfoInView(undefined);
+                    // setNewTaskStatus(undefined);
                 }
             }).catch(error => {
                 toast(ToastError);
@@ -50,9 +50,15 @@ const TaskInfoViewModeDialog = (
             toast(ToastError);
         }
     }
+
+    const onOpenChange = () => {
+        setTaskInfoInView(undefined);
+        setNewTaskStatus(undefined);
+    }
+
     return (
         <>
-            <Dialog open={task != undefined} onOpenChange={() => setTaskInfoInView(undefined)}>
+            <Dialog open={task != undefined} onOpenChange={onOpenChange}>
                 <DialogContent>
                     <DialogHeader>
                         <DialogTitle>
@@ -88,32 +94,33 @@ const TaskInfoViewModeDialog = (
                         />
                     </div> */}
 
-                    <div className="flex flex-row items-center">
-                    {
-                        statusOptions.map(
-                            option => (
-                                <Button key={option} variant={'ghost'} className={clsx(
-                                    "w-full flex flex-row items-center gap-1",
-                                    {
-                                        "border-2 border-gray-900": option == taskStatus
-                                    }
-                                )}
-                                type="button"
-                                onClick={() => {
-                                    setNewTaskStatus(option);
-                                }}
-                                >
-                                    {
-                                        option == task?.status && <Check className="w-5 h-5"/>
-                                    }
-                                    {option.toUpperCase()}
-                                </Button>
-                            )
-                        )
-                    }
+                    <div>
+                        <Label>Set to</Label>
+                        <div className="flex flex-row items-center gap-2">
+                            {
+                                Object.values(TaskInfoStatus).map(
+                                    option => (
+                                        <Button key={option} variant={'outline'} className={clsx(
+                                            "w-full flex flex-row items-center gap-1",
+                                        )}
+                                            type="button"
+                                            onClick={() => {
+                                                setNewTaskStatus(option);
+                                                handleSave(option, task?.id);
+                                            }}
+                                        >
+                                            {
+                                                (option == taskStatus) && <Check className="w-5 h-5" />
+                                            }
+                                            {option.toUpperCase()}
+                                        </Button>
+                                    )
+                                )
+                            }
+                        </div>
                     </div>
 
-                    <div className="w-full flex flex-row items-center gap-1">
+                    {/* <div className="w-full flex flex-row items-center gap-1">
                         <Button
                             type='button'
                             variant={'ghost'}
@@ -128,7 +135,7 @@ const TaskInfoViewModeDialog = (
                         <Button className="basis-1/2 flex flex-row gap-1" onClick={() => handleSave(taskStatus, task?.id || '')}>
                             Save <Save className="w-5 h-5" />
                         </Button>
-                    </div>
+                    </div> */}
                 </DialogContent>
             </Dialog>
         </>
