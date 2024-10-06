@@ -6,6 +6,7 @@ import { CalendarFold, Eye, MoveRight } from "lucide-react";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
 import { DetailedTaskInfo } from "./types";
+import { Badge } from "../ui/badge";
 
 interface TaskCardProp {
     task: DetailedTaskInfo
@@ -25,8 +26,13 @@ const TaskCard = (
                 {/* list out task title, description and deadline, click to access that note */}
                 <CardHeader className="flex flex-row justify-between items-center">
                     <div>
-                        <CardTitle>
+                        <CardTitle className="flex flex-row items-center gap-1">
                             {task.title}
+                            <Badge
+                            variant={'outline'}
+                            >
+                                {task.status}
+                            </Badge>
                         </CardTitle>
                         <CardDescription className="flex flex-row gap-1 items-center">
                             <CalendarFold />
