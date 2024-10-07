@@ -6,6 +6,7 @@ import AccountCard from "./AccountCard";
 import { DetailedAccountRecord, DialogModes } from "./types";
 import { useState } from "react";
 import { AccountTransactionDialog } from "./AccountTransactionDialog";
+import AccountDialog from "./AccountDialog";
 
 interface AccountCardsContainerProp {
     records: DetailedAccountRecord[]
@@ -17,7 +18,7 @@ const AccountCardsContainer = (
     }: AccountCardsContainerProp
 ) => {
     const [mode, setMode] = useState<DialogModes>('Close');
-
+    const [accountMode, setAccountMode] = useState<DialogModes>('Close');
     return (
         <>
             <AccountTransactionDialog 
@@ -25,17 +26,32 @@ const AccountCardsContainer = (
             mode={mode} 
             setMode={setMode}
             />
+
+            {/* Create Account Dialog */}
+            <AccountDialog mode={accountMode} setMode={setAccountMode}/>
+
             <div className="flex flex-row items-center justify-between">
                 <h1 className="text-2xl">Accounts</h1>
-                {/* A button for create transaction */}
-                <Button
-                    type="button"
-                    className="flex flex-row items-center gap-2 w-fit"
-                    onClick={() => setMode('Create')}
-                >
-                    <Plus />
-                    Transaction
-                </Button>
+
+                <div className="flex flex-row items-center justify-between gap-2">
+                    {/* A button for create transaction */}
+                    <Button
+                        type="button"
+                        className="flex flex-row items-center gap-2 w-fit"
+                        onClick={() => setMode('Create')}
+                    >
+                        <Plus />
+                        Transaction
+                    </Button>
+                    <Button
+                        type="button"
+                        className="flex flex-row items-center gap-2 w-fit"
+                        onClick={() => setAccountMode('Create')}
+                    >
+                        <Plus />
+                        Account
+                    </Button>
+                </div>
             </div>
 
             {

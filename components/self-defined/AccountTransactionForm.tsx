@@ -13,6 +13,7 @@ import { Textarea } from "../ui/textarea";
 import axios from "axios";
 import { toast } from "../ui/use-toast";
 import { ToastConfirm, ToastError, ToastLoading } from "./toast-object";
+import { useRouter } from "next/navigation";
 
 interface AccountTransactionFormProp {
     mode: DialogModes;
@@ -23,6 +24,9 @@ interface AccountTransactionFormProp {
 const formSchema = z.object({
     from: z.string(),
     to: z.string(),
+
+    title: z.string(),
+
     value: z.string(),
     remark: z.string().optional(),
 })
@@ -38,7 +42,9 @@ const AccountTransactionForm = (
         resolver: zodResolver(formSchema),
         defaultValues: {
         }
-    })
+    });
+
+    const router = useRouter();
 
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
@@ -54,6 +60,7 @@ const AccountTransactionForm = (
                     if (response.status == 200) {
                         toast(ToastConfirm);
                         setMode('Close');
+                        router.refresh();
                     }
                 }
             ).catch(
@@ -62,6 +69,7 @@ const AccountTransactionForm = (
                 }
             );
             toast(ToastLoading);
+            setMode('Close');
         } catch (error) {
             toast(ToastError);
         }
@@ -129,6 +137,27 @@ const AccountTransactionForm = (
                     />
                 </div>
 
+                {/* title */}
+                <FormField
+                    name="title"
+                    control={form.control}
+                    render={
+                        ({ field }) => {
+                            return (
+                                <FormItem className="w-full">
+                                    <FormLabel>Title</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            // type="number"
+                                            {...field}
+                                        />
+                                    </FormControl>
+                                </FormItem>
+                            )
+                        }
+                    }
+                />
+
                 {/* value */}
                 <FormField
                     name="value"
@@ -140,7 +169,7 @@ const AccountTransactionForm = (
                                     <FormLabel>Amount {'($)'}</FormLabel>
                                     <FormControl>
                                         <Input
-                                            // type="number"
+                                            type="number"
                                             {...field}
                                         />
                                     </FormControl>

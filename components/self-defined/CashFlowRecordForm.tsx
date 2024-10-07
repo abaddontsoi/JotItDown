@@ -13,7 +13,7 @@ import { Textarea } from "../ui/textarea";
 import { Switch } from "../ui/switch";
 import axios from "axios";
 import { useToast } from "../ui/use-toast";
-import { TicketCheck, X } from "lucide-react";
+import { Check, TicketCheck, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 interface CashFlowRecordFormProp {
@@ -61,7 +61,7 @@ const CashFlowRecordForm = (
                             description: (
                                 <>
                                     <div className="flex flex-row gap-2 items-center">
-                                        <TicketCheck />
+                                        <Check />
                                         The record has been added
                                     </div>
                                 </>
@@ -85,7 +85,7 @@ const CashFlowRecordForm = (
                             description: (
                                 <>
                                     <div className="flex flex-row gap-2">
-                                        <TicketCheck />
+                                        <Check />
                                         The record has been updated
                                     </div>
                                 </>
