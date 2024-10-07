@@ -13,6 +13,7 @@ import { Textarea } from "../ui/textarea";
 import axios from "axios";
 import { toast } from "../ui/use-toast";
 import { ToastConfirm, ToastError, ToastLoading } from "./toast-object";
+import { useRouter } from "next/navigation";
 
 interface AccountTransactionFormProp {
     mode: DialogModes;
@@ -41,7 +42,9 @@ const AccountTransactionForm = (
         resolver: zodResolver(formSchema),
         defaultValues: {
         }
-    })
+    });
+
+    const router = useRouter();
 
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
@@ -57,6 +60,7 @@ const AccountTransactionForm = (
                     if (response.status == 200) {
                         toast(ToastConfirm);
                         setMode('Close');
+                        router.refresh();
                     }
                 }
             ).catch(
