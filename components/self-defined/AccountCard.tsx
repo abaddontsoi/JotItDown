@@ -41,8 +41,8 @@ const AccountCard = (
     const headers = [
         'Date',
         'Account',
-        'Debit',
-        'Credit',
+        'Transfer In',
+        'Transfer Out',
     ]
 
 
