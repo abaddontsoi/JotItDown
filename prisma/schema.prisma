@@ -47,6 +47,14 @@ model User {
     createdAt DateTime @default(now()) // also used as the start date if the task
     updatedAt DateTime @updatedAt
 
+    TaskInfo             TaskInfo[]
+    Note                 Note[]
+    Category             Category[]
+    Account              Account[]
+    CashFlow             CashFlow[]
+    // CashFlowMtoMCategory CashFlowMtoMCategory[]
+    // Transaction          Transaction[]
+
     @@unique([userName, userHashtagNumber])
 }
 
@@ -63,6 +71,9 @@ model TaskInfo {
     parentContentBlockid String?       @db.ObjectId
     parentContentBlock   ContentBlock? @relation(fields: [parentContentBlockid], references: [id], onDelete: SetNull, onUpdate: Cascade)
 
+    belongToId String @db.ObjectId
+    belongTo   User   @relation(fields: [belongToId], references: [id])
+
     createdAt DateTime @default(now()) // also used as the start date if the task
     updatedAt DateTime @updatedAt
 }
@@ -75,8 +86,8 @@ model ContentBlock {
     content String
 
     // set to optional for quick notes
-    parentNoteId String? @db.ObjectId
-    parentNote   Note?   @relation(fields: [parentNoteId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+    parentNoteId String @db.ObjectId
+    parentNote   Note   @relation(fields: [parentNoteId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
     taskInfo TaskInfo[]
 
@@ -107,6 +118,9 @@ model Note {
 
     hidden Boolean
 
+    belongToId String @db.ObjectId
+    belongTo   User   @relation(fields: [belongToId], references: [id])
+
     contentBlocks ContentBlock[]
 
     childrenNotes Note[] @relation(name: "ParentChildrenNoteRelation")
@@ -125,6 +139,9 @@ model Category {
 
     category Category[] @relation(name: "CategoryParentChildrenRelation")
 
+    belongToId String @db.ObjectId
+    belongTo   User   @relation(fields: [belongToId], references: [id])
+
     Note Note[]
 
     createdAt DateTime @default(now())
@@ -138,6 +155,9 @@ model Account {
 
     title       String
     description String?
+
+    belongToId String @db.ObjectId
+    belongTo   User   @relation(fields: [belongToId], references: [id])
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
@@ -158,6 +178,9 @@ model CashFlow {
 
     accountid String?  @db.ObjectId
     account   Account? @relation(fields: [accountid], references: [id])
+
+    belongToId String @db.ObjectId
+    belongTo   User   @relation(fields: [belongToId], references: [id])
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
@@ -196,11 +219,11 @@ model CashFlowMtoMCategory {
 model Transaction {
     id String @id @default(auto()) @map("_id") @db.ObjectId
 
-    fromId String @db.ObjectId @map("fromid")
+    fromId String   @map("fromid") @db.ObjectId
     from   CashFlow @relation("CashFlowFromRelation", fields: [fromId], references: [id])
 
-    toId String @db.ObjectId 
-    to CashFlow @relation("CashFlowToRelation", fields: [toId], references: [id])
+    toId String   @db.ObjectId
+    to   CashFlow @relation("CashFlowToRelation", fields: [toId], references: [id])
 
     remark String?
 
