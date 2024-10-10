@@ -1,6 +1,17 @@
+import LoginCard from "@/components/self-defined/LoginCard";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
+
 const LoginPage = async () => {
     return (
-        <div></div>
+        <div>
+            {/* some animated backgroud */}
+            <AspectRatio 
+            ratio={16/9}
+            className="bg-slate-200">
+                {/* A login card */}
+                <LoginCard />
+            </AspectRatio>
+        </div>
     )
 }
 
