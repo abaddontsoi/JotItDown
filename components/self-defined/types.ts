@@ -3,12 +3,15 @@ import { Account, CashFlow, CashFlowCategory, CashFlowMtoMCategory, Category, Co
 export type DialogModes = 'Create' | 'Edit' | 'Close';
 
 export type DetailedTaskInfo = TaskInfo & {
-    parentContentBlock: ContentBlock & {
+    parentContentBlock: (ContentBlock & {
         parentNote: Note | null,
-    }
+    }) | null
 }
+export type OverduedTasksInfo = DetailedTaskInfo
 
 export type PromiseUrgentTasks = Promise<DetailedTaskInfo[]>
+export type PromiseOverduedTasksInfos = Promise<OverduedTasksInfo[]>
+
 
 export type UrgentCard = {
     title: string | null,
@@ -33,16 +36,6 @@ export type DetailedCategory = Category & {
 }
 
 export type PromiseDetailedNotes = Promise<DetailedNote[]>
-
-export type OverduedTasksInfo = (
-    TaskInfo & {
-        parentContentBlock: (ContentBlock & {
-            parentNote: Note | null
-        })
-    }
-)
-
-export type PromiseOverduedTasksInfos = Promise<OverduedTasksInfo[]>
 
 export type DetailedCashFlowRecord = CashFlow & {
     CashFlowMtoMCategory: (CashFlowMtoMCategory & {
