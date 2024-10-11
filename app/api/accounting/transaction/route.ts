@@ -1,32 +1,44 @@
 import { db } from "@/lib/db";
+import { getUser } from "@/lib/getUser";
 import { CashFlowType } from "@prisma/client";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
     try {
-        const data = await req.json();
-        console.log(data);
+        const user = await getUser();
 
-        const {value, ...fields} = data;
+        if (!user) {
+            return new NextResponse(JSON.stringify({
+                message: 'Unauthorized',
+                // extraInfo: transactionResponse
+            }), {
+                status: 401,
+            })
+
+        }
+
+        const data = await req.json();
+
+        const { value, ...fields } = data;
 
         const debitRecord = {
             title: data.fields.title,
             value: value,
             type: CashFlowType.Debit,
-            accountid: data.fields.to,     
+            accountid: data.fields.to,
         };
 
         const creditRecord = {
             title: data.fields.title,
             value: value,
-            type: CashFlowType.Credit,   
-            accountid: data.fields.from,  
+            type: CashFlowType.Credit,
+            accountid: data.fields.from,
         };
 
         const [debitResponse, creditResponse] = await db.$transaction(
             [
-                db.cashFlow.create({data: debitRecord}),
-                db.cashFlow.create({data: creditRecord}),
+                db.cashFlow.create({ data: { ...debitRecord, belongToId: user.id } }),
+                db.cashFlow.create({ data: { ...creditRecord, belongToId: user.id } }),
             ]
         );
 
@@ -36,11 +48,12 @@ export async function POST(req: Request) {
                     fromId: creditResponse.id,
                     toId: debitResponse.id,
                     remark: data.remark,
+                    belongToId: user.id,
                 }
             }
         )
 
-        return  new NextResponse(JSON.stringify({
+        return new NextResponse(JSON.stringify({
             message: 'OK',
             extraInfo: transactionResponse
         }), {

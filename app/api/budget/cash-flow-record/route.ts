@@ -1,11 +1,18 @@
 import { db } from "@/lib/db";
+import { getUser } from "@/lib/getUser";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
     try {
-        const value = await req.json();
+        const user = await getUser();
 
-        console.dir(value);
+        if (!user) {
+            return new NextResponse(JSON.stringify({
+                message: 'Unauthorized'
+            }), { status: 401 });
+        }
+
+        const value = await req.json();
 
         const response = await db.cashFlow.create({
             data: {
@@ -14,6 +21,7 @@ export async function POST(req: Request) {
                 description: value.description,
                 type: value.type,
                 category: value.category,
+                belongToId: user.id,
                 isLongTermUsage: value.isLongTermUsage,
             }
         })

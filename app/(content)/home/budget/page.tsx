@@ -19,7 +19,7 @@ const BudgetPage = async () => {
         }
     });
 
-    const allAccountsRecords: PromiseDetailedAccountRecords = db.account.findMany({
+    const allAccountsRecords: PromiseDetailedAccountRecords = db.cashAccount.findMany({
         include: {
             CashFlow: {
                 include: {
