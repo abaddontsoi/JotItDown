@@ -1,7 +1,19 @@
+import { auth } from "@/auth";
+
 const HomePage = async () => {
+    const session = await auth();
+
+    if (!session) {
+        return (
+            <>
+                No Auth
+            </>
+        );
+    }
+
     return (
         <div>
-            Hi
+            Hi {session.user?.name}
         </div>
     )
 }
