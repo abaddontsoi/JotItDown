@@ -9,7 +9,7 @@ export default function Home() {
 			<div
 			className="text-9xl"
 			>Welcome</div>
-			<Link href={'/home'} className="">
+			<Link href={'/login'} className="">
 				<Button className="hover:underline">
 					Jot It Down
 					<ArrowRight className="ml-2 w-4 h-4" />
