@@ -1,9 +1,11 @@
 import { auth } from "@/auth";
+import { getUser } from "@/lib/getUser";
 
 const HomePage = async () => {
-    const session = await auth();
+    // const session = await auth();
+    const user = await getUser();
 
-    if (!session) {
+    if (!user) {
         return (
             <>
                 No Auth
@@ -13,7 +15,7 @@ const HomePage = async () => {
 
     return (
         <div>
-            Hi {session.user?.name}
+            Hi {user.name}
         </div>
     )
 }

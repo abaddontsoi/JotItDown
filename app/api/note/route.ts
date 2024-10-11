@@ -19,7 +19,8 @@ export async function POST(req: Request) {
             if (data.extra?.category) {
                 const found = await db.category.findFirst({
                     where: {
-                        name: data.extra?.category
+                        name: data.extra?.category,
+                        belongToId: user.id,
                     }
                 });
 

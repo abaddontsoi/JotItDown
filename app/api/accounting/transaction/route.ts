@@ -37,8 +37,8 @@ export async function POST(req: Request) {
 
         const [debitResponse, creditResponse] = await db.$transaction(
             [
-                db.cashFlow.create({ data: { ...debitRecord, belongToId: "" } }),
-                db.cashFlow.create({ data: { ...creditRecord, belongToId: "" } }),
+                db.cashFlow.create({ data: { ...debitRecord, belongToId: user.id } }),
+                db.cashFlow.create({ data: { ...creditRecord, belongToId: user.id } }),
             ]
         );
 
@@ -48,7 +48,7 @@ export async function POST(req: Request) {
                     fromId: creditResponse.id,
                     toId: debitResponse.id,
                     remark: data.remark,
-                    belongToId: user.id, 
+                    belongToId: user.id,
                 }
             }
         )
