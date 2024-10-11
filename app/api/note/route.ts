@@ -27,7 +27,7 @@ export async function POST(req: Request) {
                     const createCategory = await db.category.create({
                         data: {
                             name: data.extra?.category,
-                            belongToId: user?.id
+                            belongToId: user.id
                         }
                     })
                     const updateResponse = await db.note.update({

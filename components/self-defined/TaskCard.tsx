@@ -55,11 +55,11 @@ const TaskCard = (
                     <Button
                         variant={'link'}
                         onClick={() => {
-                            router.push('/home/notes/' + task.parentContentBlock.parentNote?.id.toString());
+                            router.push('/home/notes/' + task.parentContentBlock?.parentNote?.id.toString());
                         }}
                         className="underline flex flex-row gap-1"
                     >
-                        {task.parentContentBlock.parentNote?.title}
+                        {task.parentContentBlock?.parentNote?.title}
                         <MoveRight className="w-4 h-4" />
                     </Button>
                 </CardContent>
