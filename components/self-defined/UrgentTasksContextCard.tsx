@@ -45,7 +45,7 @@ const UrgentTasksContextCard = (
                             urgentTasks.map(uC => {
                                 return (
                                     <TaskCard 
-                                    key={uC.parentContentBlock.parentNote?.id} 
+                                    key={uC.parentContentBlock?.parentNote?.id} 
                                     task={uC}
                                     setTaskInfoInView={setTaskInfoInView}
                                     />
