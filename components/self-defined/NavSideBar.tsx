@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { NotebookPen } from 'lucide-react';
 import { navRoutes } from "./NavSideBarRoutes";
+import { signOut } from "next-auth/react";
 
 const NavSideBar = () => {
     const router = useRouter();
@@ -23,8 +24,8 @@ const NavSideBar = () => {
             {
                 navRoutes.map((button, index) => (
                     <Button
-                    key={'nav-'+index}
-                    className="transition duration-200 hover:scale-[1.05] 
+                        key={'nav-' + index}
+                        className="transition duration-200 hover:scale-[1.05] 
                     hover:translate-x-[5px]
                     "
                         onClick={() => {
@@ -35,6 +36,20 @@ const NavSideBar = () => {
                     </Button>
                 ))
             }
+            <Button
+                key={'sign-out'}
+                className="transition duration-200 hover:scale-[1.05] 
+                    hover:translate-x-[5px]
+                    "
+                onClick={() => {
+                    signOut({
+                        redirectTo: '/'
+                    });
+                }}
+            >
+                Sign Out
+            </Button>
+
         </div>
     )
 }

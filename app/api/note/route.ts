@@ -13,7 +13,7 @@ export async function POST(req: Request) {
             const data = await req.json();
 
             const insertNoteId = await db.note.create({
-                data: {...data.basic, belongToId: user.id},
+                data: { ...data.basic, belongToId: user.id },
             })
 
             if (data.extra?.category) {
@@ -76,75 +76,77 @@ export async function PATCH(req: Request) {
     try {
         const user = await getUser();
 
-        if (user && user.id) {
-            const data = await req.json();
+        if (!user) {
+            return new NextResponse(JSON.stringify({
+                message: 'Unauthorized'
+            }), {
+                status: 401
+            });
 
-            // see if the submitted category is found
-            const { basic, extra } = data;
+        }
 
-            // update the actual note
-            const { id, ...values } = basic;
-            const updateNoteId = await db.note.update({
-                where: {
-                    id: id
-                },
-                data: {
-                    ...values
+        const data = await req.json();
+
+        // see if the submitted category is found
+        const { basic, extra } = data;
+
+        // update the actual note
+        const { id, ...values } = basic;
+        const updateNoteId = await db.note.update({
+            where: {
+                id: id
+            },
+            data: {
+                ...values
+            }
+        })
+
+        // proccess the categoty
+        if (extra?.category) {
+            const categoryFound = await db.category.findFirst(
+                {
+                    where: {
+                        name: extra?.category,
+                    }
                 }
-            })
-
-            // proccess the categoty
-            if (extra?.category) {
-                const categoryFound = await db.category.findFirst(
+            )
+            if (!categoryFound) {
+                const newCateId = await db.category.create({
+                    data: {
+                        name: extra?.category,
+                        belongToId: user.id,
+                    }
+                });
+                await db.note.update(
                     {
                         where: {
-                            name: extra?.category,
+                            id: updateNoteId.id,
+                        },
+                        data: {
+                            categoryId: newCateId.id
                         }
                     }
-                )
-                if (!categoryFound) {
-                    const newCateId = await db.category.create({
+                );
+            } else {
+                await db.note.update(
+                    {
+                        where: {
+                            id: updateNoteId.id,
+                        },
                         data: {
-                            name: extra?.category,
-                            belongToId: user.id,
+                            categoryId: categoryFound.id
                         }
-                    });
-                    await db.note.update(
-                        {
-                            where: {
-                                id: updateNoteId.id,
-                            },
-                            data: {
-                                categoryId: newCateId.id
-                            }
-                        }
-                    );
-                } else {
-                    await db.note.update(
-                        {
-                            where: {
-                                id: updateNoteId.id,
-                            },
-                            data: {
-                                categoryId: categoryFound.id
-                            }
-                        }
-                    );
-                }
+                    }
+                );
             }
-
-            return new NextResponse(JSON.stringify({
-                message: 'Note Created'
-            }), {
-                status: 200
-            });
         }
 
         return new NextResponse(JSON.stringify({
-            message: 'Unauthorized'
+            message: 'Note Created'
         }), {
-            status: 401
+            status: 200
         });
+
     } catch (error) {
         return new NextResponse(JSON.stringify({
             message: 'Failed'
