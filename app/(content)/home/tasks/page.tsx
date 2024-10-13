@@ -6,10 +6,27 @@ import { Suspense } from "react";
 import TaskMainPageContainer from "@/components/self-defined/TaskMainPageContainer";
 import ContextCardFallBack from "@/components/self-defined/ContextCardFallBack";
 import { Toaster } from "@/components/ui/toaster";
+import { getUser } from "@/lib/getUser";
+import Link from "next/link";
 
 
 const TasksPage = async () => {
+    const user = await getUser();
+
+    if (!user) {
+        return (
+            <>
+                Please <Link href={'/login'}>
+                    Sign in
+                </Link>
+            </>
+        )
+    }
+
     const allNotes: PromiseDetailedNotes = db.note.findMany({
+        where: {
+            belongToId: user.id
+        },
         include: {
             category: true,
             parentNote: {
@@ -36,12 +53,13 @@ const TasksPage = async () => {
             deadline: 'asc'
         },
         where: {
+            belongToId: user.id,
             deadline: {
                 gt: new Date()
             },
             status: {
                 not: TaskInfoStatus.Done,
-            }
+            },
         },
         include: {
             parentContentBlock: {
@@ -59,6 +77,7 @@ const TasksPage = async () => {
             deadline: 'asc'
         },
         where: {
+            belongToId: user.id,
             deadline: {
                 lt: new Date()
             },

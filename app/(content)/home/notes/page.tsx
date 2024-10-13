@@ -11,10 +11,26 @@ import AllNotes from "@/components/self-defined/AllNotes";
 import NotesMainPageHeader from "@/components/self-defined/NotesMainPageHeader";
 import ContextCardFallBack from "@/components/self-defined/ContextCardFallBack";
 import { Toaster } from "@/components/ui/toaster";
+import { getUser } from "@/lib/getUser";
+import Link from "next/link";
 
 const NotesPage = async () => {
+    const user = await getUser();
+
+    if (!user) {
+        return (
+            <>
+                Please <Link href={'/login'}>
+                    Sign in
+                </Link>
+            </>
+        )
+    }
 
     const allNotes: Promise<DetailedNote[]> = db.note.findMany({
+        where: {
+            belongToId: user.id,
+        },
         include: {
             category: true,
             parentNote: {
