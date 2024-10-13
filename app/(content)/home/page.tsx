@@ -1,5 +1,6 @@
 import { auth } from "@/auth";
 import { getUser } from "@/lib/getUser";
+import Link from "next/link";
 
 const HomePage = async () => {
     // const session = await auth();
@@ -8,11 +9,13 @@ const HomePage = async () => {
     if (!user) {
         return (
             <>
-                No Auth
+                Please <Link href={'/login'}>
+                    Sign in
+                </Link>
             </>
-        );
+        )
     }
-
+    
     return (
         <div>
             Hi {user.name}
