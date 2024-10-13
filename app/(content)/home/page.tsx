@@ -19,5 +19,6 @@ const HomePage = async () => {
         </div>
     )
 }
+export const dynamic = 'force-dynamic';
 
 export default HomePage;

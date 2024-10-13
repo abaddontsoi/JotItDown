@@ -28,3 +28,6 @@ export default function RootLayout({
         </main>
     );
 }
+
+
+export const dynamic = 'force-dynamic';
