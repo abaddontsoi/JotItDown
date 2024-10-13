@@ -66,7 +66,7 @@ model User {
     CashFlowCategory     CashFlowCategory[]
     ContentBlock         ContentBlock[]
 
-    @@unique([userName, userHashtagNumber])
+    // @@unique([userName, userHashtagNumber])
 }
 
 model Account {
