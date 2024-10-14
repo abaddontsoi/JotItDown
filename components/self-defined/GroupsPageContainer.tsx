@@ -1,4 +1,6 @@
 import GroupCard from "./GroupCard";
+import GroupCardsContainer from "./GroupCardsContainer";
+import GroupsPageHeader from "./GroupsPageHeader";
 import { PromiseDetailedGroup } from "./types"
 
 interface GroupsPageContainerProp {
@@ -14,18 +16,15 @@ export default async function GroupsPageContainer(
 
     return (
         <>
-            {/* Dialogs */}
-            
-            {/* Header block */}
+            <div className="flex flex-col gap-5">
+                {/* Dialogs */}
 
-            {/* Page content */}
-            {
-                groups.map(group => {
-                    return (
-                        <GroupCard group={group}/>
-                    )
-                })
-            }
+                {/* Header block */}
+                <GroupsPageHeader />
+
+                {/* Page content */}
+                <GroupCardsContainer groups={groups} />
+            </div>
         </>
     )
 }
