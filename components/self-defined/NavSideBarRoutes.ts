@@ -16,6 +16,10 @@ const navRoutes = [
     //     route: '/home/content-blocks',
     // },
     {
+        label: 'Groups',
+        route: '/home/groups',
+    },
+    {
         label: 'Budget',
         route: '/home/budget',
     },
