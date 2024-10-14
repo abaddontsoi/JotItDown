@@ -26,6 +26,7 @@ export async function POST(req: Request) {
             value: value,
             type: CashFlowType.Debit,
             accountid: data.fields.to,
+            category: data.fields.category,
         };
 
         const creditRecord = {
@@ -33,6 +34,7 @@ export async function POST(req: Request) {
             value: value,
             type: CashFlowType.Credit,
             accountid: data.fields.from,
+            category: data.fields.category,
         };
 
         const [debitResponse, creditResponse] = await db.$transaction(

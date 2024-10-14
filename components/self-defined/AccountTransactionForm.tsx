@@ -25,6 +25,8 @@ const formSchema = z.object({
     from: z.string(),
     to: z.string(),
 
+    category: z.string(),
+
     title: z.string(),
 
     value: z.string(),
@@ -129,6 +131,24 @@ const AccountTransactionForm = (
                                                 {...field}
                                             >
                                             </Combobox>
+                                        </FormControl>
+                                    </FormItem>
+                                )
+                            }
+                        }
+                    />
+
+                    {/* category input */}
+                    <FormField
+                        name="category"
+                        control={form.control}
+                        render={
+                            ({ field }) => {
+                                return (
+                                    <FormItem className="w-full">
+                                        <FormLabel>Category</FormLabel>
+                                        <FormControl>
+                                            <Input {...field} />
                                         </FormControl>
                                     </FormItem>
                                 )

@@ -40,7 +40,7 @@ const AccountCard = (
 
     const headers = [
         'Date',
-        'Account',
+        'Category',
         'Transfer In',
         'Transfer Out',
     ]
@@ -84,7 +84,9 @@ const AccountCard = (
                                                 '' : toDDMMYYYY(cash.createdAt)
                                         }
                                     </TableCell>
-                                    <TableCell>{cash.category}</TableCell>
+                                    <TableCell>
+                                        {cash.category}
+                                    </TableCell>
                                     <TableCell>
                                         {
                                             cash.type == CashFlowType.Debit &&
