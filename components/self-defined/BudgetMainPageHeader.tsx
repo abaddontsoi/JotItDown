@@ -20,7 +20,7 @@ const BudgetMainPageHeader = ({
         <>
             <div className="flex flex-row text-5xl items-end justify-between">
                 Budget
-                <div className="flex flex-row gap-2">
+                {/* <div className="flex flex-row gap-2">
                     <Button className="" onClick={() => {
                         setRecordType(CashFlowType.Debit);
                         setMode('Create');
@@ -35,7 +35,7 @@ const BudgetMainPageHeader = ({
                         <Plus></Plus>
                         Credit
                     </Button>
-                </div>
+                </div> */}
             </div>
         </>
     )
