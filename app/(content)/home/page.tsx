@@ -1,4 +1,5 @@
 import { auth } from "@/auth";
+import { Toaster } from "@/components/ui/toaster";
 import { getUser } from "@/lib/getUser";
 import Link from "next/link";
 
@@ -19,6 +20,7 @@ const HomePage = async () => {
     return (
         <div>
             Hi {user.name}
+            <Toaster />
         </div>
     )
 }

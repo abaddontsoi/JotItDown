@@ -19,13 +19,24 @@ export const POST = async (req: Request) => {
 
         const data = await req.json();
 
-        const createResponse = await db.group.create({
-            data: { ...data, updatedById: user.id },
-        });
+        const transaction = await db.$transaction(async (dx) => {
+            const createResponse = await db.group.create({
+                data: { ...data, updatedById: user.id },
+            });
+    
+            const createGroup = await db.groupUser.create({
+                data: {
+                    groupId: createResponse.id,
+                    userId: user.id,
+                }
+            });
+        })
+
 
         return new NextResponse(
             JSON.stringify({
-                message: 'OK'
+                message: 'OK',
+                extraInfo: transaction,
             }),
             {
                 status: 200,

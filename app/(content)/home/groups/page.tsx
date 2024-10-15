@@ -1,6 +1,7 @@
 import ContextCardFallBack from "@/components/self-defined/ContextCardFallBack";
 import GroupsPageContainer from "@/components/self-defined/GroupsPageContainer";
 import { PromiseDetailedGroup } from "@/components/self-defined/types";
+import { Toaster } from "@/components/ui/toaster";
 import { db } from "@/lib/db";
 import { getUser } from "@/lib/getUser";
 import Link from "next/link";
@@ -51,6 +52,7 @@ const GroupsPage = async (
                     userGroups={userGroups}
                 ></GroupsPageContainer>
             </Suspense>
+            <Toaster />
         </>
     )
 }
