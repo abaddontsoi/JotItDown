@@ -20,7 +20,7 @@ export default function GroupCard(
     }: GroupCardProp
 ) {
     return (
-        <Card className="w-fit transition hover:scale-[1.05] duration-500 hover:border-cyan-400">
+        <Card className="w-fit transition hover:scale-[1.05] duration-500 hover:border-cyan-400 max-w-[350px]">
             <CardHeader className="flex flex-row items-center justify-between gap-10">
                 <div>
                     <div className="text-xl font-bold">
@@ -28,7 +28,7 @@ export default function GroupCard(
                             {group.name}
                         </Link>
                     </div>
-                    <CardDescription>{group.description}</CardDescription>
+                    <CardDescription className="max-w-[200px] truncate">{group.description}</CardDescription>
                 </div>
 
                 {/* button groups */}
@@ -45,7 +45,7 @@ export default function GroupCard(
                         <Settings />
                     </Button>
 
-                    <Button 
+                    {/* <Button 
                     variant={'ghost'} 
                     className="w-fit"
                     onClick={() => {
@@ -53,7 +53,7 @@ export default function GroupCard(
                     }}
                     >
                         <UserPlus />
-                    </Button>
+                    </Button> */}
 
                 </div>
             </CardHeader>
