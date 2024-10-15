@@ -60,7 +60,7 @@ export default function GroupPageHeader(
                     </Button>
                 </div>
             </div>
-            <div>
+            <div className="text-gray-500">
                 {groupData.description}
             </div>
         </>

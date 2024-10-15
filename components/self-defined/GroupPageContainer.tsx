@@ -31,6 +31,7 @@ export default async function GroupPageContainer(
                         {/* Group Tasks */}
 
                         {/* Group Trash Can */}
+                        
                     </div>
                 </div>
             }
