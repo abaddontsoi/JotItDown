@@ -1,6 +1,7 @@
 'use client';
 
 import { Dialog, DialogContent, DialogTitle } from "../ui/dialog";
+import { Toaster } from "../ui/toaster";
 import GroupForm from "./GroupForm";
 import GroupInviteForm from "./GroupInviteForm";
 import { DetailedGroup, DialogModes } from "./types";

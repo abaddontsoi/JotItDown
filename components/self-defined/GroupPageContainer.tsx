@@ -1,3 +1,4 @@
+import { Toaster } from "../ui/toaster";
 import GroupPageHeader from "./GroupPageHeader";
 import { DetailedGroup, PromiseDetailedGroup } from "./types";
 
@@ -33,6 +34,7 @@ export default async function GroupPageContainer(
                     </div>
                 </div>
             }
+            <Toaster />
         </>
     )
 }

@@ -6,6 +6,10 @@ import { DetailedGroup, DialogModes } from "./types";
 import { z } from "zod";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import axios from "axios";
+import { toast } from "../ui/use-toast";
+import { ToastConfirm, ToastError, ToastLoading } from "./toast-object";
+import { useState } from "react";
 
 interface GroupInviteFormProp {
     mode: DialogModes;
@@ -24,11 +28,24 @@ export default function GroupInviteForm(
 ) {
     const form = getForm(existingGroup);
 
+    const [targetNotFound, setTargetNotFound] = useState<boolean>(false);
+
     const onSubmit = async (values: z.infer<typeof groupInvitationFormSchema>) => {
         try {
-
+            axios.post('/api/group/invite', values).then(response => {
+                if (response.status == 200) {
+                    toast(ToastConfirm);
+                    setMode('Close');
+                }
+            }).catch(error => {
+                console.log(error);
+                toast(ToastError);
+                setTargetNotFound(true);
+            });
+            toast(ToastLoading);
         } catch (error) {
-
+            console.log(error);
+            // toast(ToastError);
         }
     }
 
@@ -38,7 +55,7 @@ export default function GroupInviteForm(
                 <form onSubmit={form.handleSubmit(onSubmit)}>
                     {/* Friend's email input */}
                     <FormField
-                        name="email"
+                        name="toEmail"
                         render={({ field }) => {
                             return (
                                 <FormItem>
@@ -48,6 +65,17 @@ export default function GroupInviteForm(
                             )
                         }}
                     />
+                    {
+                        targetNotFound && (
+                            <>
+                                <FormItem>
+                                    <div className="text-red-400">
+                                        User not exist.
+                                    </div>
+                                </FormItem>
+                            </>
+                        )
+                    }
 
                     {/* Submit buttons */}
                     <div className="flex flex-row items-center gap-2 mt-4">
