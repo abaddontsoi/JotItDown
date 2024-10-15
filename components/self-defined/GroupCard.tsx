@@ -4,6 +4,7 @@ import { Settings, Trash, UserPlus } from "lucide-react";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardDescription, CardHeader } from "../ui/card";
 import { DetailedGroup, DialogModes } from "./types";
+import Link from "next/link";
 
 interface GroupCardProp {
     group: DetailedGroup;
@@ -23,7 +24,9 @@ export default function GroupCard(
             <CardHeader className="flex flex-row items-center justify-between gap-10">
                 <div>
                     <div className="text-xl font-bold">
-                        {group.name}
+                        <Link href={`${group.id}`} className="hover:underline">
+                            {group.name}
+                        </Link>
                     </div>
                     <CardDescription>{group.description}</CardDescription>
                 </div>
