@@ -45,7 +45,7 @@ model User {
     email    String? @unique
 
     // shorten code for invitation
-    invitationCode String? @unique
+    // invitationCode String? @unique
 
     emailVerified     DateTime?
     image             String?
