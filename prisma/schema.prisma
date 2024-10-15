@@ -31,14 +31,22 @@ enum CashFlowType {
     Credit @map("Expense")
 }
 
+enum InvitationType {
+    Group
+}
+
 // should discover more on user authentication
 model User {
     id String @id @default(auto()) @map("_id") @db.ObjectId
 
     // allows duplicated user display name
-    name              String    @db.String
-    userName          String?
-    email             String?   @unique
+    name     String  @db.String
+    userName String?
+    email    String? @unique
+
+    // shorten code for invitation
+    invitationCode String? @unique
+
     emailVerified     DateTime?
     image             String?
     // userLoginName     String @unique
@@ -71,6 +79,10 @@ model User {
     Group Group[]
 
     GroupUser GroupUser[]
+
+    FromInvitation Invitation[] @relation("InvitationFromRelation")
+
+    ToInvitation Invitation[] @relation("InvitationToRelation")
 }
 
 model Account {
@@ -326,6 +338,8 @@ model Group {
     updatedAt   DateTime @updatedAt
 
     GroupUser GroupUser[]
+
+    Invitation Invitation[]
 }
 
 model GroupUser {
@@ -336,6 +350,25 @@ model GroupUser {
 
     groupId String @db.ObjectId
     group   Group  @relation(fields: [groupId], references: [id])
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Invitation {
+    id String @id @default(auto()) @map("_id") @db.ObjectId
+
+    fromid String @db.ObjectId
+    from   User   @relation("InvitationFromRelation", fields: [fromid], references: [id])
+
+    toid String @db.ObjectId
+    to   User   @relation("InvitationToRelation", fields: [fromid], references: [id])
+
+    type InvitationType
+    read Boolean        @default(false)
+
+    groupId String? @db.ObjectId
+    group   Group?  @relation(fields: [groupId], references: [id])
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt

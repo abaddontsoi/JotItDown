@@ -1,12 +1,25 @@
+import ContextCardFallBack from "@/components/self-defined/ContextCardFallBack";
+import GroupPageContainer from "@/components/self-defined/GroupPageContainer";
+import GroupPageHeader from "@/components/self-defined/GroupPageHeader";
+import { DetailedGroup, PromiseDetailedGroup } from "@/components/self-defined/types";
+import { db } from "@/lib/db";
 import { getUser } from "@/lib/getUser";
+import { Group } from "@prisma/client";
 import Link from "next/link";
+import { Suspense } from "react";
 
 interface GroupPageProp {
 
 }
 
 const GroupPage = async (
-    { }: GroupPageProp
+    {
+        params
+    }: {
+        params: {
+            groupId: string
+        }
+    }
 ) => {
 
     // const session = await auth();
@@ -21,12 +34,42 @@ const GroupPage = async (
             </>
         )
     }
+    try {
+        const group: Promise<DetailedGroup | null> = db.group.findFirstOrThrow({
+            where: {
+                id: params.groupId,
+            },
+            include: {
+                GroupUser: {
+                    include: {
+                        user: true
+                    }
+                },
+                updatedBy: true
+            }
+        })
 
-
-    return (
-        <>
-        </>
-    )
+        return (
+            <>
+                <Suspense fallback={<ContextCardFallBack />}>
+                    {/* container */}
+                    <GroupPageContainer groupData={group} />
+                </Suspense>
+            </>
+        )
+    } catch (error) {
+        return (
+            <>
+                <Suspense fallback={<ContextCardFallBack />}>
+                    {/* container */}
+                    {/* <GroupPageContainer groupData={group} /> */}
+                    <div>
+                        No such group
+                    </div>
+                </Suspense>
+            </>
+        )
+    }
 }
 export const dynamic = 'force-dynamic';
 
