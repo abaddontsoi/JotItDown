@@ -30,6 +30,7 @@ export default function GroupCardsContainer(
                     groups.map(group => {
                         return (
                             <GroupCard
+                                key={group.id}
                                 group={group}
                                 setMode={setMode}
                                 setGroup={setGroup}
