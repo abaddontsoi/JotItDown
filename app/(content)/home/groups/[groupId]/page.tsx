@@ -1,9 +1,14 @@
-import { auth } from "@/auth";
-import { Toaster } from "@/components/ui/toaster";
 import { getUser } from "@/lib/getUser";
 import Link from "next/link";
 
-const HomePage = async () => {
+interface GroupPageProp {
+
+}
+
+const GroupPage = async (
+    { }: GroupPageProp
+) => {
+
     // const session = await auth();
     const user = await getUser();
 
@@ -16,14 +21,13 @@ const HomePage = async () => {
             </>
         )
     }
-    
+
+
     return (
-        <div>
-            Hi {user.name}
-            <Toaster />
-        </div>
+        <>
+        </>
     )
 }
 export const dynamic = 'force-dynamic';
 
-export default HomePage;
+export default GroupPage;
