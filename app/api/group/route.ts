@@ -90,6 +90,16 @@ export const PATCH = async (req: Request) => {
             }
         );
     } catch (error) {
+        console.log(error);
+
+        return new NextResponse(
+            JSON.stringify({
+                message: 'Error'
+            }),
+            {
+                status: 500,
+            }
+        );
 
     }
 }

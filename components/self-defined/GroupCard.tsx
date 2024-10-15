@@ -3,19 +3,23 @@
 import { Settings, Trash, UserPlus } from "lucide-react";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardDescription, CardHeader } from "../ui/card";
-import { DetailedGroup } from "./types";
+import { DetailedGroup, DialogModes } from "./types";
 
 interface GroupCardProp {
-    group: DetailedGroup
+    group: DetailedGroup;
+    setMode: (mdoe: DialogModes) => void;
+    setGroup: (gp: DetailedGroup) => void;
 }
 
 export default function GroupCard(
     {
         group,
+        setMode,
+        setGroup,
     }: GroupCardProp
 ) {
     return (
-        <Card className="w-fit">
+        <Card className="w-fit transition hover:scale-[1.05] duration-500 hover:border-cyan-400">
             <CardHeader className="flex flex-row items-center justify-between gap-10">
                 <div>
                     <div className="text-xl font-bold">
@@ -30,7 +34,9 @@ export default function GroupCard(
                     variant={'ghost'} 
                     className="w-fit"
                     onClick={() => {
-                        // open the group setting panel  
+                        // open the group setting panel 
+                        setGroup(group);
+                        setMode('Edit');
                     }}
                     >
                         <Settings />

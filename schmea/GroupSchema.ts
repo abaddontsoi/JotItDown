@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 export const groupFormSchema = z.object({
+    id: z.string().optional(),
     name: z.string(),
     description: z.string().optional(),
 })
@@ -14,6 +15,7 @@ export const groupFormSchema = z.object({
 export const getForm = (existingGroup?: DetailedGroup) => useForm<z.infer<typeof groupFormSchema>>({
     resolver: zodResolver(groupFormSchema),
     defaultValues: {
+        id: existingGroup?.id,
         name: existingGroup?.name, 
         description: existingGroup?.description || undefined,
     }
