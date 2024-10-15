@@ -24,7 +24,7 @@ export default function GroupCard(
             <CardHeader className="flex flex-row items-center justify-between gap-10">
                 <div>
                     <div className="text-xl font-bold">
-                        <Link href={`${group.id}`} className="hover:underline">
+                        <Link href={`groups/${group.id}`} className="hover:underline">
                             {group.name}
                         </Link>
                     </div>

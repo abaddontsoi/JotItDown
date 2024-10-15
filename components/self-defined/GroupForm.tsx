@@ -115,7 +115,12 @@ export default function GroupForm(
 
                 {/* Submit buttons */}
                 <div className="flex flex-row items-center gap-2 mt-4">
-                    <Button type="button" className="flex w-full text-red-400 hover:text-red-400 border-2 border-gray-900" variant={'outline'}>Cancel</Button>
+                    <Button type="button" className="flex w-full text-red-400 hover:text-red-400 border-2 border-gray-900" variant={'outline'}
+                        onClick={() => {
+                            setMode('Close');
+                            setGroup();
+                        }}
+                    >Cancel</Button>
                     <Button type="submit" className="flex w-full">Save</Button>
                 </div>
             </form>
