@@ -13,10 +13,11 @@ import { Textarea } from "../ui/textarea";
 import DatePicker from "../ui/date-picker";
 import { Combobox } from "../ui/combobox";
 import { Button } from "../ui/button";
-import toast from "react-hot-toast";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { DetailedTaskInfo, DialogModes } from "./types";
+import { toast } from "../ui/use-toast";
+import { ToastConfirm, ToastError, ToastLoading } from "./toast-object";
 
 const formSchema = z.object({
     title: z.string().optional(),
@@ -57,21 +58,26 @@ const TaskInfoForm = ({
     const router = useRouter();
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
-            const response = axios.post('/api/task', values).then(response => {
-                if (response.status == 200) {
-                    toast.success('Task Created');
-                    router.refresh();
-                }
-            }).finally(() => {
-                // toast.success('Task Created');
-            });
-            setTargetTaskInfo(undefined);
-            setMode('Close');
+            if (mode == 'Create') {
+                const response = axios.post('/api/task', values).then(response => {
+                    if (response.status == 200) {
+                        toast(ToastConfirm);
+                        setTargetTaskInfo(undefined);
+                        router.refresh();
+                        setMode('Close');
+                    } else {
+                        toast(ToastError);
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    toast(ToastError);
+                })
+            }
+            toast(ToastLoading);
         } catch (error) {
             console.log(error);
-            toast.error('Something Went Wrong');
+            toast(ToastError);
         }
-        toast.success('Task Created');
     }
 
     return (
