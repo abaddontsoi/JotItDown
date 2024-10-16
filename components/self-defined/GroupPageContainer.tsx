@@ -4,12 +4,13 @@ import GroupNotesContainer from "./GroupNotesContainer";
 import GroupPageHeader from "./GroupPageHeader";
 import GroupTasksContainer from "./GroupTasksContainer";
 import GroupTrashCanContainer from "./GroupTrashCanContainer";
-import { DetailedGroup, DetailedNote, PromiseDetailedGroup } from "./types";
+import { DetailedGroup, DetailedNote, DetailedTaskInfo, PromiseDetailedGroup } from "./types";
 import ContextCardFallBack from "./ContextCardFallBack";
 
 interface GroupPageContainerProps {
     groupData: Promise<DetailedGroup & {
-        Note: DetailedNote[]
+        Note: DetailedNote[],
+        TaskInfo: DetailedTaskInfo[],
     } | null>;
 }
 
