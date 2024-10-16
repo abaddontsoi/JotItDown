@@ -7,10 +7,10 @@ const navRoutes = [
         label: 'Tasks',
         route: '/home/tasks',
     },
-    {
-        label: 'Note Categories',
-        route: '/home/categories',
-    },
+    // {
+    //     label: 'Note Categories',
+    //     route: '/home/categories',
+    // },
     // {
     //     label: 'Content Blocks',
     //     route: '/home/content-blocks',

@@ -1,7 +1,7 @@
 import ContextCardFallBack from "@/components/self-defined/ContextCardFallBack";
 import GroupPageContainer from "@/components/self-defined/GroupPageContainer";
 import GroupPageHeader from "@/components/self-defined/GroupPageHeader";
-import { DetailedGroup, PromiseDetailedGroup } from "@/components/self-defined/types";
+import { DetailedGroup, DetailedNote, PromiseDetailedGroup, PromiseDetailedNotes } from "@/components/self-defined/types";
 import { db } from "@/lib/db";
 import { getUser } from "@/lib/getUser";
 import { Group } from "@prisma/client";
@@ -35,7 +35,9 @@ const GroupPage = async (
         )
     }
     try {
-        const group: Promise<DetailedGroup | null> = db.group.findFirstOrThrow({
+        const group: Promise<DetailedGroup & {
+            Note: DetailedNote[]
+        } | null> = db.group.findFirstOrThrow({
             where: {
                 id: params.groupId,
             },
@@ -45,9 +47,30 @@ const GroupPage = async (
                         user: true
                     }
                 },
-                updatedBy: true
+                updatedBy: true,
+                Note: {
+                    include: {
+                        category: true,
+                        contentBlocks: {
+                            include: {
+                                taskInfo: true,
+                            }
+                        },
+                        // optional
+                        // parentNote: {
+                        //     include: {
+                        //         contentBlocks: {
+                        //             include: {
+                        //                 taskInfo: true,
+                        //             }
+                        //         },
+                        //     }
+                        // }
+                    }
+                },
+                TaskInfo: true,
             }
-        })
+        });
 
         return (
             <>

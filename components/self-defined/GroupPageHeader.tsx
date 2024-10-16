@@ -34,8 +34,12 @@ export default function GroupPageHeader(
                 setMode={setInviteMode}
             />
             <div className="flex flex-row items-center justify-between">
-                <p className="font-bold text-6xl">{groupData.name}</p>
-
+                <div className="font-bold text-6xl">
+                    {groupData.name}
+                    <div className="text-gray-500 text-sm font-normal w-[200px] truncate">
+                        {groupData.description}
+                    </div>
+                </div>
                 <div className="flex items-center">
                     {/* Edit group button */}
                     <Button className="flex flex-row gap-1 items-center w-fit"
@@ -60,9 +64,7 @@ export default function GroupPageHeader(
                     </Button>
                 </div>
             </div>
-            <div>
-                {groupData.description}
-            </div>
+
         </>
     )
 }
