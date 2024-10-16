@@ -10,7 +10,7 @@ import { useState } from "react";
 interface UrgentTasksContextCardProp {
     urgentTasks: DetailedTaskInfo[],
     allNotes?: Note[],
-    setViewMode: () => void,
+    setViewMode?: () => void,
     setTaskInfoInView: (task: DetailedTaskInfo | undefined) => void
 }
 const UrgentTasksContextCard = (
