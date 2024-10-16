@@ -16,11 +16,19 @@ import { Dispatch, SetStateAction } from "react";
 import NoteForm from "./NoteForm";
 import { DetailedNote } from "./types";
 
-const NoteDialog = ({existingNote, mode, setMode }: {
-    existingNote?: DetailedNote, 
-    mode: 'Edit' | 'Create' | 'Close'
-    setMode: Dispatch<SetStateAction<"Edit" | "Create" | "Close">>
-}) => {
+interface NoteDialogProp {
+    existingNote?: DetailedNote;
+    mode: 'Edit' | 'Create' | 'Close';
+    groupId?: string;
+    setMode: Dispatch<SetStateAction<"Edit" | "Create" | "Close">>;
+}
+
+const NoteDialog = ({
+    existingNote,
+    mode,
+    groupId,
+    setMode
+}: NoteDialogProp) => {
     return (
         <Dialog open={mode != 'Close'} onOpenChange={() => {
             setMode('Close');
@@ -32,7 +40,12 @@ const NoteDialog = ({existingNote, mode, setMode }: {
                     </DialogTitle>
                 </DialogHeader>
 
-                <NoteForm existingNote={existingNote} mode={mode} setMode={setMode}></NoteForm>
+                <NoteForm
+                    existingNote={existingNote}
+                    mode={mode}
+                    setMode={setMode}
+                    groupId={groupId}
+                ></NoteForm>
             </DialogContent>
         </Dialog>
     )

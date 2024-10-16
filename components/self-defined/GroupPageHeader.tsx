@@ -36,7 +36,7 @@ export default function GroupPageHeader(
             <div className="flex flex-row items-center justify-between">
                 <div className="font-bold text-6xl">
                     {groupData.name}
-                    <div className="text-gray-500 text-sm font-normal">
+                    <div className="text-gray-500 text-sm font-normal w-[200px] truncate">
                         {groupData.description}
                     </div>
                 </div>

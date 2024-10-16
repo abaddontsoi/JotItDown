@@ -33,13 +33,16 @@ const formSchema = z.object({
     categoryId: z.string().optional(), // need passed from parent
     parentNoteId: z.string().optional(),
 
+    groupId: z.string().optional(),
+
     stared: z.boolean(),
     hidden: z.boolean(),
 })
 
-const NoteForm = ({ existingNote, mode, setMode }: {
+const NoteForm = ({ existingNote, mode, groupId, setMode }: {
     existingNote?: DetailedNote,
-    mode: 'Edit' | 'Create' | 'Close'
+    mode: 'Edit' | 'Create' | 'Close',
+    groupId?: string,
     setMode: Dispatch<SetStateAction<"Edit" | "Create" | "Close">>
 }) => {
 
@@ -55,6 +58,8 @@ const NoteForm = ({ existingNote, mode, setMode }: {
             categoryId: existingNote?.categoryId || undefined,
             parentNoteId: existingNote?.parentNoteId || undefined,
             
+            groupId: groupId,
+
             stared: existingNote?.stared || false,
             hidden: existingNote?.hidden || false,
         }

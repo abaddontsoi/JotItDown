@@ -3,10 +3,12 @@ import GroupNotesContainer from "./GroupNotesContainer";
 import GroupPageHeader from "./GroupPageHeader";
 import GroupTasksContainer from "./GroupTasksContainer";
 import GroupTrashCanContainer from "./GroupTrashCanContainer";
-import { DetailedGroup, PromiseDetailedGroup } from "./types";
+import { DetailedGroup, DetailedNote, PromiseDetailedGroup } from "./types";
 
 interface GroupPageContainerProps {
-    groupData: Promise<DetailedGroup | null>;
+    groupData: Promise<DetailedGroup & {
+        Note: DetailedNote[]
+    } | null>;
 }
 
 export default async function GroupPageContainer(
@@ -30,7 +32,10 @@ export default async function GroupPageContainer(
                     <div className="flex flex-col gap-5">
 
                         {/* Group Notes */}
-                        <GroupNotesContainer />
+                        <GroupNotesContainer
+                            notes={group.Note}
+                            groupId={group.id}
+                        />
 
                         {/* Group Tasks */}
                         <GroupTasksContainer />
