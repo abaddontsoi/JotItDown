@@ -1,9 +1,11 @@
+import { Suspense } from "react";
 import { Toaster } from "../ui/toaster";
 import GroupNotesContainer from "./GroupNotesContainer";
 import GroupPageHeader from "./GroupPageHeader";
 import GroupTasksContainer from "./GroupTasksContainer";
 import GroupTrashCanContainer from "./GroupTrashCanContainer";
 import { DetailedGroup, DetailedNote, PromiseDetailedGroup } from "./types";
+import ContextCardFallBack from "./ContextCardFallBack";
 
 interface GroupPageContainerProps {
     groupData: Promise<DetailedGroup & {
@@ -20,31 +22,36 @@ export default async function GroupPageContainer(
 
     return (
         <>
-            {
-                group &&
-                <div className="flex flex-col gap-5">
-                    {/* Dialogs */}
-
-                    {/* Header block */}
-                    <GroupPageHeader groupData={group} />
-
-                    {/* Page content */}
+            <Suspense fallback={<ContextCardFallBack />}>
+                {
+                    group &&
                     <div className="flex flex-col gap-5">
+                        {/* Dialogs */}
 
-                        {/* Group Notes */}
-                        <GroupNotesContainer
-                            notes={group.Note}
-                            groupId={group.id}
-                        />
+                        {/* Header block */}
+                        <GroupPageHeader groupData={group} />
 
-                        {/* Group Tasks */}
-                        <GroupTasksContainer />
+                        {/* Page content */}
+                        <div className="flex flex-col gap-5">
 
-                        {/* Group Trash Can */}
-                        <GroupTrashCanContainer />
+                            {/* Group Notes */}
+                            <GroupNotesContainer
+                                notes={group.Note}
+                                groupId={group.id}
+                            />
+
+                            {/* Group Tasks */}
+                            <GroupTasksContainer
+                                groupId={group.id}
+                                tasks={group.TaskInfo}
+                            />
+
+                            {/* Group Trash Can */}
+                            <GroupTrashCanContainer />
+                        </div>
                     </div>
-                </div>
-            }
+                }
+            </Suspense>
             <Toaster />
         </>
     )

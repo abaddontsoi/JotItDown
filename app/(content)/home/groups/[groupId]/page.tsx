@@ -68,7 +68,15 @@ const GroupPage = async (
                         // }
                     }
                 },
-                TaskInfo: true,
+                TaskInfo: {
+                    include: {
+                        parentContentBlock: {
+                            include: {
+                                parentNote: true
+                            }
+                        }
+                    }
+                },
             }
         });
 

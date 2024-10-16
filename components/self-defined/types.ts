@@ -56,6 +56,7 @@ export type DetailedGroup = Group & {
         user: User
     })[],
     updatedBy: User | null,
+    TaskInfo: DetailedTaskInfo[], 
 }
 
 export type PromiseDetailedGroup = Promise<DetailedGroup[]>

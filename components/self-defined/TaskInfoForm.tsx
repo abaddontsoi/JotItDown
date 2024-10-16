@@ -16,32 +16,32 @@ import { Button } from "../ui/button";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { DetailedTaskInfo, DialogModes } from "./types";
 
 const formSchema = z.object({
     title: z.string().optional(),
     description: z.string(),
     deadline: z.date(),
     status: z.enum(Object.values(TaskInfoStatus) as [string, ...string[]]),
-    parentContentBlockid: z.string(),
+    parentContentBlockid: z.string().optional(),
+
+    groupId: z.string().optional(),
 })
 
 interface TaskInfoFormProp {
     existingTaskInfo?: TaskInfo,
     parentContentBlockid?: string,
     mode: 'Edit' | 'Create' | 'Close',
-    setTargetTaskInfo: Dispatch<SetStateAction<TaskInfo | undefined>>,
-    setMode: Dispatch<SetStateAction<"Edit" | "Create" | "Close">>,
+    groupId?: string,
+    setTargetTaskInfo: (task?: DetailedTaskInfo) => void,
+    setMode: (mode: DialogModes) => void,
 }
-
-function enumToArray<T extends object>(enumObject: T): (keyof T)[] {
-    return Object.values(enumObject) as (keyof T)[]
-}
-
 
 const TaskInfoForm = ({
     mode,
     existingTaskInfo,
     parentContentBlockid,
+    groupId,
     setMode,
     setTargetTaskInfo
 }: TaskInfoFormProp) => {
@@ -49,17 +49,12 @@ const TaskInfoForm = ({
         resolver: zodResolver(formSchema),
         defaultValues: {
             parentContentBlockid: existingTaskInfo?.parentContentBlockid || parentContentBlockid, 
+            groupId: groupId,
         }
     });
 
     const statuses: string[] = Object.values(TaskInfoStatus);
-    // console.log(statuses);
-
-    // TaskInfoStatus
-    // console.dir(TaskInfoStatus, { depth: null });
-
     const router = useRouter();
-
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
             const response = axios.post('/api/task', values).then(response => {

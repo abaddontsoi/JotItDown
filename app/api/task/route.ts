@@ -16,6 +16,7 @@ export async function POST(req: Request) {
         }
 
         const value = await req.json();
+        console.log(value);
 
         const insert = await db.taskInfo.create({
             data: {...value, belongToId: user.id},
