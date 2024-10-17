@@ -23,6 +23,10 @@ const navRoutes = [
         label: 'Budget',
         route: '/home/budget',
     },
+    {   
+        label: 'Inbox',
+        route: '/home/inbox',
+    }
 ];
 
 export {
