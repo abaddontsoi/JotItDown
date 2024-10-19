@@ -1,6 +1,6 @@
 import ContextCardFallBack from "@/components/self-defined/ContextCardFallBack"
 import InboxPageContainer from "@/components/self-defined/InboxPageContainer"
-import { PromiseDetailedInvite } from "@/components/self-defined/types"
+import { PromiseDetailedInvitation } from "@/components/self-defined/types"
 import { db } from "@/lib/db"
 import { getUser } from "@/lib/getUser"
 import Link from "next/link"
@@ -22,9 +22,14 @@ export default async function InboxPage() {
     }
 
 
-    const invites: PromiseDetailedInvite = db.invitation.findMany({
+    const invites: PromiseDetailedInvitation = db.invitation.findMany({
         where: {
             toid: user.id,
+        },
+        include: {
+            to: true,
+            from: true,
+            group: true
         }
     })
 

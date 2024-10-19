@@ -1,12 +1,12 @@
 import { Suspense } from "react"
 import ContextCardFallBack from "./ContextCardFallBack"
 import { Invitation } from "@prisma/client"
-import { PromiseDetailedInvite } from "./types";
+import { DetailedInvitation, PromiseDetailedInvitation } from "./types";
 import InvitationsContextCard from "./InvitationsContextCard";
 import { Toaster } from "../ui/toaster";
 
 interface InboxPageContainerProp {
-    invites: PromiseDetailedInvite
+    invites: PromiseDetailedInvitation
 }
 
 export default async function InboxPageContainer(
@@ -14,7 +14,7 @@ export default async function InboxPageContainer(
         invites
     }: InboxPageContainerProp
 ) {
-    const invitations: Invitation[] = await invites;
+    const invitations: DetailedInvitation[] = await invites;
 
     return (
         <>

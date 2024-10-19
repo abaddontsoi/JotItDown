@@ -1,16 +1,18 @@
 'use client';
 
 import { Invitation } from "@prisma/client";
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import { Button } from "../ui/button";
 import { Check, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { toast } from "../ui/use-toast";
 import { ToastConfirm, ToastError, ToastLoading } from "./toast-object";
 import axios from "axios";
+import { DetailedInvitation } from "./types";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "../ui/hover-card";
 
 interface InvitationCardProp {
-    invitation: Invitation;
+    invitation: DetailedInvitation;
 }
 
 const InvitationCard = (
@@ -26,12 +28,12 @@ const InvitationCard = (
                 id: invitation.id,
                 isAccept: accept,
             }).then(response => {
-                if(response.status == 200) {
+                if (response.status == 200) {
                     toast(ToastConfirm);
                 } else {
                     toast(ToastError);
                 }
-                router.refresh();                    
+                router.refresh();
             }).catch(error => {
                 console.log(error);
                 toast(ToastError);
@@ -43,30 +45,50 @@ const InvitationCard = (
             toast(ToastError);
         }
     }
-    
+
     return (
         <Card>
             <CardHeader>
-                <CardTitle>From {invitation.fromid}</CardTitle>
+                <CardTitle>From {invitation.from.name}</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="flex flex-col items-start gap-2">
                 {/* Invite of ... */}
+                {
+                    invitation.groupId &&
+                    <CardDescription className="w-full">
+                        {invitation.from.name} invites you to group {`\"${invitation.group?.name}\"`}
+                    </CardDescription>
+                }
 
                 {/* Check and Cross button with api calling */}
                 {
-                    !invitation.read && 
+                    !invitation.read &&
                     <div className="w-full flex flex-row-reverse">
-                        <Button variant={'ghost'} onClick={() => handle(true)}>
-                            <Check color="green" />
-                        </Button>
-                        <Button variant={'ghost'} onClick={() => handle(false)}>
-                            <X color="red" />
-                        </Button>
+                        <HoverCard openDelay={200}>
+                            <HoverCardTrigger asChild>
+                                <Button variant={'ghost'} onClick={() => handle(true)}>
+                                    <Check color="green" />
+                                </Button>
+                            </HoverCardTrigger>
+                            <HoverCardContent className="w-fit">
+                                Accept Invite
+                            </HoverCardContent>
+                        </HoverCard>
+                        <HoverCard openDelay={200}>
+                            <HoverCardTrigger asChild>
+                                <Button variant={'ghost'} onClick={() => handle(false)}>
+                                    <X color="red" />
+                                </Button>
+                            </HoverCardTrigger>
+                            <HoverCardContent className="w-fit">
+                                Reject Invite
+                            </HoverCardContent>
+                        </HoverCard>
                     </div>
                 }
                 {
                     invitation.read && (
-                        'Invitation is replied'
+                        'Replied'
                     )
                 }
             </CardContent>
