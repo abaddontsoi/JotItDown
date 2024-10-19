@@ -6,18 +6,18 @@ interface InboxPageContainerProp {
     invites: Promise<Invitation[]>
 }
 
-export default async (
+export default async function InboxPageContainer(
     {
         invites
     }: InboxPageContainerProp
-) => {
+) {
     const invitations: Invitation[] = await invites;
 
     return (
         <>
             <div>
 
-                
+
 
                 <Suspense fallback={<ContextCardFallBack />}>
 

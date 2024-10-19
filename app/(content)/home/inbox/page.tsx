@@ -5,7 +5,8 @@ import { getUser } from "@/lib/getUser"
 import Link from "next/link"
 import { Suspense } from "react"
 
-export default async () => {
+// function must not be anonymous
+export default async function InboxPage(){
     // const session = await auth();
     const user = await getUser();
 
