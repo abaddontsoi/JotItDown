@@ -6,9 +6,10 @@ import { Separator } from "../ui/separator";
 import { Button } from "../ui/button";
 import { Check, X } from "lucide-react";
 import InvitationCard from "./InvitationCard";
+import { DetailedInvitation } from "./types";
 
 interface InvitationsContextCardProp {
-    invitations: Invitation[],
+    invitations: DetailedInvitation[],
 }
 
 
@@ -35,7 +36,7 @@ const InvitationsContextCard = (
                             <InvitationCard key={invitation.id} invitation={invitation}/>
                         ))
                     }
-                    <Separator />
+                    <Separator className="my-5" />
 
                     {/* Read invitations */}
                     {

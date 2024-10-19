@@ -56,9 +56,16 @@ export type DetailedGroup = Group & {
         user: User
     })[],
     updatedBy: User | null,
-    TaskInfo?: DetailedTaskInfo[], 
+    TaskInfo?: DetailedTaskInfo[],
 }
 
 export type PromiseDetailedGroup = Promise<DetailedGroup[]>
 
-export type PromiseDetailedInvite = Promise<Invitation[]>
+export type DetailedInvitation = (Invitation & {
+    to: User,
+    from: User,
+    group: Group | null,
+}
+)
+
+export type PromiseDetailedInvitation = Promise<DetailedInvitation[]>
