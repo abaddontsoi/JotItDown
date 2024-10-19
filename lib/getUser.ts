@@ -11,7 +11,7 @@ export const getUser = async () => {
 
     const userInDB = await db.user.findFirst({
         where: {
-            email: session?.user?.email || null
+            email: session?.user?.email
         }
     })
 
