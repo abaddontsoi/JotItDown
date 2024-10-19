@@ -364,6 +364,8 @@ model GroupUser {
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+
+    @@unique([userId, groupId])
 }
 
 model Invitation {

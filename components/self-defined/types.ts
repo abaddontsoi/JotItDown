@@ -1,4 +1,4 @@
-import { CashAccount, CashFlow, CashFlowCategory, CashFlowMtoMCategory, Category, ContentBlock, Group, GroupUser, Note, TaskInfo, User } from "@prisma/client";
+import { CashAccount, CashFlow, CashFlowCategory, CashFlowMtoMCategory, Category, ContentBlock, Group, GroupUser, Invitation, Note, TaskInfo, User } from "@prisma/client";
 
 export type DialogModes = 'Create' | 'Edit' | 'Close';
 
@@ -60,3 +60,5 @@ export type DetailedGroup = Group & {
 }
 
 export type PromiseDetailedGroup = Promise<DetailedGroup[]>
+
+export type PromiseDetailedInvite = Promise<Invitation[]>
