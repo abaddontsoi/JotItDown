@@ -21,10 +21,10 @@ export default function RootLayout({
         <SidebarProvider>
             {/* this is the navigation side bar */}
             <SidebarComponent />
-            <main className="flex flex-row bg-gray-200">
+            <main className="flex flex-row bg-gray-200 w-screen">
                 {/* <div className="bg-gray-200 w-fit sticky h-screen">
                 </div> */}
-                <div className="bg-slate-100 w-screen p-[20px]">
+                <div className="bg-slate-100 w-full p-[20px]">
                     <SidebarTrigger />
                     {children}
                 </div>
