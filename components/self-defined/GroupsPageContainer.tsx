@@ -16,7 +16,7 @@ export default async function GroupsPageContainer(
 
     return (
         <>
-            <div className="flex flex-col gap-5 w-full">
+            <div className="flex flex-col gap-5">
                 {/* Dialogs */}
 
                 {/* Header block */}

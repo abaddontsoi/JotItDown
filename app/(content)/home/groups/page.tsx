@@ -46,15 +46,14 @@ const GroupsPage = async (
         }
     })
     return (
-        <div className="w-full">
+        <>
             <Suspense fallback={<ContextCardFallBack />} >
                 <GroupsPageContainer
                     userGroups={userGroups}
                 ></GroupsPageContainer>
             </Suspense>
             <Toaster />
-        </div>
-
+        </>
     )
 }
 

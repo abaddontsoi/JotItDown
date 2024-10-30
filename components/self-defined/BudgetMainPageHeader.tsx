@@ -6,7 +6,6 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { DetailedCashFlowRecord, DialogModes } from "./types";
 import { CashFlowType } from "@prisma/client";
 import CashFlowRecordDialog from "./CashFlowRecordDialog";
-import { SidebarTrigger } from "../ui/sidebar";
 
 interface BudgetMainPageHeaderProp {
     setRecordType: Dispatch<SetStateAction<CashFlowType>>
@@ -19,8 +18,7 @@ const BudgetMainPageHeader = ({
 }: BudgetMainPageHeaderProp) => {
     return (
         <>
-            <div className="flex flex-row text-5xl items-center">
-                <SidebarTrigger />
+            <div className="flex flex-row text-5xl items-end justify-between">
                 Budget
                 {/* <div className="flex flex-row gap-2">
                     <Button className="" onClick={() => {
