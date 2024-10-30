@@ -25,7 +25,7 @@ export default function RootLayout({
                 {/* <div className="bg-gray-200 w-fit sticky h-screen">
                 </div> */}
                 <div className="bg-slate-100 w-full p-[20px]">
-                    <SidebarTrigger />
+                    {/* <SidebarTrigger /> */}
                     {children}
                 </div>
                 <Analytics />
