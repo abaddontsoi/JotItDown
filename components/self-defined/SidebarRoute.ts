@@ -1,4 +1,4 @@
-import { FilePen, Home } from "lucide-react";
+import { ArrowRightLeft, DollarSign, FilePen, Home, Inbox, NotebookText, UsersRound } from "lucide-react";
 
 const navRoutes = [
     {
@@ -38,7 +38,7 @@ const routes = [
             {
                 label: 'Notes',
                 route: '/home/notes',
-                icon: Home,
+                icon: NotebookText,
             },
             {
                 label: 'Tasks',
@@ -53,12 +53,12 @@ const routes = [
             {
                 label: 'Groups',
                 route: '/home/groups',
-                icon: Home,
+                icon: UsersRound,
             },
             {
                 label: 'Inbox',
                 route: '/home/inbox',
-                icon: Home,
+                icon: Inbox,
             },
         ]
     },
@@ -68,7 +68,12 @@ const routes = [
             {
                 label: 'Budget',
                 route: '/home/budget',
-                icon: Home,
+                icon: DollarSign,
+            },
+            {
+                label: 'Transactions',
+                route: '/home/transactions',
+                icon: ArrowRightLeft,
             },
         ]
     },
