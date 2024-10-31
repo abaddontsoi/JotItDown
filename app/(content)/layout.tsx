@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import "@/app/globals.css";
 import NavSideBar from "../../components/self-defined/NavSideBar";
 import { Analytics } from "@vercel/analytics/react"
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import SidebarComponent from "@/components/self-defined/Sidebar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,16 +18,16 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <main className="flex flex-row bg-gray-200">
-            {/* this is the navigation side bar */}
-            <NavSideBar />
-            {/* <div className="bg-gray-200 w-fit sticky h-screen">
-            </div> */}
-            <div className="bg-slate-100 w-screen p-[20px]">
-                {children}
-                <Analytics />
-            </div>
-        </main>
+        <SidebarProvider>
+            <main className="flex flex-row bg-gray-200">
+                <SidebarComponent />
+                <div className="bg-slate-100 w-screen p-[20px]">
+                    <SidebarTrigger />
+                    {children}
+                    <Analytics />
+                </div>
+            </main>
+        </SidebarProvider>
     );
 }
 
