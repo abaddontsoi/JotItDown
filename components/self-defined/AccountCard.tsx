@@ -1,19 +1,25 @@
 'use client';
 
-import { CashFlowType } from "@prisma/client";
+import { CashAccount, CashFlowType } from "@prisma/client";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
-import { DetailedAccountRecord, DetailedCashFlowRecord } from "./types";
+import { DetailedAccountRecord, DetailedCashFlowRecord, DialogModes } from "./types";
 import { toDDMMYYYY } from "@/utils/formatters/date-formatter";
 import clsx from "clsx";
+import { Settings } from "lucide-react";
+import { Button } from "../ui/button";
 
 interface AccountCardProp {
-    record: DetailedAccountRecord
+    record: DetailedAccountRecord;
+    setAccount?: (account: CashAccount) => void;
+    setMode?: (mode: DialogModes) => void;
 }
 
 const AccountCard = (
     {
-        record
+        record,
+        setAccount,
+        setMode,
     }: AccountCardProp
 ) => {
     const cashFlows = record.CashFlow;
@@ -48,11 +54,25 @@ const AccountCard = (
 
     return (
         <Card>
-            <CardHeader>
-                <CardTitle>{record.title}</CardTitle>
-                {
-                    record.description && <CardDescription>{record.description}</CardDescription>
-                }
+            <CardHeader className="flex flex-row items-center justify-between">
+                <div>
+                    <CardTitle>{record.title}</CardTitle>
+                    {
+                        record.description && <CardDescription>{record.description}</CardDescription>
+                    }
+                </div>
+                <Button
+                    variant={'ghost'}
+                    onClick={() => {
+                        if (setAccount && setMode) {
+                            setAccount(record);
+                            setMode('Edit');
+                        }
+
+                    }}
+                >
+                    <Settings />
+                </Button>
             </CardHeader>
 
             <CardContent>
