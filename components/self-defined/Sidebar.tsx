@@ -11,15 +11,16 @@ export default function SidebarComponent() {
     return (
         <Sidebar>
             <SidebarHeader>
-                <Button
-                    variant={'link'}
+                <SidebarMenuButton
+                    variant={'outline'}
                     onClick={() => {
                         router.push('/home');
                     }}
-                    className="flex flex-row items-center m-[30px] text-2xl">
+                    // className="flex flex-row items-center m-[30px] text-2xl"
+                >
                     <NotebookPen className="w-10 h-10" />
                     JotItDown
-                </Button>
+                </SidebarMenuButton>
             </SidebarHeader>
             <SidebarContent>
                 {
