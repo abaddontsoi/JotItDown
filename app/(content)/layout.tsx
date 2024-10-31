@@ -19,9 +19,9 @@ export default function RootLayout({
 }>) {
     return (
         <SidebarProvider>
-            <main className="flex flex-row bg-gray-200">
+            <main className="flex flex-row bg-gray-200 w-full">
                 <SidebarComponent />
-                <div className="bg-slate-100 w-screen p-[20px]">
+                <div className="bg-slate-100 w-full p-[20px]">
                     <SidebarTrigger />
                     {children}
                     <Analytics />
