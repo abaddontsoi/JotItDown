@@ -20,7 +20,7 @@ const AccountCardsContainer = (
 ) => {
     const [mode, setMode] = useState<DialogModes>('Close');
     const [accountMode, setAccountMode] = useState<DialogModes>('Close');
-    const [account, setAccount] = useState<CashAccount>();
+    const [account, setAccount] = useState<DetailedAccountRecord>();
     return (
         <>
             <AccountTransactionDialog
@@ -30,7 +30,11 @@ const AccountCardsContainer = (
             />
 
             {/* Create Account Dialog */}
-            <AccountDialog mode={accountMode} setMode={setAccountMode} />
+            <AccountDialog
+                account={account}
+                mode={accountMode}
+                setMode={setAccountMode}
+            />
 
             <div className="flex flex-row items-center justify-between">
                 <h1 className="text-2xl">Accounts</h1>

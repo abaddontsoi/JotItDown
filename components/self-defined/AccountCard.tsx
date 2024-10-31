@@ -11,7 +11,7 @@ import { Button } from "../ui/button";
 
 interface AccountCardProp {
     record: DetailedAccountRecord;
-    setAccount?: (account: CashAccount) => void;
+    setAccount?: (account: DetailedAccountRecord) => void;
     setMode?: (mode: DialogModes) => void;
 }
 

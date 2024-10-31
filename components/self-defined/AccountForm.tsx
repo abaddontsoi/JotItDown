@@ -52,6 +52,13 @@ const AccountForm = (
                         router.refresh();
                     }
                 })
+            } else if (mode == 'Edit') {
+                axios.patch('/api/accounting/account', values).then(response => {
+                    if (response.status == 200) {
+                        toast(ToastConfirm);
+                        router.refresh();
+                    }
+                });
             }
             toast(ToastLoading);
             setMode('Close');
