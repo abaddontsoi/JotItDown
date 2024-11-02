@@ -16,7 +16,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { Textarea } from "../ui/textarea";
 import { toast } from "../ui/use-toast";
-import { ToastConfirm, ToastError, ToastLoading } from "./toast-object";
+import { ToastDone, ToastError, ToastLoading } from "./toast-object";
 
 
 function extractLevelOneKeys<T extends object>(obj: T): Array<keyof T> {
@@ -83,7 +83,7 @@ const NoteForm = ({ existingNote, mode, groupId, setMode }: {
                     if (value.status == 200) {
                         console.log(value);
                         // toast.success(value.data.message);
-                        toast(ToastConfirm);
+                        toast(ToastDone);
                         router.refresh();
                     }
                 })
@@ -101,7 +101,7 @@ const NoteForm = ({ existingNote, mode, groupId, setMode }: {
                     if (value.status == 200) {
                         console.log(value);
                         // toast.success(value.data.message);
-                        toast(ToastConfirm);
+                        toast(ToastDone);
                         router.refresh();
                     }
                 })

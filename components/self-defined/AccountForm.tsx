@@ -6,7 +6,7 @@ import { DetailedAccountRecord, DialogModes } from "./types";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "../ui/use-toast";
-import { ToastConfirm, ToastError, ToastLoading } from "./toast-object";
+import { ToastDone, ToastError, ToastLoading } from "./toast-object";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
@@ -48,14 +48,14 @@ const AccountForm = (
             if (mode == 'Create') {
                 axios.post('/api/accounting/account', values).then(response => {
                     if (response.status == 200) {
-                        toast(ToastConfirm);
+                        toast(ToastDone);
                         router.refresh();
                     }
                 })
             } else if (mode == 'Edit') {
                 axios.patch('/api/accounting/account', values).then(response => {
                     if (response.status == 200) {
-                        toast(ToastConfirm);
+                        toast(ToastDone);
                         router.refresh();
                     }
                 });

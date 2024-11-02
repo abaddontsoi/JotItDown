@@ -71,3 +71,43 @@ export async function POST(req: Request) {
         });
     }
 }
+
+export async function DELETE(req: Request) {
+    try {
+        const user = await getUser();
+
+        if (!user) {
+            return new NextResponse(JSON.stringify({
+                message: 'Unauthorized',
+                // extraInfo: transactionResponse
+            }), {
+                status: 401,
+            })
+
+        }
+
+        const data = await req.json();
+
+        const deleteId = await db.transaction.delete(
+            {
+                where: {
+                    id: data.id || null
+                }
+            }
+        )
+        return new NextResponse(JSON.stringify({
+            message: 'OK',
+            extraInfo: deleteId
+        }), {
+            status: 200,
+        });
+    } catch (error) {
+        console.log(error);
+
+        return new NextResponse(JSON.stringify({
+            message: 'Error',
+        }), {
+            status: 500,
+        });
+    }
+}

@@ -8,7 +8,7 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import axios from "axios";
 import { toast } from "../ui/use-toast";
-import { ToastConfirm, ToastError, ToastLoading } from "./toast-object";
+import { ToastDone, ToastError, ToastLoading } from "./toast-object";
 import { useState } from "react";
 
 interface GroupInviteFormProp {
@@ -34,7 +34,7 @@ export default function GroupInviteForm(
         try {
             axios.post('/api/group/invite', values).then(response => {
                 if (response.status == 200) {
-                    toast(ToastConfirm);
+                    toast(ToastDone);
                     setMode('Close');
                 }
             }).catch(error => {
