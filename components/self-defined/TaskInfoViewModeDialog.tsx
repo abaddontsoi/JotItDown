@@ -9,7 +9,7 @@ import { Label } from "../ui/label";
 import { Button } from "../ui/button";
 import { Check, Save } from "lucide-react";
 import { toast } from "../ui/use-toast";
-import { ToastConfirm, ToastError, ToastLoading } from "./toast-object";
+import { ToastDone, ToastError, ToastLoading } from "./toast-object";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import clsx from "clsx";
@@ -37,7 +37,7 @@ const TaskInfoViewModeDialog = (
             }
             axios.patch('/api/task', value).then(response => {
                 if (response.status == 200) {
-                    toast(ToastConfirm);
+                    toast(ToastDone);
                     router.refresh();
                     // setTaskInfoInView(undefined);
                     // setNewTaskStatus(undefined);

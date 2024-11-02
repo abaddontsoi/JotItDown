@@ -6,7 +6,7 @@ import { Button } from "../ui/button";
 import { Check, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { toast } from "../ui/use-toast";
-import { ToastConfirm, ToastError, ToastLoading } from "./toast-object";
+import { ToastDone, ToastError, ToastLoading } from "./toast-object";
 import axios from "axios";
 import { DetailedInvitation } from "./types";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "../ui/hover-card";
@@ -29,7 +29,7 @@ const InvitationCard = (
                 isAccept: accept,
             }).then(response => {
                 if (response.status == 200) {
-                    toast(ToastConfirm);
+                    toast(ToastDone);
                 } else {
                     toast(ToastError);
                 }

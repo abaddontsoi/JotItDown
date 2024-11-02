@@ -6,6 +6,7 @@ import { DetailedTransaction, DialogModes } from "./types"
 import { CashAccount } from "@prisma/client";
 import { AccountTransactionDialog } from "./AccountTransactionDialog";
 import TransactionsPageContent from "./TransactionsPageContent";
+import { Toaster } from "../ui/toaster";
 
 interface TransactionsPageProp {
     transactions: DetailedTransaction[];
@@ -43,6 +44,7 @@ export default function TransactionsPage(
                 setMode={setMode}
                 setTransaction={setTransaction}
             />
+            <Toaster />
         </>
     )
 }

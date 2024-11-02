@@ -17,7 +17,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { DetailedTaskInfo, DialogModes } from "./types";
 import { toast } from "../ui/use-toast";
-import { ToastConfirm, ToastError, ToastLoading } from "./toast-object";
+import { ToastDone, ToastError, ToastLoading } from "./toast-object";
 
 const formSchema = z.object({
     title: z.string().optional(),
@@ -61,7 +61,7 @@ const TaskInfoForm = ({
             if (mode == 'Create') {
                 const response = axios.post('/api/task', values).then(response => {
                     if (response.status == 200) {
-                        toast(ToastConfirm);
+                        toast(ToastDone);
                         setTargetTaskInfo(undefined);
                         router.refresh();
                         setMode('Close');

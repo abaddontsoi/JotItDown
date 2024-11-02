@@ -12,7 +12,7 @@ import { TaskInfo } from "@prisma/client";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "../ui/alert-dialog";
 import axios from "axios";
 import { toast } from "../ui/use-toast";
-import { ToastConfirm, ToastError, ToastLoading } from "./toast-object";
+import { ToastDone, ToastError, ToastLoading } from "./toast-object";
 import { useRouter } from "next/navigation";
 
 const NoteView = ({ note }:
@@ -35,7 +35,7 @@ const NoteView = ({ note }:
                 }
             }).then(response => {
                 if (response.status == 200) {
-                    toast(ToastConfirm);
+                    toast(ToastDone);
                     router.back();
                 }
             }).catch(error => {

@@ -9,7 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { toast } from "../ui/use-toast";
-import { ToastLoading, ToastError, ToastConfirm } from "./toast-object";
+import { ToastLoading, ToastError, ToastDone } from "./toast-object";
 import axios from "axios";
 import Error from "next/error";
 import { useRouter } from "next/navigation";
@@ -37,7 +37,7 @@ export default function GroupForm(
                 axios.post('/api/group', values).then(
                     response => {
                         if (response.status == 200) {
-                            toast(ToastConfirm);
+                            toast(ToastDone);
                             setMode('Close');
                             setGroup();
                             router.refresh();
@@ -53,7 +53,7 @@ export default function GroupForm(
                 axios.patch('/api/group', values).then(
                     response => {
                         if (response.status == 200) {
-                            toast(ToastConfirm);
+                            toast(ToastDone);
                             setMode('Close');
                             setGroup();
                             router.refresh();

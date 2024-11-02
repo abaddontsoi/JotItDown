@@ -9,7 +9,7 @@ export const ToastLoading = {
     )
 }
 
-export const ToastConfirm = {
+export const ToastDone = {
     description: (
         <div className="flex flex-row items-center gap-1">
             <Check className="transition ease-in-out  w-4 h-4" />

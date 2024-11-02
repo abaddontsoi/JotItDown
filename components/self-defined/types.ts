@@ -71,8 +71,12 @@ export type DetailedInvitation = (Invitation & {
 export type PromiseDetailedInvitation = Promise<DetailedInvitation[]>
 
 export type DetailedTransaction = Transaction & {
-    from: CashFlow & CashAccount,
-    to: CashFlow & CashAccount,
+    from: CashFlow & {
+        account: CashAccount | null,
+    },
+    to: CashFlow & {
+        account: CashAccount | null,
+    },
 }
 
 export type PromiseDetailedTransaction = Promise<DetailedTransaction[]>

@@ -12,7 +12,7 @@ import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import axios from "axios";
 import { toast } from "../ui/use-toast";
-import { ToastConfirm, ToastError, ToastLoading } from "./toast-object";
+import { ToastDone, ToastError, ToastLoading } from "./toast-object";
 import { useRouter } from "next/navigation";
 
 interface AccountTransactionFormProp {
@@ -60,7 +60,7 @@ const AccountTransactionForm = (
             axios.post('/api/accounting/transaction', data).then(
                 response => {
                     if (response.status == 200) {
-                        toast(ToastConfirm);
+                        toast(ToastDone);
                         setMode('Close');
                         router.refresh();
                     }

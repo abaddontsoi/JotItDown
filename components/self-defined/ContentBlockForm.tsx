@@ -17,7 +17,7 @@ import { Check, Plus } from "lucide-react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { toast } from "../ui/use-toast";
-import { ToastConfirm, ToastError, ToastLoading } from "./toast-object";
+import { ToastDone, ToastError, ToastLoading } from "./toast-object";
 
 const formSchema = z.object({
     id: z.string().optional(),
@@ -51,7 +51,7 @@ const ContentBlockForm = ({ mode, existingContentBlock, defaultParentNodeId, set
             if (mode == 'Create') {
                 const postRequest = axios.post('/api/content-block', values).then((value) => {
                     if (value.status == 200) {
-                        toast(ToastConfirm);
+                        toast(ToastDone);
                         router.refresh();
                     }
                 });
@@ -61,7 +61,7 @@ const ContentBlockForm = ({ mode, existingContentBlock, defaultParentNodeId, set
             } else if (mode == 'Edit') {
                 const postRequest = axios.patch('/api/content-block', values).then(value => {
                     if (value.status == 200) {
-                        toast(ToastConfirm);
+                        toast(ToastDone);
                         router.refresh();
                     }
                 });
