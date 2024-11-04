@@ -77,7 +77,7 @@ export default function TransactionsTableCard(
                     <TableRow>
                         {
                             headers.map(header => (
-                                <TableHead className="text-center">{header}</TableHead>
+                                <TableHead key={header} className="text-center">{header}</TableHead>
                             ))
                         }
                     </TableRow>
