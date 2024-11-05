@@ -92,7 +92,7 @@ export default function TransactionsTableCard(
                     {
                         transactions
                         .filter(t => {
-                            return !endDate || !startDate || (t.createdAt < endDate && t.createdAt > startDate);
+                            return !endDate || !startDate || (t.createdAt <= endDate && t.createdAt >= startDate);
                         })
                         .map(t => (
                             <TableRow key={t.id}>
