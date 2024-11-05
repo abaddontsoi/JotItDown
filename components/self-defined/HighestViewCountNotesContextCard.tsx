@@ -4,21 +4,11 @@ import { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent }
 import { DetailedNote, DetailedTaskInfo } from "./types";
 import { useRouter } from "next/navigation";
 import NoteDisplay from "./NoteDisplay";
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { Accordion, AccordionContent, AccordionItem } from "@/components/ui/accordion";
 import { AccordionHeader, AccordionTrigger } from "@radix-ui/react-accordion";
 import { ArrowDown, ArrowUp } from "lucide-react";
 import NoteDialog from "./NoteDialog";
-
-const FallBack = () => {
-    return (
-        <div>
-            Loading
-        </div>
-    )
-}
-
-
 
 const HighestViewCountNotesContextCard = (
     { notes }: {
@@ -36,6 +26,11 @@ const HighestViewCountNotesContextCard = (
     const [mode, setMode] = useState<'Edit' | 'Create' | 'Close'>('Close');
     const [targetNote, setTargetNote] = useState<DetailedNote | undefined>();
 
+    useEffect(
+        () => {
+            router.refresh();
+        }, [notes]
+    );
     return (
         <>
             <NoteDialog
@@ -64,10 +59,10 @@ const HighestViewCountNotesContextCard = (
                             <CardContent className="flex flex-row gap-2 flex-wrap">
                                 {
                                     notes?.map(n => (
-                                        <NoteDisplay 
-                                        key={n.id} note={n}
-                                        setNote={setTargetNote}
-                                        setMode={setMode}
+                                        <NoteDisplay
+                                            key={n.id} note={n}
+                                            setNote={setTargetNote}
+                                            setMode={setMode}
                                         />
                                     ))
                                 }

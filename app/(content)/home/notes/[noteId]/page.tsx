@@ -1,7 +1,6 @@
 import { DetailedNote } from "../../../../../components/self-defined/types";
 import { db } from "@/lib/db";
 import { Suspense } from "react";
-import NoteView from "../../../../../components/self-defined/NoteView";
 import ContextCardFallBack from "@/components/self-defined/ContextCardFallBack";
 import NoteViewContainer from "@/components/self-defined/NoteViewContainer";
 import { getUser } from "@/lib/getUser";
