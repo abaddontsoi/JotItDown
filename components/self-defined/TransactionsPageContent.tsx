@@ -32,7 +32,6 @@ export default function TransactionsPageContent(
                         accounts={accounts}
                         setMode={setMode}
                         setTransaction={setTransaction}
-
                         // Date filters
                     />
                 </CardContent>

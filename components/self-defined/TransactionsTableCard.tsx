@@ -105,8 +105,8 @@ export default function TransactionsTableCard(
                                     <Button
                                         variant={'ghost'}
                                         onClick={() => {
-                                            setMode('Edit');
                                             setTransaction(t);
+                                            setMode('Edit');
                                         }}
                                     >
                                         <PenLine className="w-5 h-5" />
