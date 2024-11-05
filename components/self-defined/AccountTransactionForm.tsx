@@ -1,7 +1,7 @@
 'use client';
 
 import { Account, CashAccount } from "@prisma/client";
-import { DialogModes } from "./types";
+import { DetailedTransaction, DialogModes } from "./types";
 import { z } from "zod";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import { useForm } from "react-hook-form";
@@ -18,58 +18,88 @@ import { useRouter } from "next/navigation";
 interface AccountTransactionFormProp {
     mode: DialogModes;
     allAccounts: CashAccount[],
+    transaction?: DetailedTransaction
     setMode: (mode: DialogModes) => void
 }
 
 const formSchema = z.object({
+    id: z.string().optional(),
+
+    category: z.string(),
+    title: z.string(),
+    value: z.string(),
+    remark: z.string().optional(),
+
     from: z.string(),
     to: z.string(),
 
-    category: z.string(),
-
-    title: z.string(),
-
-    value: z.string(),
-    remark: z.string().optional(),
+    fromCash: z.string().optional(),
+    toCash: z.string().optional(),
 })
 
 const AccountTransactionForm = (
     {
         mode,
         allAccounts,
+        transaction,
         setMode
     }: AccountTransactionFormProp
 ) => {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
+            id: transaction?.id,
+
+            category: transaction?.from.category || '',
+            title: transaction?.from.title || '',
+            value: transaction?.from.value.toString() || '0',
+            remark: transaction?.remark || undefined,
+            
+            from: transaction?.from.accountid || '',
+            to: transaction?.to.accountid || '',
+
+            fromCash: transaction?.fromId,
+            toCash: transaction?.toId,
         }
     });
-
     const router = useRouter();
-
-
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
-            const {value, ...fields} = values;
-            const data = {
-                value: parseFloat(values.value),
-                fields
-            }
-
-            axios.post('/api/accounting/transaction', data).then(
-                response => {
-                    if (response.status == 200) {
-                        toast(ToastDone);
-                        setMode('Close');
-                        router.refresh();
+            if (mode == 'Create') {
+                const { value, ...fields } = values;
+                const data = {
+                    value: parseFloat(values.value),
+                    fields
+                }
+                axios.post('/api/accounting/transaction', data).then(
+                    response => {
+                        if (response.status == 200) {
+                            toast(ToastDone);
+                            setMode('Close');
+                            router.refresh();
+                        }
                     }
-                }
-            ).catch(
-                error => {
-                    toast(ToastError);
-                }
-            );
+                ).catch(
+                    error => {
+                        console.log(error);
+                        toast(ToastError);
+                    }
+                );
+            } else if (mode == 'Edit') {
+                axios.patch('/api/accounting/transaction', values).then(
+                    response => {
+                        if (response.status == 200) {
+                            toast(ToastDone);
+                            setMode('Close');
+                            router.refresh();
+                        }
+                    }
+                ).catch(
+                    error => {
+                        toast(ToastError);
+                    }
+                );
+            }
             toast(ToastLoading);
             setMode('Close');
         } catch (error) {

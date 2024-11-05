@@ -27,6 +27,7 @@ export default function TransactionsPage(
             {/* Required dialogs */}
             <AccountTransactionDialog
                 mode={mode}
+                transaction={selectedTransaction}
                 allAccounts={accounts}
                 setMode={setMode}
             />
