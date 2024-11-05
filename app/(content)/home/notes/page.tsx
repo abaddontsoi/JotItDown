@@ -1,5 +1,5 @@
 import { db } from "@/lib/db";
-import { TaskInfoStatus } from "@prisma/client";
+import { NoteStatus, TaskInfoStatus } from "@prisma/client";
 import NotesMainPage from "../../../../components/self-defined/NotesMainPage";
 import { DetailedNote, DetailedTaskInfo } from "../../../../components/self-defined/types";
 import { Suspense } from "react";
@@ -30,6 +30,7 @@ const NotesPage = async () => {
     const allNotes: Promise<DetailedNote[]> = db.note.findMany({
         where: {
             belongToId: user.id,
+            hidden: false,
         },
         include: {
             category: true,
@@ -79,12 +80,5 @@ const NotesPage = async () => {
     )
 }
 
-// const FallBack = () => {
-//     return (
-//         <div>
-//             Loading
-//         </div>
-//     )
-// }
 export const dynamic = 'force-dynamic';
 export default NotesPage;
