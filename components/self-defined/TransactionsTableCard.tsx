@@ -24,12 +24,17 @@ interface TransactionsTableCardProp {
     accounts: CashAccount[];
     setMode: (mode: DialogModes) => void;
     setTransaction: (transaction?: DetailedTransaction) => void;
+
+    startDate?: Date;
+    endDate?: Date;
 }
 
 export default function TransactionsTableCard(
     {
         transactions,
         accounts,
+        startDate,
+        endDate,
         setMode,
         setTransaction,
     }: TransactionsTableCardProp
@@ -85,7 +90,11 @@ export default function TransactionsTableCard(
 
                 <TableBody>
                     {
-                        transactions.map(t => (
+                        transactions
+                        .filter(t => {
+                            return !endDate || !startDate || (t.createdAt < endDate && t.createdAt > startDate);
+                        })
+                        .map(t => (
                             <TableRow key={t.id}>
                                 <TableCell className="text-center">
                                     {t.createdAt.toDateString()}
