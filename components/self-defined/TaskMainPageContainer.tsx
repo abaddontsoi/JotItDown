@@ -4,12 +4,14 @@ import TasksMainPage from "./TasksMainPage";
 import ContextCardFallBack from "./ContextCardFallBack";
 interface TaskMainPageContainerProp {
     allNotes: Promise<DetailedNote[]>,
+    allTasks: Promise<DetailedTaskInfo[]>,
     fiveMostUrgentTaskInfo: Promise<DetailedTaskInfo[]>,
     overduedTasksInfo?: PromiseOverduedTasksInfos
 }
 const TaskMainPageContainer = async (
     {
         allNotes,
+        allTasks,
         fiveMostUrgentTaskInfo,
         overduedTasksInfo
     }: TaskMainPageContainerProp
@@ -18,6 +20,7 @@ const TaskMainPageContainer = async (
         <Suspense fallback={<ContextCardFallBack />}>
             <TasksMainPage
                 allNotes={await allNotes}
+                allTasks={await allTasks}
                 fiveMostUrgentTaskInfo={await fiveMostUrgentTaskInfo}
                 overduedTasksInfo={await overduedTasksInfo}
             />
