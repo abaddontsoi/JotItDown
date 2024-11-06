@@ -47,6 +47,22 @@ const TasksPage = async () => {
         }
     });
 
+    const tasks = db.taskInfo.findMany({
+        orderBy: {
+            deadline: 'asc'
+        },
+        where: {
+            belongToId: user.id,
+        },
+        include: {
+            parentContentBlock: {
+                include: {
+                    parentNote: true,
+                }
+            }
+        },
+    });
+
     const fiveMostUrgentTaskInfo: PromiseUrgentTasks = db.taskInfo.findMany({
         orderBy: {
             // sort by ascending date
@@ -98,9 +114,12 @@ const TasksPage = async () => {
     return (
         <>
             <Suspense fallback={<ContextCardFallBack />}>
-                <TaskMainPageContainer allNotes={allNotes} 
-                fiveMostUrgentTaskInfo={fiveMostUrgentTaskInfo} 
-                overduedTasksInfo={overduedTasksInfo} />
+                <TaskMainPageContainer
+                    allNotes={allNotes}
+                    allTasks={tasks}
+                    fiveMostUrgentTaskInfo={fiveMostUrgentTaskInfo}
+                    overduedTasksInfo={overduedTasksInfo}
+                />
             </Suspense>
             <Toaster />
         </>
