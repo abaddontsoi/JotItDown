@@ -55,6 +55,7 @@ const TasksMainPage = (
                     {/* All tasks component, it contains filter */}
                     <AllTasksContextCard
                         tasks={allTasks}
+                        setTaskInfoInView={setTaskInfoInView}
                     />
                 </Suspense>
             </div>

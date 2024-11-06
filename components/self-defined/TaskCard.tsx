@@ -10,7 +10,7 @@ import { Badge } from "../ui/badge";
 
 interface TaskCardProp {
     task: DetailedTaskInfo
-    setTaskInfoInView: (task: DetailedTaskInfo | undefined) => void
+    setTaskInfoInView?: (task: DetailedTaskInfo | undefined) => void
 }
 
 const TaskCard = (
@@ -29,7 +29,7 @@ const TaskCard = (
                         <CardTitle className="flex flex-row items-center gap-1">
                             {task.title}
                             <Badge
-                            variant={'outline'}
+                                variant={'outline'}
                             >
                                 {task.status}
                             </Badge>
@@ -40,10 +40,11 @@ const TaskCard = (
                         </CardDescription>
                     </div>
                     <Button
-                    variant={'ghost'}
-                    onClick={() => {
-                        setTaskInfoInView(task);
-                    }}
+                        variant={'ghost'}
+                        onClick={() => {
+                            if (setTaskInfoInView)
+                                setTaskInfoInView(task);
+                        }}
                     >
                         <Eye />
                     </Button>
