@@ -23,6 +23,9 @@ export default async function Transactions() {
                         account: true,
                     }
                 }
+            },
+            orderBy: {
+                createdAt: 'desc'
             }
         }
     )
