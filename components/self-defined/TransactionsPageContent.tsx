@@ -68,7 +68,7 @@ export default function TransactionsPageContent(
                 {/* Place filter components here */}
                 {
                     !filterCollapse &&
-                    <div>
+                    <div className="w-full">
                         <div className="flex gap-2 flex-wrap">
                             <div>
                                 <Label>From Account</Label>
