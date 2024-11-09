@@ -7,6 +7,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { useState } from "react";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
+import { Combobox } from "../ui/combobox";
+import { Undo, X } from "lucide-react";
+import { Button } from "../ui/button";
 
 interface TransactionsPageContentProp {
     transactions: DetailedTransaction[];
@@ -24,24 +27,72 @@ export default function TransactionsPageContent(
     }: TransactionsPageContentProp
 ) {
     const [startDate, setStartDate] = useState<Date>();
-    const [endDate, setEndDate] = useState<Date>(new Date());
+    const [endDate, setEndDate] = useState<Date>();
+    const [fromAccountId, setFromAccountId] = useState<string>();
+    const [toAccountId, setToAccountId] = useState<string>();
 
+    const clrFilter = () => {
+        setStartDate(undefined);
+        setEndDate(undefined);
+        setFromAccountId(undefined);
+        setToAccountId(undefined);
+    }
     return (
         <>
             <Card>
-                <CardHeader className="flex flex-row items-center justify-between">
+                <CardHeader className="flex flex-col items-start">
                     <CardTitle className="w-fit">All transactions</CardTitle>
 
-                    {/* Place a date filter component here */}
-                    <div className="flex gap-2">
+                    {/* Place filter components here */}
+                    <div className="flex gap-2 flex-wrap">
+                        <div>
+                            <Label>From Account</Label>
+                            <Combobox
+                                options={
+                                    accounts.map(ac => (
+                                        {
+                                            value: ac.id,
+                                            label: ac.title,
+                                        }
+                                    ))
+                                }
+                                value={fromAccountId}
+                                onChange={(event) => {
+                                    setFromAccountId(event.toString());
+                                }}
+                            />
+                        </div>
+
+                        <div>
+                            <Label>To Account</Label>
+                            <Combobox
+                                options={
+                                    accounts.map(ac => (
+                                        {
+                                            value: ac.id,
+                                            label: ac.title,
+                                        }
+                                    ))
+                                }
+                                value={toAccountId}
+                                onChange={(event) => {
+                                    setToAccountId(event.toString());
+                                }}
+                            />
+                        </div>
+
                         <div>
                             <Label>Start Date</Label>
                             {/* start date */}
                             <Input
-                                className="w-fit"
+                                className="w-fit h-10"
                                 type="date"
                                 onChange={(event) => {
-                                    setStartDate(new Date(event.target.value));
+                                    if (event.target.value) {
+                                        setStartDate(new Date(event.target.value));
+                                    } else {
+                                        setStartDate(undefined);
+                                    }
                                 }}
                             />
                         </div>
@@ -50,14 +101,27 @@ export default function TransactionsPageContent(
                             <Label>End Date</Label>
                             {/* end date */}
                             <Input
-                                className="w-fit"
+                                className="w-fit h-10"
                                 type="date"
                                 onChange={(event) => {
-                                    setEndDate(new Date(event.target.value));
+                                    if (event.target.value) {
+                                        setEndDate(new Date(event.target.value));
+                                    }
+                                    else {
+                                        setEndDate(undefined);
+                                    }
                                 }}
-                                defaultValue={(new Date()).toISOString()}
                             />
                         </div>
+
+                    </div>
+                    <div className="w-full flex flex-row-reverse">
+                        <Button
+                            variant={'destructive'}
+                            onClick={clrFilter}
+                        >
+                            Clear filter
+                        </Button>
                     </div>
                 </CardHeader>
                 <CardContent>
@@ -70,6 +134,10 @@ export default function TransactionsPageContent(
                         // Date filters
                         startDate={startDate}
                         endDate={endDate}
+
+                        // Account filter
+                        fromAccountId={fromAccountId}
+                        toAccountId={toAccountId}
                     />
                 </CardContent>
             </Card>
