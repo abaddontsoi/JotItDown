@@ -87,15 +87,15 @@ export default function TransactionsTableCard(
             transactions.filter(t => {
                 return !startDate || t.createdAt >= startDate;
             })
-            .filter(t => {
-                return !endDate || t.createdAt <= endDate;
-            })
-            .filter(t => {
-                return !fromAccountId || t.from.accountid == fromAccountId;
-            })
-            .filter(t => {
-                return !toAccountId || t.to.accountid == toAccountId;
-            })
+                .filter(t => {
+                    return !endDate || t.createdAt <= endDate;
+                })
+                .filter(t => {
+                    return !fromAccountId || t.from.accountid == fromAccountId;
+                })
+                .filter(t => {
+                    return !toAccountId || t.to.accountid == toAccountId;
+                })
         );
     }, [
         startDate,
@@ -104,62 +104,60 @@ export default function TransactionsTableCard(
         toAccountId,
     ]);
     return (
-        <>
-            <Table>
-                <TableHeader>
-                    <TableRow>
-                        {
-                            headers.map(header => (
-                                <TableHead key={header} className="text-center">{header}</TableHead>
-                            ))
-                        }
-                    </TableRow>
-                </TableHeader>
-
-                <TableBody>
+        <Table>
+            <TableHeader>
+                <TableRow>
                     {
-                        filtered
-                            .map(t => (
-                                <TableRow key={t.id}>
-                                    <TableCell className="text-center">
-                                        {t.createdAt.toDateString()}
-                                    </TableCell>
-                                    <TableCell className="text-center">
-                                        {t.from.account?.title}
-                                    </TableCell>
-                                    <TableCell className="text-center">
-                                        {t.to.account?.title}
-                                    </TableCell>
-                                    <TableCell className="text-center">
-                                        {/* From's value == To's value */}
-                                        {t.from.value}
-                                    </TableCell>
-                                    <TableCell className="text-center">
-                                        {/* update button */}
-                                        <Button
-                                            variant={'ghost'}
-                                            onClick={() => {
-                                                setTransaction(t);
-                                                setMode('Edit');
-                                            }}
-                                        >
-                                            <PenLine className="w-5 h-5" />
-                                        </Button>
-                                        {/* delete button */}
-                                        <Button
-                                            variant={'ghost'}
-                                            onClick={() => {
-                                                handleDelete(t.id);
-                                            }}
-                                        >
-                                            <Trash2 className="w-5 h-5" />
-                                        </Button>
-                                    </TableCell>
-                                </TableRow>
-                            ))
+                        headers.map(header => (
+                            <TableHead key={header} className="text-center">{header}</TableHead>
+                        ))
                     }
-                </TableBody>
-            </Table>
-        </>
+                </TableRow>
+            </TableHeader>
+
+            <TableBody>
+                {
+                    filtered
+                        .map(t => (
+                            <TableRow key={t.id} className="hover:bg-gray-200 duration-300">
+                                <TableCell className="text-center">
+                                    {t.createdAt.toDateString()}
+                                </TableCell>
+                                <TableCell className="text-center">
+                                    {t.from.account?.title}
+                                </TableCell>
+                                <TableCell className="text-center">
+                                    {t.to.account?.title}
+                                </TableCell>
+                                <TableCell className="text-center">
+                                    {/* From's value == To's value */}
+                                    {t.from.value}
+                                </TableCell>
+                                <TableCell className="text-center">
+                                    {/* update button */}
+                                    <Button
+                                        variant={'ghost'}
+                                        onClick={() => {
+                                            setTransaction(t);
+                                            setMode('Edit');
+                                        }}
+                                    >
+                                        <PenLine className="w-5 h-5" />
+                                    </Button>
+                                    {/* delete button */}
+                                    <Button
+                                        variant={'ghost'}
+                                        onClick={() => {
+                                            handleDelete(t.id);
+                                        }}
+                                    >
+                                        <Trash2 className="w-5 h-5" />
+                                    </Button>
+                                </TableCell>
+                            </TableRow>
+                        ))
+                }
+            </TableBody>
+        </Table>
     )
 }
