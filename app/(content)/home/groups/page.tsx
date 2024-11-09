@@ -50,7 +50,7 @@ const GroupsPage = async (
             <Suspense fallback={<ContextCardFallBack />} >
                 <GroupsPageContainer
                     userGroups={userGroups}
-                ></GroupsPageContainer>
+                />
             </Suspense>
             <Toaster />
         </>
