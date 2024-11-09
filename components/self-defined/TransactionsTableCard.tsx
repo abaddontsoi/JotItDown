@@ -84,9 +84,10 @@ export default function TransactionsTableCard(
 
     useEffect(() => {
         setFiltered(
-            transactions.filter(t => {
-                return !startDate || t.createdAt >= startDate;
-            })
+            transactions
+                .filter(t => {
+                    return !startDate || t.createdAt >= startDate;
+                })
                 .filter(t => {
                     return !endDate || t.createdAt <= endDate;
                 })
