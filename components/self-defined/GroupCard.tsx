@@ -20,7 +20,7 @@ export default function GroupCard(
     }: GroupCardProp
 ) {
     return (
-        <Card className="w-fit transition hover:scale-[1.05] duration-500 hover:border-cyan-400 max-w-[350px]">
+        <Card className="w-fit transition hover:scale-[1.01] duration-500 hover:border-slate-700 max-w-[350px]" draggable>
             <CardHeader className="flex flex-row items-center justify-between gap-10">
                 <div>
                     <div className="text-xl font-bold">
