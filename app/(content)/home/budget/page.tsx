@@ -52,7 +52,7 @@ const BudgetPage = async () => {
                     }
                 },
                 orderBy: {
-                    createdAt: 'asc'
+                    createdAt: 'desc'
                 }
             }
         }

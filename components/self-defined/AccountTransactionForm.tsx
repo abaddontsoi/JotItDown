@@ -1,6 +1,5 @@
 'use client';
 
-import { Account, itemAccount } from "@prisma/client";
 import { DetailedTransaction, DialogModes } from "./types";
 import { z } from "zod";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
@@ -14,10 +13,11 @@ import axios from "axios";
 import { toast } from "../ui/use-toast";
 import { ToastDone, ToastError, ToastLoading } from "./toast-object";
 import { useRouter } from "next/navigation";
+import { ItemAccount } from "@prisma/client";
 
 interface AccountTransactionFormProp {
     mode: DialogModes;
-    allAccounts: itemAccount[],
+    allAccounts: ItemAccount[],
     transaction?: DetailedTransaction
     setMode: (mode: DialogModes) => void
 }
