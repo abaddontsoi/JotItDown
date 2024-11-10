@@ -1,4 +1,4 @@
-import { ArrowRightLeft, DollarSign, FilePen, Home, Inbox, NotebookText, UsersRound } from "lucide-react";
+import { ArrowRightLeft, ChartLine, DollarSign, FilePen, Home, Inbox, NotebookText, UsersRound } from "lucide-react";
 
 const navRoutes = [
     {
@@ -9,14 +9,6 @@ const navRoutes = [
         label: 'Tasks',
         route: '/home/tasks',
     },
-    // {
-    //     label: 'Note Categories',
-    //     route: '/home/categories',
-    // },
-    // {
-    //     label: 'Content Blocks',
-    //     route: '/home/content-blocks',
-    // },
     {
         label: 'Groups',
         route: '/home/groups',
@@ -74,6 +66,11 @@ const routes = [
                 label: 'Transactions',
                 route: '/home/transactions',
                 icon: ArrowRightLeft,
+            },
+            {
+                label: 'Statistics',
+                route: '/home/statistics',
+                icon: ChartLine,
             },
         ]
     },

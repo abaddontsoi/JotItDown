@@ -1,24 +1,23 @@
 'use client';
 
 import { NotebookPen } from "lucide-react";
-import { Button } from "../ui/button";
 import { Sidebar, SidebarHeader, SidebarContent, SidebarGroup, SidebarFooter, SidebarTrigger, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarGroupContent } from "../ui/sidebar";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { routes } from "./SidebarRoute";
+import { cn } from "@/lib/utils";
 
 export default function SidebarComponent() {
     const router = useRouter();
+    const path = usePathname();
     return (
-        <Sidebar>
+        <Sidebar collapsible={'icon'}>
             <SidebarHeader>
                 <SidebarMenuButton
-                    variant={'outline'}
                     onClick={() => {
                         router.push('/home');
                     }}
-                    // className="flex flex-row items-center m-[30px] text-2xl"
                 >
-                    <NotebookPen className="w-10 h-10" />
+                    <NotebookPen />
                     JotItDown
                 </SidebarMenuButton>
             </SidebarHeader>
@@ -37,7 +36,12 @@ export default function SidebarComponent() {
                                                         onClick={() => {
                                                             router.push(c.route);
                                                         }}
-                                                    // asChild
+                                                        className={
+                                                            cn(
+                                                                path == c.route && "underline"
+                                                            )
+                                                        }
+                                                        variant={path == c.route ? 'outline' : 'default'}
                                                     >
                                                         {
                                                             c.icon &&
@@ -55,7 +59,6 @@ export default function SidebarComponent() {
                     ))
                 }
             </SidebarContent>
-            <SidebarFooter />
         </Sidebar>
     )
 }
