@@ -3,7 +3,7 @@ import TransactionsPageContainer from "@/components/self-defined/TransactionsPag
 import { PromiseDetailedTransaction } from "@/components/self-defined/types";
 import { db } from "@/lib/db";
 import { getUser } from "@/lib/getUser"
-import { CashAccount } from "@prisma/client";
+import { ItemAccount } from "@prisma/client";
 import Link from "next/link";
 import { Suspense } from "react";
 
@@ -30,7 +30,7 @@ export default async function Transactions() {
         }
     )
 
-    const cashAccounts: Promise<CashAccount[]> = db.cashAccount.findMany();
+    const ItemAccounts: Promise<ItemAccount[]> = db.ItemAccount.findMany();
 
     if (!user) {
         return (
@@ -44,7 +44,7 @@ export default async function Transactions() {
             <Suspense fallback={<ContextCardFallBack />}>
                 <TransactionsPageContainer
                     transactions={transactions}
-                    accounts={cashAccounts}
+                    accounts={ItemAccounts}
                 />
             </Suspense>
         </>

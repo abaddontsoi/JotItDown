@@ -1,6 +1,6 @@
 'use client';
 
-import { Account, CashAccount } from "@prisma/client";
+import { Account, ItemAccount } from "@prisma/client";
 import { DetailedTransaction, DialogModes } from "./types";
 import { z } from "zod";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
@@ -17,7 +17,7 @@ import { useRouter } from "next/navigation";
 
 interface AccountTransactionFormProp {
     mode: DialogModes;
-    allAccounts: CashAccount[],
+    allAccounts: ItemAccount[],
     transaction?: DetailedTransaction
     setMode: (mode: DialogModes) => void
 }

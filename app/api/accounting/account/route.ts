@@ -19,7 +19,7 @@ export async function POST(req: Request) {
 
         const data = await req.json();
 
-        const insertId = await db.cashAccount.create({
+        const insertId = await db.ItemAccount.create({
             data: {...data, belongToId: user.id}
         })
 
@@ -59,7 +59,7 @@ export async function PATCH(req: Request) {
 
         const {id, ...others} = data;
 
-        const updateId = await db.cashAccount.update({
+        const updateId = await db.ItemAccount.update({
             where: {
                 id: id
             }, 

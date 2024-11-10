@@ -7,7 +7,7 @@ import { DetailedAccountRecord, DialogModes } from "./types";
 import { useState } from "react";
 import { AccountTransactionDialog } from "./AccountTransactionDialog";
 import AccountDialog from "./AccountDialog";
-import { CashAccount } from "@prisma/client";
+import { ItemAccount } from "@prisma/client";
 
 interface AccountCardsContainerProp {
     records: DetailedAccountRecord[]
