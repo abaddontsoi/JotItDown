@@ -38,7 +38,7 @@ const BudgetPage = async () => {
         }
     });
 
-    const allAccountsRecords: PromiseDetailedAccountRecords = db.cashAccount.findMany({
+    const allAccountsRecords: PromiseDetailedAccountRecords = db.itemAccount.findMany({
         where: {
             belongToId: user.id,
         },
@@ -52,7 +52,7 @@ const BudgetPage = async () => {
                     }
                 },
                 orderBy: {
-                    createdAt: 'asc'
+                    createdAt: 'desc'
                 }
             }
         }

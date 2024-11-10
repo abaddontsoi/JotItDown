@@ -1,7 +1,6 @@
 'use client';
 
 import { z } from "zod";
-import { Dialog, DialogContent, DialogTitle } from "../ui/dialog";
 import { DetailedAccountRecord, DialogModes } from "./types";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -24,6 +23,7 @@ const formSchema = z.object({
     id: z.string().optional(),
     title: z.string(),
     description: z.string().optional(),
+    originalCapital: z.number().optional(),
 })
 
 const AccountForm = (
@@ -39,6 +39,7 @@ const AccountForm = (
             id: account?.id || undefined,
             title: account?.title || 'New Account',
             description: account?.description || undefined,
+            originalCapital: account?.originalCapital || undefined,
         }
     });
     const router = useRouter();
@@ -71,26 +72,50 @@ const AccountForm = (
         <>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)}>
-                    {/* title */}
-                    <FormField
-                        name="title"
-                        control={form.control}
-                        render={
-                            ({ field }) => {
-                                return (
-                                    <FormItem className="w-full">
-                                        <FormLabel>Title</FormLabel>
-                                        <FormControl>
-                                            <Input
-                                                // type="number"
-                                                {...field}
-                                            />
-                                        </FormControl>
-                                    </FormItem>
-                                )
+                    <div className="flex items-center gap-2">
+                        {/* title */}
+                        <FormField
+                            name="title"
+                            control={form.control}
+                            render={
+                                ({ field }) => {
+                                    return (
+                                        <FormItem className="w-full">
+                                            <FormLabel>Title</FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    // type="number"
+                                                    {...field}
+                                                />
+                                            </FormControl>
+                                        </FormItem>
+                                    )
+                                }
                             }
-                        }
-                    />
+                        />
+                        {/* Basic capital */}
+                        <FormField
+                            name="originalCapital"
+                            control={form.control}
+                            render={
+                                ({ field }) => {
+                                    return (
+                                        <FormItem className="w-full">
+                                            <FormLabel>Basic capital in {"$"} {"(Optional)"}</FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    type="number"
+                                                    onChange={(event) => {
+                                                        form.setValue("originalCapital", parseFloat(event.target.value) || 0);
+                                                    }}
+                                                />
+                                            </FormControl>
+                                        </FormItem>
+                                    )
+                                }
+                            }
+                        />
+                    </div>
 
                     {/* Description */}
                     <FormField

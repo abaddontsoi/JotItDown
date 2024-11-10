@@ -1,6 +1,6 @@
 'use client';
 
-import { CashAccount, CashFlowType } from "@prisma/client";
+import { CashFlowType } from "@prisma/client";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
 import { DetailedAccountRecord, DetailedCashFlowRecord, DialogModes } from "./types";
@@ -43,6 +43,8 @@ const AccountCard = (
     );
 
     const balance: number = totalDebit - totalCredit;
+
+    const basic = record.originalCapital;
 
     const headers = [
         'Date',
@@ -122,22 +124,67 @@ const AccountCard = (
                             ))
                         }
 
+                        {
+                            basic && (
+                                <TableRow className="text-center">
+                                    <TableCell></TableCell>
+                                    <TableCell className="border-t-4">Basic</TableCell>
+                                    <TableCell className="border-t-4"></TableCell>
+                                    <TableCell className={
+                                        basic ? clsx(
+                                            "text-center border-t-4",
+                                            {
+                                                "border-t-green-400": balance >= 0,
+                                                "border-t-red-400": balance < 0,
+                                            }
+                                        ) : ""
+                                    }>
+                                        {
+                                            basic
+                                        }
+                                    </TableCell>
+                                    <TableCell className={
+                                        basic ? clsx(
+                                            "text-center border-t-4",
+                                            {
+                                                "border-t-green-400": balance >= 0,
+                                                "border-t-red-400": balance < 0,
+                                            }
+                                        ) : ""
+                                    }>
+                                    </TableCell>
+                                </TableRow>
+                            )
+                        }
                         <TableRow className="text-center">
                             <TableCell></TableCell>
-                            <TableCell className="border-t-4">Balance </TableCell>
-                            <TableCell className="border-t-4"></TableCell>
-                            <TableCell className="text-center border-t-4 border-t-green-400">
-                            </TableCell>
-                            <TableCell className={clsx(
-                                "text-center border-t-4",
-                                {
-                                    "border-t-green-400": balance > 0,
-                                    "border-t-red-400": balance <= 0,
+                            <TableCell>Balance</TableCell>
+                            <TableCell></TableCell>
+                            <TableCell
+                                className={
+                                    !basic ? clsx(
+                                        "text-center border-t-4",
+                                        {
+                                            "border-t-green-400": balance >= 0,
+                                            "border-t-red-400": balance < 0,
+                                        }
+                                    ) : ""
                                 }
-                            )}>
-                                {/* {allExpense} */}
+                            >
+                            </TableCell>
+                            <TableCell
+                                className={
+                                    !basic ? clsx(
+                                        "text-center border-t-4",
+                                        {
+                                            "border-t-green-400": balance >= 0,
+                                            "border-t-red-400": balance < 0,
+                                        }
+                                    ) : ""
+                                }
+                            >
                                 {
-                                    balance
+                                    (basic || 0) + balance
                                 }
                             </TableCell>
                         </TableRow>

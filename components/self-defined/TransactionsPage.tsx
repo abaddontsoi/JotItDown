@@ -3,14 +3,14 @@
 import { useState } from "react";
 import TransactionsPageHeader from "./TransactionsPageHeader";
 import { DetailedTransaction, DialogModes } from "./types"
-import { CashAccount } from "@prisma/client";
+import { itemAccount } from "@prisma/client";
 import { AccountTransactionDialog } from "./AccountTransactionDialog";
 import TransactionsPageContent from "./TransactionsPageContent";
 import { Toaster } from "../ui/toaster";
 
 interface TransactionsPageProp {
     transactions: DetailedTransaction[];
-    accounts: CashAccount[];
+    accounts: itemAccount[];
 }
 
 export default function TransactionsPage(
