@@ -3,7 +3,7 @@ import TransactionsPageContainer from "@/components/self-defined/TransactionsPag
 import { PromiseDetailedTransaction } from "@/components/self-defined/types";
 import { db } from "@/lib/db";
 import { getUser } from "@/lib/getUser"
-import { itemAccount } from "@prisma/client";
+import { ItemAccount } from "@prisma/client";
 import Link from "next/link";
 import { Suspense } from "react";
 
@@ -30,7 +30,7 @@ export default async function Transactions() {
         }
     )
 
-    const itemAccounts: Promise<itemAccount[]> = db.itemAccount.findMany();
+    const itemAccounts: Promise<ItemAccount[]> = db.itemAccount.findMany();
 
     if (!user) {
         return (

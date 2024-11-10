@@ -1,6 +1,6 @@
 'use client';
 
-import { itemAccount } from "@prisma/client";
+import { ItemAccount } from "@prisma/client";
 import { DetailedTransaction, DialogModes } from "./types";
 import {
     Table,
@@ -22,7 +22,7 @@ import { useEffect, useState } from "react";
 
 interface TransactionsTableCardProp {
     transactions: DetailedTransaction[];
-    accounts: itemAccount[];
+    accounts: ItemAccount[];
     setMode: (mode: DialogModes) => void;
     setTransaction: (transaction?: DetailedTransaction) => void;
 
