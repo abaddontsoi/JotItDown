@@ -228,8 +228,6 @@ model Category {
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
-
-    // @@unique([name])
 }
 
 model CashAccount {
@@ -237,6 +235,10 @@ model CashAccount {
 
     title       String
     description String?
+
+    isCashSaving Boolean?
+
+    basic Float?
 
     belongToId String @db.ObjectId
     belongTo   User   @relation(fields: [belongToId], references: [id])
@@ -269,10 +271,7 @@ model CashFlow {
 
     CashFlowMtoMCategory CashFlowMtoMCategory[]
 
-    Property Property[]
-
     FromTransaction Transaction[] @relation("CashFlowFromRelation")
-
     ToTransaction Transaction[] @relation("CashFlowToRelation")
 }
 
@@ -324,9 +323,6 @@ model Transaction {
 
 model Property {
     id String @id @default(auto()) @map("_id") @db.ObjectId
-
-    relatedCashRecordId String   @map("relatedCashRecordid") @db.ObjectId
-    relatedCashRecord   CashFlow @relation(fields: [relatedCashRecordId], references: [id])
 
     belongToId String @db.ObjectId
     belongTo   User   @relation(fields: [belongToId], references: [id])
