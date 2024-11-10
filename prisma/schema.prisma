@@ -64,7 +64,7 @@ model User {
     TaskInfo             TaskInfo[]
     Note                 Note[]
     Category             Category[]
-    Account              CashAccount[]
+    Account              ItemAccount[]
     CashFlow             CashFlow[]
     // CashFlowMtoMCategory CashFlowMtoMCategory[]
     // Transaction          Transaction[]
@@ -230,7 +230,7 @@ model Category {
     updatedAt DateTime @updatedAt
 }
 
-model CashAccount {
+model ItemAccount {
     id String @id @default(auto()) @map("_id") @db.ObjectId
 
     title       String
@@ -238,7 +238,7 @@ model CashAccount {
 
     isCashSaving Boolean?
 
-    basic Float?
+    originalCapital Float?
 
     belongToId String @db.ObjectId
     belongTo   User   @relation(fields: [belongToId], references: [id])
@@ -247,6 +247,9 @@ model CashAccount {
     updatedAt DateTime @updatedAt
 
     CashFlow CashFlow[]
+    Property Property[]
+
+    @@map("CashAccount")
 }
 
 model CashFlow {
@@ -261,7 +264,7 @@ model CashFlow {
     isLongTermUsage Boolean @default(false)
 
     accountid String?      @db.ObjectId
-    account   CashAccount? @relation(fields: [accountid], references: [id])
+    account   ItemAccount? @relation(fields: [accountid], references: [id])
 
     belongToId String @db.ObjectId
     belongTo   User   @relation(fields: [belongToId], references: [id])
@@ -272,7 +275,7 @@ model CashFlow {
     CashFlowMtoMCategory CashFlowMtoMCategory[]
 
     FromTransaction Transaction[] @relation("CashFlowFromRelation")
-    ToTransaction Transaction[] @relation("CashFlowToRelation")
+    ToTransaction   Transaction[] @relation("CashFlowToRelation")
 }
 
 model CashFlowCategory {
@@ -323,6 +326,9 @@ model Transaction {
 
 model Property {
     id String @id @default(auto()) @map("_id") @db.ObjectId
+
+    itemAccountId String      @db.ObjectId
+    itemAccount   ItemAccount @relation(fields: [itemAccountId], references: [id])
 
     belongToId String @db.ObjectId
     belongTo   User   @relation(fields: [belongToId], references: [id])
