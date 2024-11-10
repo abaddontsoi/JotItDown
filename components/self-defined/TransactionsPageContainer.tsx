@@ -2,11 +2,11 @@ import { Suspense } from "react";
 import { DetailedTransaction, PromiseDetailedTransaction } from "./types"
 import ContextCardFallBack from "./ContextCardFallBack";
 import TransactionsPage from "./TransactionsPage";
-import { ItemAccount } from "@prisma/client";
+import { itemAccount } from "@prisma/client";
 
 interface TransactionsPageContainerProp {
     transactions: PromiseDetailedTransaction;
-    accounts: Promise<ItemAccount[]>
+    accounts: Promise<itemAccount[]>
 }
 
 export default async function TransactionsPageContainer(

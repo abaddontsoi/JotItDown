@@ -38,7 +38,7 @@ const BudgetPage = async () => {
         }
     });
 
-    const allAccountsRecords: PromiseDetailedAccountRecords = db.ItemAccount.findMany({
+    const allAccountsRecords: PromiseDetailedAccountRecords = db.itemAccount.findMany({
         where: {
             belongToId: user.id,
         },

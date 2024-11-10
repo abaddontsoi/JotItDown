@@ -1,6 +1,6 @@
 'use client';
 
-import { ItemAccount, CashFlowType } from "@prisma/client";
+import { itemAccount, CashFlowType } from "@prisma/client";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
 import { DetailedAccountRecord, DetailedCashFlowRecord, DialogModes } from "./types";

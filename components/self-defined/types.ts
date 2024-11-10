@@ -1,4 +1,4 @@
-import { ItemAccount, CashFlow, CashFlowCategory, CashFlowMtoMCategory, Category, ContentBlock, Group, GroupUser, Invitation, Note, TaskInfo, Transaction, User } from "@prisma/client";
+import { itemAccount, CashFlow, CashFlowCategory, CashFlowMtoMCategory, Category, ContentBlock, Group, GroupUser, Invitation, Note, TaskInfo, Transaction, User } from "@prisma/client";
 
 export type DialogModes = 'Create' | 'Edit' | 'Close';
 
@@ -45,7 +45,7 @@ export type DetailedCashFlowRecord = CashFlow & {
 
 export type PromiseDetailedCashFlowRecords = Promise<DetailedCashFlowRecord[]>
 
-export type DetailedAccountRecord = ItemAccount & {
+export type DetailedAccountRecord = itemAccount & {
     CashFlow: DetailedCashFlowRecord[]
 }
 
@@ -72,10 +72,10 @@ export type PromiseDetailedInvitation = Promise<DetailedInvitation[]>
 
 export type DetailedTransaction = Transaction & {
     from: CashFlow & {
-        account: ItemAccount | null,
+        account: itemAccount | null,
     },
     to: CashFlow & {
-        account: ItemAccount | null,
+        account: itemAccount | null,
     },
 }
 
