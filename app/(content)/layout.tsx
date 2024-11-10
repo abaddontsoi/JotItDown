@@ -4,7 +4,7 @@ import "@/app/globals.css";
 import NavSideBar from "../../components/self-defined/NavSideBar";
 import { Analytics } from "@vercel/analytics/react"
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import SidebarComponent from "@/components/self-defined/Sidebar";
+import SidebarComponent from "@/components/self-defined/SidebarComponent";
 
 const inter = Inter({ subsets: ["latin"] });
 
