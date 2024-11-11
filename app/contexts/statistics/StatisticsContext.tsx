@@ -1,44 +1,21 @@
 // contexts/theme/ThemeContext.tsx
 'use client'
 
+import { DetailedTransaction, DialogModes } from '@/components/self-defined/types';
 import { createContext, ReactNode, useContext, useState } from 'react'
-
-// type Theme = 'light' | 'dark'
-// type ThemeContextType = {
-//   theme: Theme
-//   toggleTheme: () => void
-// }
-
-// const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
-
-// export function ThemeProvider({ children }: { children: React.ReactNode }) {
-//   const [theme, setTheme] = useState<Theme>('light')
-
-//   return (
-//     <ThemeContext.Provider value={{
-//       theme,
-//       toggleTheme: () => setTheme(t => t === 'light' ? 'dark' : 'light')
-//     }}>
-//       {children}
-//     </ThemeContext.Provider>
-//   )
-// }
-
-// export function useTheme() {
-//   const context = useContext(ThemeContext)
-//   if (context === undefined) {
-//     throw new Error('useTheme must be used within ThemeProvider')
-//   }
-//   return context
-// }
 
 // Define context type, they can be variables and functions
 type StatisticsContextType = {
-    pageTitle: string
+    pageTitle: string;
+    dialogMode: DialogModes;
+    transactions?: DetailedTransaction[];
+
+    setDialogMode: (mode: DialogModes) => void;
+    setTransactions: (transactions?: DetailedTransaction[]) => void;
 }
 
 // Create the context
-const StatisticsContext = createContext<StatisticsContextType | undefined>(undefined);
+export const StatisticsContext = createContext<StatisticsContextType | undefined>(undefined);
 
 // Set up provider and set default values, elements inside the provider are consumers 
 // they can access those values in context
@@ -49,11 +26,19 @@ export function StatisticsProvider(
         children: React.ReactNode
     }
 ) {
+    const [mode, setMode] = useState<DialogModes>('Close');
+    const [transactions, setTransactions] = useState<DetailedTransaction[]>();
+
     return (
         <StatisticsContext.Provider
             value={
                 {
-                    pageTitle: 'Statistics'
+                    pageTitle: 'Statistics',
+                    dialogMode: mode,
+                    transactions: transactions,
+
+                    setDialogMode: setMode,
+                    setTransactions: setTransactions,
                 }
             }
         >
