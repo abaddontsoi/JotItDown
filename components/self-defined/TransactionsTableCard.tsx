@@ -103,6 +103,7 @@ export default function TransactionsTableCard(
         endDate,
         fromAccountId,
         toAccountId,
+        transactions,
     ]);
     return (
         <Table>

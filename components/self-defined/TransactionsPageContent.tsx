@@ -4,7 +4,7 @@ import { ItemAccount } from "@prisma/client";
 import { DetailedTransaction, DialogModes } from "./types";
 import TransactionsTableCard from "./TransactionsTableCard";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Combobox } from "../ui/combobox";

@@ -75,8 +75,8 @@ const AccountTransactionForm = (
                     response => {
                         if (response.status == 200) {
                             toast(ToastDone);
-                            setMode('Close');
                             router.refresh();
+                            setMode('Close');
                         }
                     }
                 ).catch(
@@ -90,8 +90,8 @@ const AccountTransactionForm = (
                     response => {
                         if (response.status == 200) {
                             toast(ToastDone);
-                            setMode('Close');
                             router.refresh();
+                            setMode('Close');
                         }
                     }
                 ).catch(

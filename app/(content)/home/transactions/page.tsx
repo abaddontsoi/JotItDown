@@ -50,3 +50,5 @@ export default async function Transactions() {
         </>
     )
 }
+
+export const dynamic = "force-dynamic";
