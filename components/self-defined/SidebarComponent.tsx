@@ -59,6 +59,9 @@ export default function SidebarComponent() {
                     ))
                 }
             </SidebarContent>
+            <SidebarFooter>
+                <SidebarTrigger />
+            </SidebarFooter>
         </Sidebar>
     )
 }

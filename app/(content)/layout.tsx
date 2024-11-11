@@ -22,7 +22,7 @@ export default function RootLayout({
             <main className="flex flex-row bg-gray-200 w-full">
                 <SidebarComponent />
                 <div className="bg-slate-100 w-full p-[20px]">
-                    <SidebarTrigger />
+                    {/* <SidebarTrigger /> */}
                     {children}
                     <Analytics />
                 </div>
