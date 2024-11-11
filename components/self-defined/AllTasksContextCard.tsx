@@ -28,9 +28,11 @@ export default function AllTasksContextCard(
 
             <CardContent>
                 {/* Filtered tasks */}
-                <CardContent>
+                <CardContent className="flex flex-wrap gap-2">
                     {
-                        tasks.map(task => (
+                        tasks
+                        .sort((a,b) => {return -(a.createdAt.valueOf() - b.createdAt.valueOf())})
+                        .map(task => (
                             <TaskCard 
                                 key={task.id}
                                 task={task}

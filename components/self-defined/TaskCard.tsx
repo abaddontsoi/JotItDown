@@ -22,7 +22,7 @@ const TaskCard = (
     const router = useRouter();
     return (
         <>
-            <Card className="w-fit transition duration-200 hover:scale-[1.02]">
+            <Card className="w-fit transition duration-300 hover:scale-[1.02] hover:border-black">
                 {/* list out task title, description and deadline, click to access that note */}
                 <CardHeader className="flex flex-row justify-between items-center">
                     <div>
