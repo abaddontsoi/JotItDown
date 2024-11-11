@@ -38,7 +38,8 @@ export default function SidebarComponent() {
                                                         }}
                                                         className={
                                                             cn(
-                                                                path == c.route && "underline"
+                                                                path == c.route && "underline",
+                                                                "px-5",
                                                             )
                                                         }
                                                         variant={path == c.route ? 'outline' : 'default'}
@@ -47,7 +48,16 @@ export default function SidebarComponent() {
                                                             c.icon &&
                                                             <c.icon />
                                                         }
-                                                        {c.label}
+                                                        <span
+                                                            className={
+                                                                cn(
+                                                                    "flex items-center gap-2",
+                                                                    "transition hover:scale-110 hover:translate-x-2 duration-500",
+                                                                )
+                                                            }
+                                                        >
+                                                            {c.label}
+                                                        </span>
                                                     </SidebarMenuButton>
                                                 </SidebarMenuItem>
                                             )
