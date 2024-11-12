@@ -49,7 +49,7 @@ export async function POST(req: Request) {
                 data: {
                     fromId: creditResponse.id,
                     toId: debitResponse.id,
-                    remark: data.remark,
+                    remark: data.fields.remark,
                     belongToId: user.id,
                 }
             }
