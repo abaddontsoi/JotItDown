@@ -198,7 +198,6 @@ const AccountTransactionForm = (
                                     <FormLabel>Title</FormLabel>
                                     <FormControl>
                                         <Input
-                                            // type="number"
                                             {...field}
                                         />
                                     </FormControl>
@@ -252,7 +251,9 @@ const AccountTransactionForm = (
                 {/* confirm or cancel */}
                 <div className="w-full flex flex-row-reverse mt-3 gap-1">
                     <Button className="basis-1/2" type="submit">Save</Button>
-                    <Button className="basis-1/2 border-2 border-gray-900 bg-white text-red-500 hover:bg-slate-100"
+                    <Button 
+                        variant={'cancel'}
+                        className="basis-1/2"
                         type='reset'
                         onClick={() => {
                             setMode('Close');

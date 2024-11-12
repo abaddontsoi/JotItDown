@@ -39,9 +39,11 @@ export const Combobox = ({ options, value, onChange }: ComboboxProps) => {
           aria-expanded={open}
           className="w-full justify-between"
         >
-          {value
-            ? options.find((option) => option.value === value)?.label
-            : "Select option..."}
+          <span className="w-full max-w-[100px] truncate">
+            {value
+              ? options.find((option) => option.value === value)?.label
+              : "Select option..."}
+          </span>
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
