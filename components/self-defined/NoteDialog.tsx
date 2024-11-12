@@ -31,7 +31,7 @@ const NoteDialog = ({
 }: NoteDialogProp) => {
     return (
         <Dialog open={mode != 'Close'} onOpenChange={() => {
-            setMode('Close');
+            // setMode('Close');
         }}>
             <DialogContent>
                 <DialogHeader>
