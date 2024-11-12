@@ -30,8 +30,8 @@ const ContentBlockDialog = ({ mode, existingContentBlock, defaultParentNodeId, s
             }
             onOpenChange={
                 () => {
-                    setContentBlock(undefined);
-                    setMode('Close');
+                    // setContentBlock(undefined);
+                    // setMode('Close');
                 }
             }
         >
