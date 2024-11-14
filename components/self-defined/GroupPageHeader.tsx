@@ -33,7 +33,7 @@ export default function GroupPageHeader(
                 existingGroup={groupData}
                 setMode={setInviteMode}
             />
-            <div className="flex flex-row items-center justify-between">
+            <div className="flex flex-row items-center justify-between px-4 py-4 sticky wi-full">
                 <div className="font-bold text-6xl">
                     {groupData.name}
                     <div className="text-gray-500 text-sm font-normal w-[200px] truncate">

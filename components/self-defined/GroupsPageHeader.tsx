@@ -24,8 +24,8 @@ export default function GroupsPageHeader(
             existingGroup={group}
             setGroup={setGroup}
             />
-            <div className="flex flex-row items-center justify-between">
-                <p className="font-bold text-6xl">Groups</p>
+            <div className="flex flex-row items-center justify-between p-4 sticky w-full">
+                <p className="text-5xl">Groups</p>
 
                 {/* Create group button */}
                 <Button className="flex flex-row gap-1 items-center"

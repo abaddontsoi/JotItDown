@@ -82,12 +82,10 @@ const GroupPage = async (
         });
 
         return (
-            <>
-                <Suspense fallback={<ContextCardFallBack />}>
-                    {/* container */}
-                    <GroupPageContainer groupData={group} />
-                </Suspense>
-            </>
+            <Suspense fallback={<ContextCardFallBack />}>
+                {/* container */}
+                <GroupPageContainer groupData={group} />
+            </Suspense>
         )
     } catch (error) {
         return (

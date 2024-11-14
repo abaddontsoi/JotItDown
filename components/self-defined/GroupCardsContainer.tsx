@@ -25,7 +25,7 @@ export default function GroupCardsContainer(
                 setMode={setMode}
                 setGroup={setGroup}
             />
-            <div className="flex items-center gap-3 flex-wrap">
+            <div className="flex items-center gap-3 flex-wrap px-8">
                 {
                     groups.map(group => {
                         return (
