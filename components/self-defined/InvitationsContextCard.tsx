@@ -24,29 +24,33 @@ const InvitationsContextCard = (
     const unread = invitations.filter(i => !i.read);
 
     return (
-        <>
-            <Card>
-                <CardHeader>
-                    Invitations
-                </CardHeader>
-                <CardContent>
-                    {/* Unread invitations */}
-                    {
+        <Card>
+            <CardHeader className="text-xl font-semibold">
+                Invitations
+            </CardHeader>
+            <CardContent>
+                {/* Unread invitations */}
+                {
+                    unread.length > 0 ?
                         unread.map(invitation => (
-                            <InvitationCard key={invitation.id} invitation={invitation}/>
-                        ))
-                    }
-                    <Separator className="my-5" />
+                            <InvitationCard key={invitation.id} invitation={invitation} />
+                        )) :
+                        <div>
+                            No unread
+                        </div>
+                }
+                <Separator className="my-5" />
 
+                <div className="flex flex-wrap gap-2">
                     {/* Read invitations */}
                     {
                         read.map(invitation => (
-                            <InvitationCard key={invitation.id} invitation={invitation}/>
+                            <InvitationCard key={invitation.id} invitation={invitation} />
                         ))
                     }
-                </CardContent>
-            </Card>
-        </>
+                </div>
+            </CardContent>
+        </Card>
     )
 }
 
