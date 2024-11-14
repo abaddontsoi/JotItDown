@@ -53,12 +53,10 @@ const NotesPage = async () => {
     });
 
     return (
-        <>
+        <div className="pt-4">
             <Suspense fallback={<ContextCardFallBack />}>
                 <NotesMainPageHeader />
-                <Toaster />
-                <div className="flex flex-col gap-4 mt-4">
-
+                <div className="flex flex-col gap-4 mt-4 px-[40px]">
                     <Suspense fallback={<ContextCardFallBack />}>
                         {/* Display Newest Star Notes * 5 */}
                         <StaredNotesContextCard notes={await allNotes} />
@@ -74,9 +72,9 @@ const NotesPage = async () => {
                         <AllNotes notes={await allNotes} />
                     </Suspense>
                 </div>
-
+                <Toaster />
             </Suspense>
-        </>
+        </div>
     )
 }
 

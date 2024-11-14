@@ -11,14 +11,13 @@ const NotesMainPageHeader = () => {
     return (
         <>
             <NoteDialog mode={mode} setMode={setMode} />
-            <div className="flex flex-row text-5xl items-end justify-between">
+            <div className="flex flex-row text-5xl items-end justify-between px-[20px] sticky top-0">
                 Notes
 
-                <Button className="" onClick={() => {
+                <Button className="gap-1 items-center" onClick={() => {
                     setMode('Create');
                 }}>
-                    <Plus></Plus>
-                    Create new
+                    <Plus className="w-5 h-5"/> Note
                 </Button>
             </div>
         </>
