@@ -26,11 +26,6 @@ const HighestViewCountNotesContextCard = (
     const [mode, setMode] = useState<'Edit' | 'Create' | 'Close'>('Close');
     const [targetNote, setTargetNote] = useState<DetailedNote | undefined>();
 
-    useEffect(
-        () => {
-            router.refresh();
-        }, [notes]
-    );
     return (
         <>
             <NoteDialog
