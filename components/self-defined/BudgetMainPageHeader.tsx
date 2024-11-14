@@ -17,10 +17,9 @@ const BudgetMainPageHeader = ({
     setRecordType,
 }: BudgetMainPageHeaderProp) => {
     return (
-        <>
-            <div className="flex flex-row text-5xl items-end justify-between">
-                Budget
-                {/* <div className="flex flex-row gap-2">
+        <div className="flex flex-row text-5xl items-end justify-between w-full px-4 py-2">
+            Budget
+            {/* <div className="flex flex-row gap-2">
                     <Button className="" onClick={() => {
                         setRecordType(CashFlowType.Debit);
                         setMode('Create');
@@ -36,8 +35,7 @@ const BudgetMainPageHeader = ({
                         Credit
                     </Button>
                 </div> */}
-            </div>
-        </>
+        </div>
     )
 }
 

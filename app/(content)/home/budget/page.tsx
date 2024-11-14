@@ -59,7 +59,7 @@ const BudgetPage = async () => {
     })
 
     return (
-        <>
+        <div>
             <Suspense fallback={<ContextCardFallBack />}>
                 <BudgetMainPageContainer
                     allDetailedCashFlow={allDetailedCashFlow}
@@ -67,7 +67,7 @@ const BudgetPage = async () => {
                 />
             </Suspense>
             <Toaster />
-        </>
+        </div>
     )
 }
 
