@@ -16,9 +16,8 @@ export default function TransactionsPageHeader(
     }: TransactionsPageHeaderProp
 ) {
     return (
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between w-full px-4 py-2">
             <h1 className="text-5xl">Transactions</h1>
-
             <div>
                 <Button
                     className="flex items-center gap-1"
@@ -26,7 +25,7 @@ export default function TransactionsPageHeader(
                         setMode('Create');
                     }}
                 >
-                    <Plus /> Transaction
+                    <Plus className="w-5 h-5"/> Transaction
                 </Button>
             </div>
         </div>

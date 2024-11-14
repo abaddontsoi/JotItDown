@@ -4,6 +4,7 @@ import { Invitation } from "@prisma/client"
 import { DetailedInvitation, PromiseDetailedInvitation } from "./types";
 import InvitationsContextCard from "./InvitationsContextCard";
 import { Toaster } from "../ui/toaster";
+import InboxMainPageHeader from "@/app/(content)/home/inbox/_components/InboxMainPageHeader";
 
 interface InboxPageContainerProp {
     invites: PromiseDetailedInvitation
@@ -19,12 +20,16 @@ export default async function InboxPageContainer(
     return (
         <>
             <div>
-                {/* For invitations */}
-                <Suspense fallback={<ContextCardFallBack />}>
-                    <InvitationsContextCard invitations={invitations} />
-                </Suspense>
+                <InboxMainPageHeader />
 
-                {/* For other inboxes */}
+                <div className="px-4">
+                    {/* For invitations */}
+                    <Suspense fallback={<ContextCardFallBack />}>
+                        <InvitationsContextCard invitations={invitations} />
+                    </Suspense>
+
+                    {/* For other inboxes */}
+                </div>
             </div>
             <Toaster />
         </>

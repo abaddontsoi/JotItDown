@@ -21,7 +21,7 @@ const AccountCardsContainer = (
     const [accountMode, setAccountMode] = useState<DialogModes>('Close');
     const [account, setAccount] = useState<DetailedAccountRecord>();
     return (
-        <>
+        <div>
             <AccountTransactionDialog
                 allAccounts={records}
                 mode={mode}
@@ -35,7 +35,7 @@ const AccountCardsContainer = (
                 setMode={setAccountMode}
             />
 
-            <div className="flex flex-row items-center justify-between">
+            <div className="flex flex-row items-center justify-between w-full px-4 bg-slate-100 py-2">
                 <h1 className="text-2xl">Accounts</h1>
 
                 <div className="flex flex-row items-center justify-between gap-2">
@@ -59,17 +59,19 @@ const AccountCardsContainer = (
                 </div>
             </div>
 
-            {
-                records.map(record => (
-                    <AccountCard
-                        key={record.id}
-                        record={record}
-                        setAccount={setAccount}
-                        setMode={setAccountMode}
-                    />
-                ))
-            }
-        </>
+            <div className="flex flex-col gap-2 px-4">
+                {
+                    records.map(record => (
+                        <AccountCard
+                            key={record.id}
+                            record={record}
+                            setAccount={setAccount}
+                            setMode={setAccountMode}
+                        />
+                    ))
+                }
+            </div>
+        </div>
     )
 }
 

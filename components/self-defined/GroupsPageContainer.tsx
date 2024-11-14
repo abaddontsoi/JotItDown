@@ -15,16 +15,12 @@ export default async function GroupsPageContainer(
     const groups = await userGroups;
 
     return (
-        <>
-            <div className="flex flex-col gap-5">
-                {/* Dialogs */}
+        <div className="flex flex-col gap-5">
+            {/* Header block */}
+            <GroupsPageHeader />
 
-                {/* Header block */}
-                <GroupsPageHeader />
-
-                {/* Page content */}
-                <GroupCardsContainer groups={groups} />
-            </div>
-        </>
+            {/* Page content */}
+            <GroupCardsContainer groups={groups} />
+        </div>
     )
 }

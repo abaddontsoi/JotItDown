@@ -6,7 +6,7 @@ export default function StatisticsPageBody() {
     const ctx = useStatistics();
 
     return (
-        <div>
+        <div className="px-4">
             {
                 ctx.transactions && ctx.transactions.map(t => {
                     return (

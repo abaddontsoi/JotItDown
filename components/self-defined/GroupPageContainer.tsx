@@ -33,7 +33,7 @@ export default async function GroupPageContainer(
                         <GroupPageHeader groupData={group} />
 
                         {/* Page content */}
-                        <div className="flex flex-col gap-5">
+                        <div className="flex flex-col gap-5 px-5">
 
                             {/* Group Notes */}
                             <GroupNotesContainer

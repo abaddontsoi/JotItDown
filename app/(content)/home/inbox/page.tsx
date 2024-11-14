@@ -34,14 +34,12 @@ export default async function InboxPage() {
     })
 
     return (
-        <>
-            <div>
-                <Suspense fallback={<ContextCardFallBack />}>
-                    <InboxPageContainer
-                        invites={invites}
-                    />
-                </Suspense>
-            </div>
-        </>
+        <div>
+            <Suspense fallback={<ContextCardFallBack />}>
+                <InboxPageContainer
+                    invites={invites}
+                />
+            </Suspense>
+        </div>
     )
 }
