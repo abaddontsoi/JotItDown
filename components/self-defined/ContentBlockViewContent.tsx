@@ -38,12 +38,12 @@ const ContentBlockViewContent = (
     }
     return (
         <>
-            <Card className="hover:bg-gray-100 
+            <Card className="
+            hover:bg-gray-100 
             duration-200 
             hover:border-gray-800 
-            hover:border-2
-            hover:-translate-x-2
-            hover:scale-[1.01]
+            border-2
+            w-fit
             "
             >
                 <CardHeader>

@@ -45,20 +45,6 @@ const NoteViewPage = async ({ params }: {
         }
     });
 
-    // move to client component using API ?
-    // if (note != null) {
-    //     db.note.update({
-    //         where: {
-    //             id: params.noteId,
-    //         },
-    //         data: {
-    //             readCount: {
-    //                 increment: 1
-    //             }
-    //         }
-    //     });
-    // }
-
     return (
         <Suspense fallback={<ContextCardFallBack />}>
             <NoteViewContainer PromiseNote={note} />

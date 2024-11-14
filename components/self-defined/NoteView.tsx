@@ -48,7 +48,7 @@ const NoteView = ({ note }:
     }
     if (note != null) {
         return (
-            <>
+            <div className="w-full">
                 {/* hidden content block adder dialog */}
                 <ContentBlockDialog
                     mode={contentBlockDialogMode}
@@ -67,9 +67,8 @@ const NoteView = ({ note }:
                     setTargetTaskInfo={setTargetTaskInfo}
                 />
 
-
                 {/* Title */}
-                <div className="flex flex-row justify-between">
+                <div className="flex flex-row justify-between sticky top-0 bg-slate-100 w-full p-[20px]">
                     <p className="text-6xl font-bold font-mono">
                         {note.title || 'No title'}
                     </p>
@@ -96,7 +95,7 @@ const NoteView = ({ note }:
                                 <AlertDialogFooter>
                                     <AlertDialogCancel>Cancel</AlertDialogCancel>
                                     <AlertDialogAction
-                                    onClick={() => confirmDelete(note.id)}
+                                        onClick={() => confirmDelete(note.id)}
                                     >Delete</AlertDialogAction>
                                 </AlertDialogFooter>
                             </AlertDialogContent>
@@ -113,26 +112,23 @@ const NoteView = ({ note }:
                     </div>
                 </div>
 
-
-                <ScrollArea className="h-[800px] mt-4">
-                    {/* Content Blocks */}
-                    <div className="flex flex-col gap-2 p-4">
-                        {
-                            note.contentBlocks?.map(block => {
-                                return (
-                                    <ContentBlockViewContent
-                                        key={block.id}
-                                        contentBlock={block}
-                                        setMode={setMode}
-                                        setTaskInfoDialogMode={setTaskInfoDialogMode}
-                                        setContentBlock={setSelectedContentBlock}
-                                    />
-                                )
-                            })
-                        }
-                    </div>
-                </ScrollArea>
-            </>
+                {/* Content Blocks */}
+                <div className="flex flex-row flex-wrap gap-2 p-[40px] mt-4">
+                    {
+                        note.contentBlocks?.map(block => {
+                            return (
+                                <ContentBlockViewContent
+                                    key={block.id}
+                                    contentBlock={block}
+                                    setMode={setMode}
+                                    setTaskInfoDialogMode={setTaskInfoDialogMode}
+                                    setContentBlock={setSelectedContentBlock}
+                                />
+                            )
+                        })
+                    }
+                </div>
+            </div>
         )
     }
 }
