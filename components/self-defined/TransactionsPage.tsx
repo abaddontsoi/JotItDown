@@ -5,9 +5,8 @@ import TransactionsPageHeader from "./TransactionsPageHeader";
 import { DetailedTransaction, DialogModes } from "./types"
 import { ItemAccount } from "@prisma/client";
 import { AccountTransactionDialog } from "./AccountTransactionDialog";
-import TransactionsPageContent from "./TransactionsPageContent";
+import AllTransactions from "./AllTransactions";
 import { Toaster } from "../ui/toaster";
-import { useRouter } from "next/navigation";
 
 interface TransactionsPageProp {
     transactions: DetailedTransaction[];
@@ -40,12 +39,14 @@ export default function TransactionsPage(
             />
 
             {/* Content */}
-            <TransactionsPageContent
-                transactions={transactions}
-                accounts={accounts}
-                setMode={setMode}
-                setTransaction={setTransaction}
-            />
+            <div className="px-4">
+                <AllTransactions
+                    transactions={transactions}
+                    accounts={accounts}
+                    setMode={setMode}
+                    setTransaction={setTransaction}
+                />
+            </div>
             <Toaster />
         </>
     )

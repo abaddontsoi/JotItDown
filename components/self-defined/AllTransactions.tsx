@@ -18,7 +18,7 @@ interface TransactionsPageContentProp {
     setTransaction: (transaction?: DetailedTransaction) => void;
 }
 
-export default function TransactionsPageContent(
+export default function AllTransactions(
     {
         transactions,
         accounts,
@@ -45,7 +45,7 @@ export default function TransactionsPageContent(
     return (
         <Card className="my-2">
             <CardHeader className="flex flex-col items-start">
-                <CardTitle className="w-full flex justify-between">
+                <CardTitle className="w-full flex justify-between items-center">
                     All transactions
                     <Button
                         variant={'ghost'}
