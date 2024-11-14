@@ -5,8 +5,8 @@ import { DetailedTaskInfo, DetailedNote, OverduedTasksInfo } from "./types";
 import UrgentTasksContextCard from "./UrgentTasksContextCard";
 import ContextCardFallBack from "./ContextCardFallBack";
 import TaskInfoViewModeDialog from "./TaskInfoViewModeDialog";
-import { TaskInfo } from "@prisma/client";
 import AllTasksContextCard from "./AllTasksContextCard";
+import TasksMainPageHeader from "@/app/(content)/home/tasks/_components/TasksMainPageHeader";
 
 interface TasksMainPageProp {
     allNotes: DetailedNote[],
@@ -34,7 +34,8 @@ const TasksMainPage = (
                 setTaskInfoInView={setTaskInfoInView}
             />
 
-            <div className="flex flex-col gap-2">
+            <TasksMainPageHeader />
+            <div className="flex flex-col gap-2 px-[40px]">
                 <Suspense fallback={<ContextCardFallBack />}>
                     <UrgentTasksContextCard
                         allNotes={allNotes}
