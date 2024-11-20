@@ -23,7 +23,7 @@ const NoteDisplay = ({ note, setMode, setNote }: NoteDisplayProp) => {
     ) || 0;
 
     return (
-        <Card className="max-w-[500px] hover:scale-[1.1] duration-200 hover:border-2 hover:shadow-md hover:border-slate-500">
+        <Card className="max-w-[500px] hover:scale-[1.01] duration-200 border-2 hover:shadow-md hover:border-slate-500">
             <CardHeader className="flex flex-row gap-4 justify-between text-nowrap items-center">
                 <CardTitle className="flex flex-row items-center">
                     <Button

@@ -149,6 +149,7 @@ export async function PATCH(req: Request) {
         });
 
     } catch (error) {
+        console.log(error);
         return new NextResponse(JSON.stringify({
             message: 'Failed'
         }), {

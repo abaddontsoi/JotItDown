@@ -5,6 +5,7 @@ import ContextCardFallBack from "@/components/self-defined/ContextCardFallBack";
 import NoteViewContainer from "@/components/self-defined/NoteViewContainer";
 import { getUser } from "@/lib/getUser";
 import Link from "next/link";
+import { Group } from "@prisma/client";
 
 const NoteViewPage = async ({ params }: {
     params: {
@@ -45,9 +46,11 @@ const NoteViewPage = async ({ params }: {
         }
     });
 
+    const groups: Promise<Group[]> = db.group.findMany();
+
     return (
         <Suspense fallback={<ContextCardFallBack />}>
-            <NoteViewContainer PromiseNote={note} />
+            <NoteViewContainer PromiseNote={note} PromiseGroups={groups}/>
         </Suspense>
     )
 }
