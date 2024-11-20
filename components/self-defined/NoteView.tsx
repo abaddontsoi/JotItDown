@@ -1,27 +1,30 @@
 'use client';
 
-import { DetailedContentBlock, DetailedNote } from "./types";
+import { DetailedContentBlock, DetailedNote, DialogModes } from "./types";
 import ContentBlockViewContent from "./ContentBlockViewContent";
 import { Button } from "../ui/button";
-import { Plus, Trash } from "lucide-react";
+import { Plus, Share, Trash } from "lucide-react";
 import ContentBlockDialog from "./ContentBlockDialog";
 import { useState } from "react";
 import { ScrollArea } from "../ui/scroll-area";
 import TaskInfoDialog from "./TaskInfoDialog";
-import { TaskInfo } from "@prisma/client";
+import { Group, TaskInfo } from "@prisma/client";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "../ui/alert-dialog";
 import axios from "axios";
 import { toast } from "../ui/use-toast";
 import { ToastDone, ToastError, ToastLoading } from "./toast-object";
 import { useRouter } from "next/navigation";
+import NoteShareDialog from "./NoteShareDialog";
 
-const NoteView = ({ note }:
+const NoteView = ({ note, groups }:
     {
         note: DetailedNote | null,
+        groups: Group[],
     }
 ) => {
-    const [contentBlockDialogMode, setMode] = useState<'Edit' | 'Create' | 'Close'>('Close');
-    const [taskInfoDialogMode, setTaskInfoDialogMode] = useState<'Edit' | 'Create' | 'Close'>('Close');
+    const [contentBlockDialogMode, setMode] = useState<DialogModes>('Close');
+    const [taskInfoDialogMode, setTaskInfoDialogMode] = useState<DialogModes>('Close');
+    const [noteShareMode, setNoteShareMode] = useState<DialogModes>('Close');
     const [selectedContentBlock, setSelectedContentBlock] = useState<DetailedContentBlock>();
     const [targetTaskInfo, setTargetTaskInfo] = useState<TaskInfo | undefined>();
 
@@ -67,6 +70,14 @@ const NoteView = ({ note }:
                     setTargetTaskInfo={setTargetTaskInfo}
                 />
 
+                {/* Share note dialog */}
+                <NoteShareDialog
+                    note={note}
+                    groups={groups}
+                    mode={noteShareMode}
+                    setMode={setNoteShareMode}
+                />
+
                 {/* Title */}
                 <div className="flex flex-row justify-between sticky top-0 bg-slate-100 w-full p-[20px]">
                     <p className="text-6xl font-bold font-mono">
@@ -102,6 +113,14 @@ const NoteView = ({ note }:
                         </AlertDialog>
 
                         <Button
+                            variant={'ghost'}
+                            className="w-fit"
+                            onClick={() => setNoteShareMode('Create')}
+                        >
+                            <Share />
+                        </Button>
+
+                        <Button
                             onClick={() => {
                                 setMode('Create');
                             }}
@@ -129,6 +148,12 @@ const NoteView = ({ note }:
                     }
                 </div>
             </div>
+        )
+    } else {
+        return (
+            <>
+                No such note
+            </>
         )
     }
 }
