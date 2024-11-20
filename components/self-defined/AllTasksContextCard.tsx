@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import TaskCard from "./TaskCard";
 import { DetailedTaskInfo } from "./types";
@@ -15,6 +16,10 @@ export default function AllTasksContextCard(
         setTaskInfoInView,
     }: AllTasksContextCardProp
 ) {
+    const [mode, setMode] = useState<boolean>(false);
+    const [filtered, setFiltered] = useState<DetailedTaskInfo[]>(tasks);
+
+    
     return (
         <Card>
             <CardHeader>
