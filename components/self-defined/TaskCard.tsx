@@ -53,16 +53,20 @@ const TaskCard = (
                     <CardDescription className="min-w-[200px] max-w-[250px] truncate">
                         {task.description}
                     </CardDescription>
-                    <Button
-                        variant={'link'}
-                        onClick={() => {
-                            router.push('/home/notes/' + task.parentContentBlock?.parentNote?.id.toString());
-                        }}
-                        className="underline flex flex-row gap-1"
-                    >
-                        {task.parentContentBlock?.parentNote?.title}
-                        <MoveRight className="w-4 h-4" />
-                    </Button>
+                    {
+                        task.parentContentBlock?.parentNote?.id && (
+                            <Button
+                                variant={'link'}
+                                onClick={() => {
+                                    router.push('/home/notes/' + task.parentContentBlock?.parentNote?.id.toString());
+                                }}
+                                className="underline flex flex-row gap-1"
+                            >
+                                {task.parentContentBlock?.parentNote?.title}
+                                <MoveRight className="w-4 h-4" />
+                            </Button>
+                        )
+                    }
                 </CardContent>
             </Card>
         </>
