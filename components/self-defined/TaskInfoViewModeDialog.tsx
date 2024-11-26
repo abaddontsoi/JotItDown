@@ -67,34 +67,10 @@ const TaskInfoViewModeDialog = (
                     </DialogHeader>
 
                     <div>
-                        <pre>
-                            {
-                                task?.description
-                            }
-                        </pre>
+                        {
+                            task?.description
+                        }
                     </div>
-
-                    {/* <div>
-                        <Label>Task Status</Label>
-                        <Combobox
-                            value={taskStatus}
-                            onChange={(value) => {
-                                console.log(value);
-                                setNewTaskStatus(value);
-                            }}
-                            options={
-                                statusOptions.map(
-                                    item =>
-                                    (
-                                        {
-                                            value: item,
-                                            label: item,
-                                        }
-                                    )
-                                )
-                            }
-                        />
-                    </div> */}
 
                     <div>
                         <Label>Set to</Label>
