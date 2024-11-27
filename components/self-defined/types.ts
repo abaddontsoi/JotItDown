@@ -6,8 +6,8 @@ export type DetailedTaskInfo = TaskInfo & {
     parentContentBlock: (ContentBlock & {
         parentNote: Note | null;
     }) | null;
-    belongTo: User | null;
-    group: Group | null;
+    belongTo?: User | null;
+    group?: Group | null;
 }
 export type OverduedTasksInfo = DetailedTaskInfo
 
