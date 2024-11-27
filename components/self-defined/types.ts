@@ -7,6 +7,7 @@ export type DetailedTaskInfo = TaskInfo & {
         parentNote: Note | null;
     }) | null;
     belongTo: User | null;
+    group: Group | null;
 }
 export type OverduedTasksInfo = DetailedTaskInfo
 

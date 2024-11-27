@@ -26,7 +26,8 @@ export default async function Task({
                     parentNote: true,
                 }
             },
-            belongTo: true
+            belongTo: true,
+            group: true,
         }
     })
 
