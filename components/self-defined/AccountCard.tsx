@@ -8,6 +8,7 @@ import { toDDMMYYYY } from "@/utils/formatters/date-formatter";
 import clsx from "clsx";
 import { Settings } from "lucide-react";
 import { Button } from "../ui/button";
+import { useState } from "react";
 
 interface AccountCardProp {
     record: DetailedAccountRecord;
@@ -53,7 +54,10 @@ const AccountCard = (
         'Transfer Out',
     ]
 
-
+    const [collapse, setCollapse] = useState<boolean>(true);
+    const switchCollapse = () => {
+        setCollapse(prev => !prev);
+    }
     return (
         <Card>
             <CardHeader className="flex flex-row items-center justify-between">
@@ -63,21 +67,31 @@ const AccountCard = (
                         record.description && <CardDescription>{record.description}</CardDescription>
                     }
                 </div>
-                <Button
-                    variant={'ghost'}
-                    onClick={() => {
-                        if (setAccount && setMode) {
-                            setAccount(record);
-                            setMode('Edit');
+                <div className="flex item-center">
+                    <Button
+                        variant={'ghost'}
+                        onClick={switchCollapse}
+                    >
+                        {
+                            collapse ? 'Expand' : 'Collapse'
                         }
+                    </Button>
+                    <Button
+                        variant={'ghost'}
+                        onClick={() => {
+                            if (setAccount && setMode) {
+                                setAccount(record);
+                                setMode('Edit');
+                            }
 
-                    }}
-                >
-                    <Settings />
-                </Button>
+                        }}
+                    >
+                        <Settings />
+                    </Button>
+                </div>
             </CardHeader>
 
-            <CardContent>
+            <CardContent className="overflow-y-auto max-h-[300px]">
                 <Table>
                     <TableHeader>
                         <TableRow>
@@ -96,7 +110,7 @@ const AccountCard = (
 
                     <TableBody>
                         {
-                            cashFlows.map((cash, index) => (
+                            !collapse && cashFlows.map((cash, index) => (
                                 <TableRow key={cash.id} className="text-center">
                                     <TableCell></TableCell>
                                     <TableCell>
