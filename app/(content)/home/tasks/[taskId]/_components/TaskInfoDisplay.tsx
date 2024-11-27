@@ -5,13 +5,14 @@ import { DetailedTaskInfo } from "@/components/self-defined/types";
 import { Button } from "@/components/ui/button";
 import { TaskInfoStatus } from "@prisma/client";
 import { Pen } from "lucide-react";
+import Link from "next/link";
 
 interface TaskInfoDisplayProps {
     task: DetailedTaskInfo;
 }
 
 export default function TaskInfoDisplay({ task }: TaskInfoDisplayProps) {
-    
+
     const ctx = useTaskInfo();
     const handleEditMode = () => {
         if (ctx.mode == 'Edit') {
@@ -21,24 +22,35 @@ export default function TaskInfoDisplay({ task }: TaskInfoDisplayProps) {
             ctx.setMode('Edit');
         }
     }
-    
+
     return (
         <div className="space-y-6">
             {/* Location and title */}
             <div className="flex items-center justify-between">
                 <div className="text-sm text-gray-600 flex items-center space-x-2">
-                    <span>{task.parentContentBlock?.parentNote?.title}</span>
-                    <span>\</span>
-                    <span>{task.parentContentBlock?.title}</span>
-                    <span>\</span>
+                    {
+                        task.parentContentBlock && (
+                            <>
+                                <Link
+                                    href={`/home/notes/${task.parentContentBlock.parentNoteId}`}
+                                    className="hover:underline text-sm text-gray-600 flex items-center space-x-2"
+                                >
+                                    <span>{task.parentContentBlock?.parentNote?.title}</span>
+                                    <span>\</span>
+                                    <span>{task.parentContentBlock?.title}</span>
+                                    <span>\</span>
+                                </Link>
+                            </>
+                        )
+                    }
                     <span className="font-medium text-gray-900 text-2xl">{task.title}</span>
                 </div>
                 <Button
-                    variant={'secondary'} 
+                    variant={'secondary'}
                     onClick={handleEditMode}
                     className="gap-2 items-center"
                 >
-                    <Pen className="w-4 h-4"/> Edit
+                    <Pen className="w-4 h-4" /> Edit
                 </Button>
             </div>
 
