@@ -4,8 +4,9 @@ export type DialogModes = 'Create' | 'Edit' | 'Close';
 
 export type DetailedTaskInfo = TaskInfo & {
     parentContentBlock: (ContentBlock & {
-        parentNote: Note | null,
-    }) | null
+        parentNote: Note | null;
+    }) | null;
+    belongTo: User | null;
 }
 export type OverduedTasksInfo = DetailedTaskInfo
 

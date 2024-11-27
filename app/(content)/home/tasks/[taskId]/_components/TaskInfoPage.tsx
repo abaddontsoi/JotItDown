@@ -21,7 +21,36 @@ export default function TaskInfoPage(
     }
 
     return (
-        <>
-        </>
+        <div>
+            {/* Title */}
+            <div>
+                {task.title}
+            </div>
+            
+            {/* Location */}
+            <div>
+                {task.parentContentBlock?.parentNote?.title} \ {task.parentContentBlock?.title}
+            </div>
+            
+            {/* Description */}
+            <div>
+                {task.description}
+            </div>
+
+            {/* Status */}
+            <div>
+                {task.status}
+            </div>
+
+            {/* Belong to */}
+            <div>
+                {task.belongTo?.name}
+            </div>
+
+            {/* Deadline */}
+            <div>
+                {task.deadline.toDateString()}
+            </div>
+        </div>
     )
 }

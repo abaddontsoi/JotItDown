@@ -25,7 +25,8 @@ export default async function Task({
                 include: {
                     parentNote: true,
                 }
-            }
+            },
+            belongTo: true
         }
     })
 
