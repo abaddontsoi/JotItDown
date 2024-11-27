@@ -139,7 +139,7 @@ const AccountCard = (
                         }
 
                         {
-                            basic && (
+                            basic != null && (
                                 <TableRow className="text-center">
                                     <TableCell></TableCell>
                                     <TableCell className="border-t-4">Basic</TableCell>
