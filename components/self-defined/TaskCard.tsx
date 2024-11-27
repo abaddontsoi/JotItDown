@@ -7,6 +7,7 @@ import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
 import { DetailedTaskInfo } from "./types";
 import { Badge } from "../ui/badge";
+import Link from "next/link";
 
 interface TaskCardProp {
     task: DetailedTaskInfo
@@ -27,7 +28,12 @@ const TaskCard = (
                 <CardHeader className="flex flex-row justify-between items-center">
                     <div>
                         <CardTitle className="flex flex-row items-center gap-1">
-                            {task.title}
+                            <Link
+                                href={`/home/tasks/${task.id}`}
+                                className="hover:underline"
+                            >
+                                {task.title}
+                            </Link>
                             <Badge
                                 variant={'outline'}
                             >
