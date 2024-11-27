@@ -1,7 +1,7 @@
 'use client';
 
 import { ItemAccount } from "@prisma/client";
-import { DetailedTransaction, DialogModes } from "./types";
+import { DetailedTransaction, Modes } from "./types";
 import TransactionsTableCard from "./TransactionsTableCard";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { useEffect, useState } from "react";
@@ -14,7 +14,7 @@ import { useRouter } from "next/navigation";
 interface TransactionsPageContentProp {
     transactions: DetailedTransaction[];
     accounts: ItemAccount[];
-    setMode: (mode: DialogModes) => void;
+    setMode: (mode: Modes) => void;
     setTransaction: (transaction?: DetailedTransaction) => void;
 }
 

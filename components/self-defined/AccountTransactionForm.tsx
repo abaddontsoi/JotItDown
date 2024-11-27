@@ -1,6 +1,6 @@
 'use client';
 
-import { DetailedTransaction, DialogModes } from "./types";
+import { DetailedTransaction, Modes } from "./types";
 import { z } from "zod";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import { useForm } from "react-hook-form";
@@ -16,10 +16,10 @@ import { useRouter } from "next/navigation";
 import { ItemAccount } from "@prisma/client";
 
 interface AccountTransactionFormProp {
-    mode: DialogModes;
+    mode: Modes;
     allAccounts: ItemAccount[],
     transaction?: DetailedTransaction
-    setMode: (mode: DialogModes) => void
+    setMode: (mode: Modes) => void
 }
 
 const formSchema = z.object({

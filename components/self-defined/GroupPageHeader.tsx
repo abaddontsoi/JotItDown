@@ -4,7 +4,7 @@ import { Plus, Settings, UserPlus } from "lucide-react";
 import { Button } from "../ui/button";
 import GroupDialog from "./GroupDialog";
 import { useState } from "react";
-import { DetailedGroup, DialogModes } from "./types";
+import { DetailedGroup, Modes } from "./types";
 import GroupInviteDialog from "./GroupInviteDialog";
 
 interface GroupsPageHeaderProp {
@@ -16,8 +16,8 @@ export default function GroupPageHeader(
         groupData
     }: GroupsPageHeaderProp
 ) {
-    const [mode, setMode] = useState<DialogModes>('Close');
-    const [inviteMode, setInviteMode] = useState<DialogModes>('Close');
+    const [mode, setMode] = useState<Modes>('Close');
+    const [inviteMode, setInviteMode] = useState<Modes>('Close');
     const [group, setGroup] = useState<DetailedGroup>();
 
     return (

@@ -2,7 +2,7 @@
 
 import { getForm, groupInvitationFormSchema } from "@/schmea/GroupInviteSchema";
 import { Form, FormField, FormItem, FormLabel } from "../ui/form";
-import { DetailedGroup, DialogModes } from "./types";
+import { DetailedGroup, Modes } from "./types";
 import { z } from "zod";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
@@ -12,9 +12,9 @@ import { ToastDone, ToastError, ToastLoading } from "./toast-object";
 import { useState } from "react";
 
 interface GroupInviteFormProp {
-    mode: DialogModes;
+    mode: Modes;
     existingGroup: DetailedGroup;
-    setMode: (mode: DialogModes) => void;
+    setMode: (mode: Modes) => void;
     // setGroup: (group: DetailedGroup) => void;
 }
 

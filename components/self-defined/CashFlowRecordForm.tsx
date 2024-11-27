@@ -4,7 +4,7 @@ import { CashFlowRecordFormSchmea } from "@/schmea/BudgetSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { DetailedCashFlowRecord, DialogModes } from "./types";
+import { DetailedCashFlowRecord, Modes } from "./types";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import { Button } from "../ui/button";
 import { CashFlowType } from ".prisma/client";
@@ -17,11 +17,11 @@ import { Check, TicketCheck, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 interface CashFlowRecordFormProp {
-    mode: DialogModes,
+    mode: Modes,
     existingDetailedCashFlowRecord?: DetailedCashFlowRecord;
     type: CashFlowType;
     setType: (type: CashFlowType) => void;
-    setMode: (mode: DialogModes) => void;
+    setMode: (mode: Modes) => void;
     setDetailedCashFlowRecord: (record: DetailedCashFlowRecord | undefined) => void;
 }
 

@@ -2,10 +2,10 @@
 
 import { Plus } from "lucide-react";
 import { Button } from "../ui/button";
-import { DetailedTransaction, DialogModes } from "./types";
+import { DetailedTransaction, Modes } from "./types";
 
 interface TransactionsPageHeaderProp {
-    setMode: (mode: DialogModes) => void;
+    setMode: (mode: Modes) => void;
     setTransaction: (t?: DetailedTransaction) => void;
 }
 

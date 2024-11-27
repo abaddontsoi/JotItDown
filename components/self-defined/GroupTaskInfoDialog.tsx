@@ -2,7 +2,7 @@
 
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 import TaskInfoForm from "./TaskInfoForm";
-import { DetailedTaskInfo, DialogModes } from "./types";
+import { DetailedTaskInfo, Modes } from "./types";
 
 interface GroupTaskInfoDialogProp {
     existingTaskInfo?: DetailedTaskInfo;
@@ -10,7 +10,7 @@ interface GroupTaskInfoDialogProp {
     parentContentBlockid?: string,
     groupId?: string,
     setTargetTaskInfo: (task?: DetailedTaskInfo) => void;
-    setMode: (mode: DialogModes) => void;
+    setMode: (mode: Modes) => void;
 }
 
 const GroupTaskInfoDialog = ({

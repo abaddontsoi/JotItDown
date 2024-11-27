@@ -3,12 +3,12 @@
 import { Settings, Trash, UserPlus } from "lucide-react";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardDescription, CardHeader } from "../ui/card";
-import { DetailedGroup, DialogModes } from "./types";
+import { DetailedGroup, Modes } from "./types";
 import Link from "next/link";
 
 interface GroupCardProp {
     group: DetailedGroup;
-    setMode: (mdoe: DialogModes) => void;
+    setMode: (mdoe: Modes) => void;
     setGroup: (gp: DetailedGroup) => void;
 }
 

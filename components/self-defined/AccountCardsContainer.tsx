@@ -3,7 +3,7 @@
 import { Plus } from "lucide-react";
 import { Button } from "../ui/button";
 import AccountCard from "./AccountCard";
-import { DetailedAccountRecord, DialogModes } from "./types";
+import { DetailedAccountRecord, Modes } from "./types";
 import { useState } from "react";
 import { AccountTransactionDialog } from "./AccountTransactionDialog";
 import AccountDialog from "./AccountDialog";
@@ -17,8 +17,8 @@ const AccountCardsContainer = (
         records
     }: AccountCardsContainerProp
 ) => {
-    const [mode, setMode] = useState<DialogModes>('Close');
-    const [accountMode, setAccountMode] = useState<DialogModes>('Close');
+    const [mode, setMode] = useState<Modes>('Close');
+    const [accountMode, setAccountMode] = useState<Modes>('Close');
     const [account, setAccount] = useState<DetailedAccountRecord>();
     return (
         <div>

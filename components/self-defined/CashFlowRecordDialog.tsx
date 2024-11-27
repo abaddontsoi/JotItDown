@@ -2,15 +2,15 @@
 
 import { Dispatch, SetStateAction } from "react";
 import { Dialog, DialogContent, DialogTitle } from "../ui/dialog";
-import { DetailedCashFlowRecord, DialogModes } from "./types";
+import { DetailedCashFlowRecord, Modes } from "./types";
 import { CashFlowType } from "@prisma/client";
 import CashFlowRecordForm from "./CashFlowRecordForm";
 
 interface CashFlowRecordDialogProp {
     existingRecord?: DetailedCashFlowRecord;
-    mode: DialogModes;
+    mode: Modes;
     recordType: CashFlowType;
-    setMode: Dispatch<SetStateAction<DialogModes>>;
+    setMode: Dispatch<SetStateAction<Modes>>;
     setRecordType: Dispatch<SetStateAction<CashFlowType>>;
     setExistingRecord: Dispatch<SetStateAction<DetailedCashFlowRecord | undefined>>;
 }

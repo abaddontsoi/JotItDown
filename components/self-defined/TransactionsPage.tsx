@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import TransactionsPageHeader from "./TransactionsPageHeader";
-import { DetailedTransaction, DialogModes } from "./types"
+import { DetailedTransaction, Modes } from "./types"
 import { ItemAccount } from "@prisma/client";
 import { AccountTransactionDialog } from "./AccountTransactionDialog";
 import AllTransactions from "./AllTransactions";
@@ -19,7 +19,7 @@ export default function TransactionsPage(
         accounts
     }: TransactionsPageProp
 ) {
-    const [mode, setMode] = useState<DialogModes>('Close');
+    const [mode, setMode] = useState<Modes>('Close');
     const [selectedTransaction, setTransaction] = useState<DetailedTransaction>();
 
     return (

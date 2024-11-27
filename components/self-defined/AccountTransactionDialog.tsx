@@ -1,13 +1,13 @@
 import { Account, ItemAccount } from "@prisma/client";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "../ui/dialog";
 import AccountTransactionForm from "./AccountTransactionForm";
-import { DetailedTransaction, DialogModes } from "./types";
+import { DetailedTransaction, Modes } from "./types";
 
 interface AccountTransactionDialogProps {
-    mode: DialogModes;
+    mode: Modes;
     allAccounts: ItemAccount[]
     transaction?: DetailedTransaction;
-    setMode: (mode: DialogModes) => void
+    setMode: (mode: Modes) => void
 }
 
 export function AccountTransactionDialog(

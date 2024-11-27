@@ -1,6 +1,6 @@
 'use client';
 
-import { DetailedContentBlock, DetailedNote, DialogModes } from "./types";
+import { DetailedContentBlock, DetailedNote, Modes } from "./types";
 import ContentBlockViewContent from "./ContentBlockViewContent";
 import { Button } from "../ui/button";
 import { Plus, Share, Trash } from "lucide-react";
@@ -22,9 +22,9 @@ const NoteView = ({ note, groups }:
         groups: Group[],
     }
 ) => {
-    const [contentBlockDialogMode, setMode] = useState<DialogModes>('Close');
-    const [taskInfoDialogMode, setTaskInfoDialogMode] = useState<DialogModes>('Close');
-    const [noteShareMode, setNoteShareMode] = useState<DialogModes>('Close');
+    const [contentBlockDialogMode, setMode] = useState<Modes>('Close');
+    const [taskInfoDialogMode, setTaskInfoDialogMode] = useState<Modes>('Close');
+    const [noteShareMode, setNoteShareMode] = useState<Modes>('Close');
     const [selectedContentBlock, setSelectedContentBlock] = useState<DetailedContentBlock>();
     const [targetTaskInfo, setTargetTaskInfo] = useState<TaskInfo | undefined>();
 

@@ -1,7 +1,7 @@
 'use client';
 
 import { z } from "zod";
-import { DetailedAccountRecord, DialogModes } from "./types";
+import { DetailedAccountRecord, Modes } from "./types";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "../ui/use-toast";
@@ -14,9 +14,9 @@ import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 
 interface AccountFormProp {
-    mode: DialogModes;
+    mode: Modes;
     account?: DetailedAccountRecord;
-    setMode: (mode: DialogModes) => void;
+    setMode: (mode: Modes) => void;
 }
 
 const formSchema = z.object({
