@@ -22,6 +22,7 @@ const AccountCardsContainer = (
     const [account, setAccount] = useState<DetailedAccountRecord>();
     return (
         <div>
+            {/* Transaction dialog */}
             <AccountTransactionDialog
                 allAccounts={records}
                 mode={mode}
@@ -44,7 +45,7 @@ const AccountCardsContainer = (
                         type="button"
                         className="flex flex-row items-center gap-2 w-fit"
                         onClick={() => setMode('Create')}
-                    >
+                        >
                         <Plus />
                         Transaction
                     </Button>
@@ -52,6 +53,7 @@ const AccountCardsContainer = (
                         type="button"
                         className="flex flex-row items-center gap-2 w-fit"
                         onClick={() => setAccountMode('Create')}
+                        variant={'outline'}
                     >
                         <Plus />
                         Account
