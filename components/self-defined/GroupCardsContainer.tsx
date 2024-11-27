@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import GroupCard from "./GroupCard";
-import { DetailedGroup, DialogModes } from "./types";
+import { DetailedGroup, Modes } from "./types";
 import GroupDialog from "./GroupDialog";
 
 interface GroupCardsContainerProp {
@@ -14,7 +14,7 @@ export default function GroupCardsContainer(
         groups
     }: GroupCardsContainerProp
 ) {
-    const [mode, setMode] = useState<DialogModes>('Close');
+    const [mode, setMode] = useState<Modes>('Close');
     const [group, setGroup] = useState<DetailedGroup>();
 
     return (

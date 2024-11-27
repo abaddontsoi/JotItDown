@@ -3,7 +3,7 @@
 import { $Enums, CashFlowType } from "@prisma/client";
 import { SetStateAction, useState } from "react";
 import BudgetMainPageHeader from "./BudgetMainPageHeader";
-import { DetailedCashFlowRecord, DialogModes } from "./types";
+import { DetailedCashFlowRecord, Modes } from "./types";
 import CashFlowRecordDialog from "./CashFlowRecordDialog";
 
 interface BudgetMainPageProp {
@@ -16,7 +16,7 @@ const BudgetMainPageHeaderBlock = (
     }: BudgetMainPageProp
 ) => {
 
-    const [mode, setMode] = useState<DialogModes>('Close');
+    const [mode, setMode] = useState<Modes>('Close');
     const [recordType, setRecordType] = useState<CashFlowType>(CashFlowType.Debit);
     const [cashFlowRecord, setExistingCashFlowRecord] = useState<DetailedCashFlowRecord | undefined>();
 

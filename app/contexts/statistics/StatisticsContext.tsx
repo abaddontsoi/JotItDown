@@ -1,16 +1,16 @@
 // contexts/theme/ThemeContext.tsx
 'use client'
 
-import { DetailedTransaction, DialogModes } from '@/components/self-defined/types';
+import { DetailedTransaction, Modes } from '@/components/self-defined/types';
 import { createContext, ReactNode, useContext, useState } from 'react'
 
 // Define context type, they can be variables and functions
 type StatisticsContextType = {
     pageTitle: string;
-    dialogMode: DialogModes;
+    dialogMode: Modes;
     transactions?: DetailedTransaction[];
 
-    setDialogMode: (mode: DialogModes) => void;
+    setDialogMode: (mode: Modes) => void;
     setTransactions: (transactions?: DetailedTransaction[]) => void;
 }
 
@@ -26,7 +26,7 @@ export function StatisticsProvider(
         children: React.ReactNode
     }
 ) {
-    const [mode, setMode] = useState<DialogModes>('Close');
+    const [mode, setMode] = useState<Modes>('Close');
     const [transactions, setTransactions] = useState<DetailedTransaction[]>();
 
     return (

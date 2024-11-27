@@ -3,13 +3,13 @@
 import { Plus } from "lucide-react";
 import { Button } from "../ui/button";
 import { Dispatch, SetStateAction, useState } from "react";
-import { DetailedCashFlowRecord, DialogModes } from "./types";
+import { DetailedCashFlowRecord, Modes } from "./types";
 import { CashFlowType } from "@prisma/client";
 import CashFlowRecordDialog from "./CashFlowRecordDialog";
 
 interface BudgetMainPageHeaderProp {
     setRecordType: Dispatch<SetStateAction<CashFlowType>>
-    setMode: Dispatch<SetStateAction<DialogModes>>
+    setMode: Dispatch<SetStateAction<Modes>>
 }
 
 const BudgetMainPageHeader = ({

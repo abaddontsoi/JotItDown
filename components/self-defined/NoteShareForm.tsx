@@ -1,7 +1,7 @@
 'use client';
 
 import { z } from "zod";
-import { DialogModes } from "./types";
+import { Modes } from "./types";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormField, FormItem, FormLabel } from "../ui/form";
@@ -15,7 +15,7 @@ import axios from "axios";
 interface NoteShareFormProp {
     note: Note;
     groups: Group[];
-    setMode: (mode: DialogModes) => void;
+    setMode: (mode: Modes) => void;
 }
 
 const formSchema = z.object({

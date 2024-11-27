@@ -3,13 +3,13 @@
 import { Group, Note } from "@prisma/client";
 import { Dialog, DialogContent, DialogTitle } from "../ui/dialog";
 import NoteShareForm from "./NoteShareForm";
-import { DialogModes } from "./types";
+import { Modes } from "./types";
 
 interface NoteShareDialogProp {
     note: Note;
-    mode: DialogModes;
+    mode: Modes;
     groups: Group[];
-    setMode: (mode: DialogModes) => void;
+    setMode: (mode: Modes) => void;
 }
 
 export default function NoteShareDialog(

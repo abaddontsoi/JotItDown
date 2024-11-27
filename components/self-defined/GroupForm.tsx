@@ -2,7 +2,7 @@
 
 import { useForm } from "react-hook-form";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
-import { DetailedGroup, DialogModes } from "./types";
+import { DetailedGroup, Modes } from "./types";
 import { z } from "zod";
 import { getForm, groupFormSchema } from "@/schmea/GroupSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -15,9 +15,9 @@ import Error from "next/error";
 import { useRouter } from "next/navigation";
 
 interface GroupFormProp {
-    mode: DialogModes;
+    mode: Modes;
     existingGroup?: DetailedGroup;
-    setMode: (mode: DialogModes) => void;
+    setMode: (mode: Modes) => void;
     setGroup: (mode?: DetailedGroup) => void;
 }
 

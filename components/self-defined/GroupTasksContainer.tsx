@@ -3,7 +3,7 @@
 import { Plus } from "lucide-react";
 import { Button } from "../ui/button";
 import UrgentTasksContextCard from "./UrgentTasksContextCard";
-import { DetailedTaskInfo, DialogModes } from "./types";
+import { DetailedTaskInfo, Modes } from "./types";
 import TaskInfoDialog from "./TaskInfoDialog";
 import { useState } from "react";
 import GroupTaskInfoDialog from "./GroupTaskInfoDialog";
@@ -21,7 +21,7 @@ export default function GroupTasksContainer(
         tasks,
     }: GroupTasksContainerProp
 ) {
-    const [mode, setMode] = useState<DialogModes>('Close');
+    const [mode, setMode] = useState<Modes>('Close');
     const [task, setTask] = useState<DetailedTaskInfo>();
 
     return (

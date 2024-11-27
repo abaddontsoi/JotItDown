@@ -1,7 +1,7 @@
 'use client';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { DetailedNote, DialogModes } from "./types";
+import { DetailedNote, Modes } from "./types";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { TaskInfo } from "@prisma/client";
@@ -10,7 +10,7 @@ import { Settings } from "lucide-react";
 
 interface NoteDisplayProp {
     note: DetailedNote;
-    setMode: (mode: DialogModes) => void;
+    setMode: (mode: Modes) => void;
     setNote: (note: DetailedNote) => void;
 }
 

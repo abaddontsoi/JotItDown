@@ -3,7 +3,7 @@
 import { CashFlowType } from "@prisma/client";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
-import { DetailedAccountRecord, DetailedCashFlowRecord, DialogModes } from "./types";
+import { DetailedAccountRecord, DetailedCashFlowRecord, Modes } from "./types";
 import { toDDMMYYYY } from "@/utils/formatters/date-formatter";
 import clsx from "clsx";
 import { Settings } from "lucide-react";
@@ -12,7 +12,7 @@ import { Button } from "../ui/button";
 interface AccountCardProp {
     record: DetailedAccountRecord;
     setAccount?: (account: DetailedAccountRecord) => void;
-    setMode?: (mode: DialogModes) => void;
+    setMode?: (mode: Modes) => void;
 }
 
 const AccountCard = (

@@ -2,12 +2,12 @@
 
 import { Dialog, DialogContent, DialogTitle } from "../ui/dialog";
 import AccountForm from "./AccountForm";
-import { DetailedAccountRecord, DialogModes } from "./types";
+import { DetailedAccountRecord, Modes } from "./types";
 
 interface AccountDialogProp {
-    mode: DialogModes;
+    mode: Modes;
     account?: DetailedAccountRecord;
-    setMode: (mode: DialogModes) => void;
+    setMode: (mode: Modes) => void;
 }
 
 const AccountDialog = (

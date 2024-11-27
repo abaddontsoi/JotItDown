@@ -1,25 +1,25 @@
 'use client';
 
-import { Dispatch, SetStateAction } from "react";
-import { Dialog, DialogContent } from "../ui/dialog";
 import { TaskInfo, TaskInfoStatus } from "@prisma/client";
-import { Form, FormField, FormItem } from "../ui/form";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Label } from "../ui/label";
-import { Input } from "../ui/input";
-import { Textarea } from "../ui/textarea";
-import DatePicker from "../ui/date-picker";
-import { Combobox } from "../ui/combobox";
-import { Button } from "../ui/button";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { DetailedTaskInfo, Modes } from "./types";
-import { toast } from "../ui/use-toast";
-import { ToastDone, ToastError, ToastLoading } from "./toast-object";
+import { DetailedTaskInfo, Modes } from "../types";
+import { toast } from "@/components/ui/use-toast";
+import { ToastDone, ToastError, ToastLoading } from "../toast-object";
+import { Form, FormField, FormItem } from "@/components/ui/form";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Combobox } from "@/components/ui/combobox";
+import { Button } from "@/components/ui/button";
+import { format } from "date-fns";
+import DatePicker from "@/components/ui/date-picker";
 
 const formSchema = z.object({
+    id: z.string().optional(),
     title: z.string().optional(),
     description: z.string(),
     deadline: z.date(),
@@ -32,7 +32,7 @@ const formSchema = z.object({
 interface TaskInfoFormProp {
     existingTaskInfo?: TaskInfo,
     parentContentBlockid?: string,
-    mode: 'Edit' | 'Create' | 'Close',
+    mode: Modes,
     groupId?: string,
     setTargetTaskInfo: (task?: DetailedTaskInfo) => void,
     setMode: (mode: Modes) => void,
@@ -49,8 +49,14 @@ const TaskInfoForm = ({
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
+            id: existingTaskInfo?.id,
             parentContentBlockid: existingTaskInfo?.parentContentBlockid || parentContentBlockid, 
             groupId: groupId,
+
+            title: existingTaskInfo?.title || undefined,
+            description: existingTaskInfo?.description,
+            deadline: existingTaskInfo?.deadline,
+            status: existingTaskInfo?.status,
         }
     });
 
@@ -59,7 +65,22 @@ const TaskInfoForm = ({
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
             if (mode == 'Create') {
-                const response = axios.post('/api/task', values).then(response => {
+                axios.post('/api/task', values).then(response => {
+                    if (response.status == 200) {
+                        toast(ToastDone);
+                        setTargetTaskInfo(undefined);
+                        router.refresh();
+                        setMode('Close');
+                    } else {
+                        toast(ToastError);
+                    }
+                }).catch(error => {
+                    console.log(error);
+                    toast(ToastError);
+                })
+            }
+            if (mode == 'Edit') {
+                axios.patch('/api/task', values).then(response => {
                     if (response.status == 200) {
                         toast(ToastDone);
                         setTargetTaskInfo(undefined);
@@ -129,11 +150,9 @@ const TaskInfoForm = ({
                                 <Input
                                     type="datetime-local"
                                     onChange={(event) => {
-                                        
-                                        // console.log(event.target.value);
                                         form.setValue('deadline', new Date(event.target.value));
                                     }}
-                                // {...field}
+                                    defaultValue={format(existingTaskInfo?.deadline || new Date(), "yyyy-MM-dd'T'HH:mm")}
                                 />
                             </FormItem>
                         );
@@ -160,19 +179,6 @@ const TaskInfoForm = ({
                         );
                     }}
                 />
-
-                {/* <FormField
-                    name='title'
-                    control={form.control}
-                    render={(
-                        { field }
-                    ) => {
-                        return (
-                            <FormItem>
-                            </FormItem>
-                        );
-                    }}
-                /> */}
 
                 <div className="flex flex-row gap-2 justify-end mt-[10px]">
                     <Button

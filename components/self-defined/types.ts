@@ -1,6 +1,6 @@
 import { ItemAccount, CashFlow, CashFlowCategory, CashFlowMtoMCategory, Category, ContentBlock, Group, GroupUser, Invitation, Note, TaskInfo, Transaction, User } from "@prisma/client";
 
-export type DialogModes = 'Create' | 'Edit' | 'Close';
+export type Modes = 'Create' | 'Edit' | 'Close';
 
 export type DetailedTaskInfo = TaskInfo & {
     parentContentBlock: (ContentBlock & {

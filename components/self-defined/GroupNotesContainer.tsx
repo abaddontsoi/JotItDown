@@ -2,7 +2,7 @@
 
 import { Plus } from "lucide-react";
 import { Button } from "../ui/button";
-import { DetailedNote, DialogModes } from "./types";
+import { DetailedNote, Modes } from "./types";
 import { SetStateAction, useState } from "react";
 import NoteDialog from "./NoteDialog";
 import AllNotes from "./AllNotes";
@@ -18,7 +18,7 @@ export default function GroupNotesContainer(
         groupId,
     }: GroupNotesContainerProp
 ) {
-    const [mode, setMode] = useState<DialogModes>('Close');
+    const [mode, setMode] = useState<Modes>('Close');
 
     return (
         <>

@@ -2,12 +2,12 @@
 
 import { Dialog, DialogContent, DialogTitle } from "../ui/dialog";
 import GroupForm from "./GroupForm";
-import { DetailedGroup, DialogModes } from "./types";
+import { DetailedGroup, Modes } from "./types";
 
 interface GroupDialogProp {
-    mode: DialogModes;
+    mode: Modes;
     existingGroup?: DetailedGroup;
-    setMode: (mode: DialogModes) => void;
+    setMode: (mode: Modes) => void;
     setGroup: (group?: DetailedGroup) => void;
 }
 

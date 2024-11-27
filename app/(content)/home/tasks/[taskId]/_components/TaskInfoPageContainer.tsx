@@ -1,7 +1,7 @@
 import ContextCardFallBack from "@/components/self-defined/ContextCardFallBack"
 import { DetailedTaskInfo } from "@/components/self-defined/types"
 import { Suspense } from "react"
-import TaskInfoPage from "./TaskInfoPage"
+import TaskInfoContextPage from "./TaskInfoContextPage"
 
 interface TaskInfoPageContainerProp {
     task: Promise<DetailedTaskInfo | null>
@@ -13,10 +13,8 @@ export default async function TaskInfoPageContainer(
     }: TaskInfoPageContainerProp
 ) {
     return (
-        <>
-            <Suspense fallback={<ContextCardFallBack />}>
-                <TaskInfoPage task={await task} />
-            </Suspense>
-        </>
+        <Suspense fallback={<ContextCardFallBack />}>
+            <TaskInfoContextPage task={await task} />
+        </Suspense>
     )
 }
