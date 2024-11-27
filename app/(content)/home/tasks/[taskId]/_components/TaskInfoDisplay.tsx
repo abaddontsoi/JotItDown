@@ -71,9 +71,9 @@ export default function TaskInfoDisplay({ task }: TaskInfoDisplayProps) {
                 <h2 className="text-sm font-semibold text-gray-700">Status</h2>
                 <span className={`
                     mt-1 inline-block px-3 py-1 rounded-full text-sm
-                    ${task.status === TaskInfoStatus.Draft ? 'bg-blue-100 text-blue-800' : ''}
-                    ${task.status === TaskInfoStatus.Pending ? 'bg-blue-100 text-blue-800' : ''}
-                    ${task.status === TaskInfoStatus.Running ? 'bg-blue-100 text-blue-800' : ''}
+                    ${task.status === TaskInfoStatus.Draft ? 'bg-rose-100 text-rose-800' : ''}
+                    ${task.status === TaskInfoStatus.Pending ? 'bg-orange-100 text-orange-800' : ''}
+                    ${task.status === TaskInfoStatus.Running ? 'bg-green-100 text-green-800' : ''}
                     ${task.status === TaskInfoStatus.Done ? 'bg-blue-100 text-blue-800' : ''}
                 `}>
                     {task.status}
