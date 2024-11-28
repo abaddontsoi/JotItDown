@@ -39,7 +39,7 @@ export const Combobox = ({ options, value, onChange }: ComboboxProps) => {
           aria-expanded={open}
           className="w-full justify-between"
         >
-          <span className="w-full max-w-[100px] truncate">
+          <span className="w-full max-w-[150px] truncate">
             {value
               ? options.find((option) => option.value === value)?.label
               : "Select option..."}
