@@ -6,9 +6,13 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from ".
 import { DetailedAccountRecord, DetailedCashFlowRecord, Modes } from "./types";
 import { toDDMMYYYY } from "@/utils/formatters/date-formatter";
 import clsx from "clsx";
-import { Settings } from "lucide-react";
+import { Settings, CalendarIcon, X, FilterIcon } from "lucide-react";
 import { Button } from "../ui/button";
 import { useState } from "react";
+import { Calendar } from "../ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
 
 interface AccountCardProp {
     record: DetailedAccountRecord;
@@ -16,78 +20,151 @@ interface AccountCardProp {
     setMode?: (mode: Modes) => void;
 }
 
-const AccountCard = (
-    {
-        record,
-        setAccount,
-        setMode,
-    }: AccountCardProp
-) => {
+const AccountCard = ({ record, setAccount, setMode }: AccountCardProp) => {
+    const [collapse, setCollapse] = useState<boolean>(true);
+    const [showFilter, setShowFilter] = useState<boolean>(false);
+    const [startDate, setStartDate] = useState<Date | undefined>(undefined);
+    const [endDate, setEndDate] = useState<Date | undefined>(undefined);
+    
     const cashFlows = record.CashFlow;
-    const totalDebit = record.CashFlow.filter(cash => cash.type == CashFlowType.Debit).reduce(
-        (
-            total: number,
-            item: DetailedCashFlowRecord
-        ) => {
-            return total + item.value;
-        },
-        0
-    );
-    const totalCredit = record.CashFlow.filter(cash => cash.type == CashFlowType.Credit).reduce(
-        (
-            total: number,
-            item: DetailedCashFlowRecord
-        ) => {
-            return total + item.value;
-        },
-        0
-    );
-
-    const balance: number = totalDebit - totalCredit;
-
     const basic = record.originalCapital;
 
-    const headers = [
-        'Date',
-        'Category',
-        'Transfer In',
-        'Transfer Out',
-    ]
+    const filteredCashFlows = cashFlows.filter(cash => {
+        const cashDate = new Date(cash.createdAt);
+        if (startDate && endDate) {
+            return cashDate >= startDate && cashDate <= endDate;
+        }
+        if (startDate) {
+            return cashDate >= startDate;
+        }
+        if (endDate) {
+            return cashDate <= endDate;
+        }
+        return true;
+    });
+    
+    const totalDebit = filteredCashFlows
+        .filter(cash => cash.type == CashFlowType.Debit)
+        .reduce((total: number, item: DetailedCashFlowRecord) => total + item.value, 0);
+    
+    const totalCredit = filteredCashFlows
+        .filter(cash => cash.type == CashFlowType.Credit)
+        .reduce((total: number, item: DetailedCashFlowRecord) => total + item.value, 0);
+    
+    const balance: number = totalDebit - totalCredit;
 
-    const [collapse, setCollapse] = useState<boolean>(true);
-    const switchCollapse = () => {
-        setCollapse(prev => !prev);
-    }
+    const headers = ['Date', 'Category', 'Transfer In', 'Transfer Out'];
+
+    const switchCollapse = () => setCollapse(prev => !prev);
+
+    const handleSettingsClick = () => {
+        if (setAccount && setMode) {
+            setAccount(record);
+            setMode('Edit');
+        }
+    };
+
+    const clearFilters = () => {
+        setStartDate(undefined);
+        setEndDate(undefined);
+    };
+
+    const toggleFilter = () => setShowFilter(prev => !prev);
+
     return (
         <Card>
-            <CardHeader className="flex flex-row items-center justify-between">
-                <div>
-                    <CardTitle>{record.title}</CardTitle>
-                    {
-                        record.description && <CardDescription>{record.description}</CardDescription>
-                    }
-                </div>
-                <div className="flex item-center">
-                    <Button
-                        variant={'ghost'}
-                        onClick={switchCollapse}
-                    >
-                        {
-                            collapse ? 'Expand' : 'Collapse'
-                        }
-                    </Button>
-                    <Button
-                        variant={'ghost'}
-                        onClick={() => {
-                            if (setAccount && setMode) {
-                                setAccount(record);
-                                setMode('Edit');
-                            }
+            <CardHeader>
+                <div className="flex flex-col space-y-2">
+                    <div className="flex justify-between items-center">
+                        <div>
+                            <CardTitle>{record.title}</CardTitle>
+                            {record.description && (
+                                <CardDescription>{record.description}</CardDescription>
+                            )}
+                        </div>
+                        <div className="flex items-center gap-1">
+                            {/* {(startDate || endDate) && (
+                                <span className="text-sm text-muted-foreground">
+                                    {startDate && format(startDate, "MM/dd/yyyy")}
+                                    {startDate && endDate && " - "}
+                                    {endDate && format(endDate, "MM/dd/yyyy")}
+                                </span>
+                            )} */}
+                            <Button 
+                                variant="ghost" 
+                                size="sm" 
+                                onClick={toggleFilter}
+                                className={cn(showFilter && "bg-accent")}
+                            >
+                                <FilterIcon className="h-4 w-4" />
+                            </Button>
+                            <Button variant="ghost" size="sm" onClick={switchCollapse}>
+                                {collapse ? 'Expand' : 'Collapse'}
+                            </Button>
+                            <Button variant="ghost" size="sm" onClick={handleSettingsClick}>
+                                <Settings className="h-4 w-4" />
+                            </Button>
+                        </div>
+                    </div>
+                    {showFilter && (
+                        <div className="flex justify-end">
+                            <div className="flex items-center gap-2">
+                                <Popover>
+                                    <PopoverTrigger asChild>
+                                        <Button
+                                            variant="outline"
+                                            size="sm"
+                                            className={cn(
+                                                "justify-start text-left font-normal w-[130px]",
+                                                !startDate && "text-muted-foreground"
+                                            )}
+                                        >
+                                            <CalendarIcon className="mr-1 h-3 w-3" />
+                                            {startDate ? format(startDate, "PP") : "Start"}
+                                        </Button>
+                                    </PopoverTrigger>
+                                    <PopoverContent className="w-auto p-0" align="end">
+                                        <Calendar
+                                            mode="single"
+                                            selected={startDate}
+                                            onSelect={setStartDate}
+                                            initialFocus
+                                        />
+                                    </PopoverContent>
+                                </Popover>
 
-                        }}
-                    >
-                        <Settings />
-                    </Button>
+                                <Popover>
+                                    <PopoverTrigger asChild>
+                                        <Button
+                                            variant="outline"
+                                            size="sm"
+                                            className={cn(
+                                                "justify-start text-left font-normal w-[130px]",
+                                                !endDate && "text-muted-foreground"
+                                            )}
+                                        >
+                                            <CalendarIcon className="mr-1 h-3 w-3" />
+                                            {endDate ? format(endDate, "PP") : "End"}
+                                        </Button>
+                                    </PopoverTrigger>
+                                    <PopoverContent className="w-auto p-0" align="end">
+                                        <Calendar
+                                            mode="single"
+                                            selected={endDate}
+                                            onSelect={setEndDate}
+                                            initialFocus
+                                        />
+                                    </PopoverContent>
+                                </Popover>
+
+                                {(startDate || endDate) && (
+                                    <Button variant="ghost" size="sm" onClick={clearFilters}>
+                                        <X className="h-4 w-4" />
+                                    </Button>
+                                )}
+                            </div>
+                        </div>
+                    )}
                 </div>
             </CardHeader>
 
@@ -95,118 +172,86 @@ const AccountCard = (
                 <Table>
                     <TableHeader>
                         <TableRow>
-                            <TableHead>
-                                {/* Actions */}
-                            </TableHead>
-                            {
-                                headers.map(h =>
-                                    <TableHead className="text-center" key={h}>
-                                        {h}
-                                    </TableHead>
-                                )
-                            }
+                            <TableHead>{/* Actions */}</TableHead>
+                            {headers.map(header => (
+                                <TableHead className="text-center" key={header}>
+                                    {header}
+                                </TableHead>
+                            ))}
                         </TableRow>
                     </TableHeader>
 
                     <TableBody>
-                        {
-                            !collapse && cashFlows.map((cash, index) => (
-                                <TableRow key={cash.id} className="text-center">
-                                    <TableCell></TableCell>
-                                    <TableCell>
-                                        {
-                                            (index > 0 &&
-                                                cash.createdAt.toDateString() == cashFlows[index - 1].createdAt.toDateString()) ?
-                                                '' : toDDMMYYYY(cash.createdAt)
-                                        }
-                                    </TableCell>
-                                    <TableCell>
-                                        {cash.category}
-                                    </TableCell>
-                                    <TableCell>
-                                        {
-                                            cash.type == CashFlowType.Debit &&
-                                            cash.value
-                                        }
-                                    </TableCell>
-                                    <TableCell>{
-                                        cash.type == CashFlowType.Credit &&
-                                        cash.value
-                                    }</TableCell>
-                                    {/* <TableCell>{ }</TableCell> */}
-                                </TableRow>
-                            ))
-                        }
+                        {!collapse && filteredCashFlows.map((cash, index) => (
+                            <TableRow key={cash.id} className="text-center">
+                                <TableCell />
+                                <TableCell>
+                                    {(index > 0 &&
+                                        cash.createdAt.toDateString() === 
+                                        filteredCashFlows[index - 1].createdAt.toDateString())
+                                        ? ''
+                                        : toDDMMYYYY(cash.createdAt)}
+                                </TableCell>
+                                <TableCell>{cash.category}</TableCell>
+                                <TableCell>
+                                    {cash.type === CashFlowType.Debit && cash.value}
+                                </TableCell>
+                                <TableCell>
+                                    {cash.type === CashFlowType.Credit && cash.value}
+                                </TableCell>
+                            </TableRow>
+                        ))}
 
-                        {
-                            basic != null && (
-                                <TableRow className="text-center">
-                                    <TableCell></TableCell>
-                                    <TableCell className="border-t-4">Basic</TableCell>
-                                    <TableCell className="border-t-4"></TableCell>
-                                    <TableCell className={
-                                        basic ? clsx(
-                                            "text-center border-t-4",
-                                            {
-                                                "border-t-green-400": balance >= 0,
-                                                "border-t-red-400": balance < 0,
-                                            }
-                                        ) : ""
-                                    }>
-                                        {
-                                            basic
-                                        }
-                                    </TableCell>
-                                    <TableCell className={
-                                        basic ? clsx(
-                                            "text-center border-t-4",
-                                            {
-                                                "border-t-green-400": balance >= 0,
-                                                "border-t-red-400": balance < 0,
-                                            }
-                                        ) : ""
-                                    }>
-                                    </TableCell>
-                                </TableRow>
-                            )
-                        }
+                        {basic != null && basic > 0 && (
+                            <TableRow className="text-center">
+                                <TableCell />
+                                <TableCell className="border-t-4">Basic</TableCell>
+                                <TableCell className="border-t-4" />
+                                <TableCell className={clsx(
+                                    "text-center border-t-4",
+                                    {
+                                        "border-t-green-400": balance >= 0,
+                                        "border-t-red-400": balance < 0,
+                                    }
+                                )}>
+                                    {basic}
+                                </TableCell>
+                                <TableCell className={clsx(
+                                    "text-center border-t-4",
+                                    {
+                                        "border-t-green-400": balance >= 0,
+                                        "border-t-red-400": balance < 0,
+                                    }
+                                )} />
+                            </TableRow>
+                        )}
+
                         <TableRow className="text-center">
-                            <TableCell></TableCell>
+                            <TableCell />
                             <TableCell>Balance</TableCell>
-                            <TableCell></TableCell>
-                            <TableCell
-                                className={
-                                    !basic ? clsx(
-                                        "text-center border-t-4",
-                                        {
-                                            "border-t-green-400": balance >= 0,
-                                            "border-t-red-400": balance < 0,
-                                        }
-                                    ) : ""
-                                }
-                            >
-                            </TableCell>
-                            <TableCell
-                                className={
-                                    !basic ? clsx(
-                                        "text-center border-t-4",
-                                        {
-                                            "border-t-green-400": balance >= 0,
-                                            "border-t-red-400": balance < 0,
-                                        }
-                                    ) : ""
-                                }
-                            >
+                            <TableCell />
+                            <TableCell className={!basic ? clsx(
+                                "text-center border-t-4",
                                 {
-                                    (basic || 0) + balance
+                                    "border-t-green-400": balance >= 0,
+                                    "border-t-red-400": balance < 0,
                                 }
+                            ) : ""} />
+                            <TableCell className={!basic ? clsx(
+                                "text-center border-t-4",
+                                {
+                                    "border-t-green-400": balance >= 0,
+                                    "border-t-red-400": balance < 0,
+                                }
+                            ) : ""}>
+                                {(basic || 0) + balance}
                             </TableCell>
                         </TableRow>
                     </TableBody>
                 </Table>
             </CardContent>
         </Card>
-    )
-}
+    );
+};
 
 export default AccountCard;
