@@ -35,7 +35,7 @@ export default async function Transactions() {
     if (!user) {
         return (
             <>
-                Please <Link href={'/login'}>log in</Link>
+                Please <Link href={'/login'}>sign in</Link>
             </>
         )
     }

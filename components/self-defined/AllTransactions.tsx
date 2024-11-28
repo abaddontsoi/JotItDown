@@ -35,6 +35,8 @@ export default function AllTransactions(
     const [fromAccountId, setFromAccountId] = useState<string>();
     const [toAccountId, setToAccountId] = useState<string>();
 
+    const [quickSumMode, setQuickSumMode] = useState<boolean>(false);
+
     const clrFilter = () => {
         setStartDate(undefined);
         setEndDate(undefined);
@@ -42,27 +44,40 @@ export default function AllTransactions(
         setToAccountId(undefined);
         router.refresh();
     }
+
+    const handleQuickSum = () => {
+        setQuickSumMode(prev => !prev);
+    }
     return (
         <Card className="my-2">
             <CardHeader className="flex flex-col items-start">
                 <CardTitle className="w-full flex justify-between items-center">
                     All transactions
-                    <Button
-                        variant={'ghost'}
-                        onClick={() => {
-                            setCollapse(prev => !prev)
-                        }}
-                    >
-                        {
-                            filterCollapse ?
-                                <>
-                                    Show Filter
-                                </> :
-                                <>
-                                    Hide Filter
-                                </>
-                        }
-                    </Button>
+                    <div className="flex gap-1">
+                        <Button
+                            variant={quickSumMode ? 'secondary' : 'ghost'}
+                            onClick={handleQuickSum}
+                        >
+                            Quick Sum
+                        </Button>
+
+                        <Button
+                            variant={'ghost'}
+                            onClick={() => {
+                                setCollapse(prev => !prev)
+                            }}
+                        >
+                            {
+                                filterCollapse ?
+                                    <>
+                                        Show Filter
+                                    </> :
+                                    <>
+                                        Hide Filter
+                                    </>
+                            }
+                        </Button>
+                    </div>
                 </CardTitle>
 
                 {/* Place filter components here */}
@@ -165,6 +180,9 @@ export default function AllTransactions(
                     // Account filter
                     fromAccountId={fromAccountId}
                     toAccountId={toAccountId}
+
+                    // Show quick sum?
+                    quickSumMode={quickSumMode}
                 />
             </CardContent>
         </Card>
