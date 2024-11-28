@@ -31,6 +31,8 @@ interface TransactionsTableCardProp {
 
     fromAccountId?: string;
     toAccountId?: string;
+
+    quickSumMode?: boolean;
 }
 
 export default function TransactionsTableCard(
@@ -41,6 +43,7 @@ export default function TransactionsTableCard(
         endDate,
         fromAccountId,
         toAccountId,
+        quickSumMode,
         setMode,
         setTransaction,
     }: TransactionsTableCardProp
@@ -158,6 +161,24 @@ export default function TransactionsTableCard(
                                 </TableCell>
                             </TableRow>
                         ))
+                }
+                {
+                    quickSumMode == true && (
+                        <TableRow>
+                            <TableCell className="text-center text-slate-400">Total</TableCell>
+                            <TableCell></TableCell>
+                            <TableCell></TableCell>
+                            <TableCell className="text-center">
+                                {filtered.reduce((
+                                    acc: number,
+                                    item: DetailedTransaction
+                                ) => {
+                                    return acc + item.from.value;
+                                }, 0)}
+                            </TableCell>
+                            <TableCell></TableCell>
+                        </TableRow>
+                    )
                 }
             </TableBody>
         </Table>
