@@ -51,8 +51,8 @@ const AccountTransactionForm = (
             id: transaction?.id,
 
             category: transaction?.from.category || '',
-            title: transaction?.from.title || '',
-            value: transaction?.from.value.toString() || '0',
+            title: transaction?.from.title || undefined,
+            value: transaction?.from.value.toString() || undefined,
             remark: transaction?.remark || undefined,
             
             from: transaction?.from.accountid || '',
@@ -169,7 +169,7 @@ const AccountTransactionForm = (
                     />
 
                     {/* category input */}
-                    <FormField
+                    {/* <FormField
                         name="category"
                         control={form.control}
                         render={
@@ -184,7 +184,7 @@ const AccountTransactionForm = (
                                 )
                             }
                         }
-                    />
+                    /> */}
                 </div>
 
                 {/* title */}
@@ -198,6 +198,7 @@ const AccountTransactionForm = (
                                     <FormLabel>Title</FormLabel>
                                     <FormControl>
                                         <Input
+                                            placeholder="Enter title"
                                             {...field}
                                         />
                                     </FormControl>
@@ -218,6 +219,7 @@ const AccountTransactionForm = (
                                     <FormLabel>Amount {'($)'}</FormLabel>
                                     <FormControl>
                                         <Input
+                                            placeholder="Enter value"
                                             type="number"
                                             {...field}
                                         />
@@ -239,6 +241,7 @@ const AccountTransactionForm = (
                                     <FormLabel>Remark</FormLabel>
                                     <FormControl>
                                         <Textarea
+                                            placeholder="Remark for this transaction"
                                             {...field}
                                         />
                                     </FormControl>
