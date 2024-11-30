@@ -10,10 +10,16 @@ import { Label } from "../ui/label";
 import { Combobox } from "../ui/combobox";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
-import { Download, FileText } from "lucide-react";
+import { DownloadIcon, FileText } from "lucide-react";
 import axios from "axios";
 import { ToastError } from "./toast-object";
 import { toast } from "../ui/use-toast";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
 
 interface TransactionsPageContentProp {
     transactions: DetailedTransaction[];
@@ -106,22 +112,24 @@ export default function AllTransactions(
                 <CardTitle className="w-full flex justify-between items-center">
                     All transactions
                     <div className="flex gap-1">
-                        <Button
-                            variant="outline"
-                            size="icon"
-                            onClick={handleDownload}
-                            title="Download as CSV"
-                        >
-                            <Download className="h-4 w-4" />
-                        </Button>
-                        <Button
-                            variant="outline"
-                            size="icon"
-                            onClick={handlePdfDownload}
-                            title="Download Summary PDF"
-                        >
-                            <FileText className="h-4 w-4" />
-                        </Button>
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant="outline" size="icon">
+                                    <DownloadIcon className="h-4 w-4" />
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent>
+                                <DropdownMenuItem onClick={handleDownload}>
+                                    <FileText className="mr-2 h-4 w-4" />
+                                    Download CSV
+                                </DropdownMenuItem>
+                                <DropdownMenuItem onClick={handlePdfDownload}>
+                                    <FileText className="mr-2 h-4 w-4" />
+                                    Download PDF
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+
                         <Button
                             variant={quickSumMode ? 'secondary' : 'ghost'}
                             onClick={handleQuickSum}
