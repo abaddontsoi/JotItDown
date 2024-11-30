@@ -9,35 +9,38 @@ import { Suspense } from "react";
 
 export default async function Transactions() {
     const user = await getUser();
+    
     if (!user) {
         return (
             <>
-                Please <Link href={'/login'}>sign in</Link>
+                Please <Link href={'/login'}>Sign in</Link>
             </>
         )
     }
 
-    const transactions: PromiseDetailedTransaction = db.transaction.findMany(
-        {
-            where: {
-                belongToId: user.id
-            },
-            include: {
-                from: {
-                    include: {
-                        account: true,
-                    },
+    const transactions = db.transaction.findMany({
+        where: {
+            belongToId: user.id
+        },
+        include: {
+            from: {
+                include: {
+                    account: true,
                 },
-                to: {
-                    include: {
-                        account: true,
-                    }
-                }
             },
+            to: {
+                include: {
+                    account: true,
+                }
+            }
         }
-    )
+    });
 
-    const itemAccounts: Promise<ItemAccount[]> = db.itemAccount.findMany();
+    const itemAccounts = db.itemAccount.findMany({
+        where: {
+            belongToId: user.id
+        }
+    });
 
     return (
         <>

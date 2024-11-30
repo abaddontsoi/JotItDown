@@ -9,25 +9,19 @@ const CategoriesPage = async () => {
     if (!user) {
         return (
             <>
-                Please <Link href={'/login'}>
-                    Sign in
-                </Link>
+                Please <Link href={'/login'}>Sign in</Link>
             </>
         )
     }
 
-    const allCategories = db.category.findMany(
-        {
-            where: {
-                belongToId: user.id,
-            }
+    const allCategories = db.category.findMany({
+        where: {
+            belongToId: user.id,
         }
-    )
+    });
 
     return (
-        <>
-            <CategoriesMainPage />
-        </>
+        <CategoriesMainPage />
     )
 }
 
