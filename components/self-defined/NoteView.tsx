@@ -3,7 +3,7 @@
 import { DetailedContentBlock, DetailedNote, Modes } from "./types";
 import ContentBlockViewContent from "./ContentBlockViewContent";
 import { Button } from "../ui/button";
-import { Plus, Share, Trash } from "lucide-react";
+import { Plus, Share, Trash, Download } from "lucide-react";
 import ContentBlockDialog from "./ContentBlockDialog";
 import { useState } from "react";
 import { ScrollArea } from "../ui/scroll-area";
@@ -49,6 +49,27 @@ const NoteView = ({ note, groups }:
             toast(ToastError);
         }
     }
+
+    const handleDownload = async () => {
+        try {
+            const response = await axios.post('/api/note/download/pdf', {
+                noteId: note?.id
+            }, {
+                responseType: 'blob'
+            });
+
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', `${note?.title || 'Note'}.pdf`);
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+        } catch (error) {
+            toast(ToastError);
+        }
+    };
+
     if (note != null) {
         return (
             <div className="w-full">
@@ -118,6 +139,14 @@ const NoteView = ({ note, groups }:
                             onClick={() => setNoteShareMode('Create')}
                         >
                             <Share />
+                        </Button>
+
+                        <Button
+                            variant={'ghost'}
+                            className="w-fit"
+                            onClick={handleDownload}
+                        >
+                            <Download />
                         </Button>
 
                         <Button
