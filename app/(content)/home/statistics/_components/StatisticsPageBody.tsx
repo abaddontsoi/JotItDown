@@ -16,7 +16,16 @@ export default function StatisticsPageBody({ transactions }: StatisticsPageBodyP
 
     // Calculate total value
     const totalValue = transactions.reduce((sum, t) => sum + t.from.value, 0);
-    
+
+    const findMaxValueTransaction = () => {
+        if (transactions.length === 0) return null;
+        const personalTransactions = transactions.filter(t => t.from.account?.isPersonalSpending);
+        if (personalTransactions.length === 0) return null;
+        return personalTransactions[0];  // Initialize with first transaction
+    }
+
+    const maxTransaction = findMaxValueTransaction();
+
     return (
         <div className="space-y-6 px-4 md:px-6 py-4">
             <div className="grid gap-6">
@@ -53,21 +62,20 @@ export default function StatisticsPageBody({ transactions }: StatisticsPageBodyP
 
                     <Card>
                         <CardHeader>
-                            <CardTitle className="text-sm font-medium">Most Expensive Transaction</CardTitle>
+                            <CardTitle className="text-sm font-medium">Most Expensive Personal Transaction</CardTitle>
                         </CardHeader>
                         <CardContent>
-                            {transactions.length > 0 ? (
+                            {maxTransaction ? (
                                 <div>
                                     <div className="text-2xl font-bold">
-                                        ${Math.max(...transactions.map(t => t.from.value)).toFixed(2)}
+                                        ${maxTransaction.from.value.toFixed(2)}
                                     </div>
                                     <div className="text-sm text-muted-foreground">
-                                        {transactions.reduce((max, t) => t.from.value > max.from.value ? t : max).from.account?.title} →{' '}
-                                        {transactions.reduce((max, t) => t.from.value > max.from.value ? t : max).to.account?.title}
+                                        {maxTransaction.from.account?.title} → {maxTransaction.to.account?.title}
                                     </div>
                                 </div>
                             ) : (
-                                <div className="text-2xl font-bold">N/A</div>
+                                <div className="text-2xl font-bold">No personal transactions</div>
                             )}
                         </CardContent>
                     </Card>
