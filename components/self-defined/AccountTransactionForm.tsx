@@ -63,7 +63,7 @@ const AccountTransactionForm = (
             fromCash: transaction?.fromId,
             toCash: transaction?.toId,
 
-            recordDate: transaction?.recordDate || new Date(),
+            recordDate: transaction?.recordDate || undefined,
         }
     });
     const router = useRouter();
@@ -247,8 +247,7 @@ const AccountTransactionForm = (
                             <FormControl>
                                 <Input
                                     type="datetime-local"
-                                    value={field.value ? new Date(field.value).toISOString().split('T')[0] : ''}
-                                    onChange={(e) => field.onChange(e.target.value ? new Date(e.target.value) : null)}
+                                    onChange={(e) => field.onChange(new Date(e.target.value))}
                                 />
                             </FormControl>
                         </FormItem>

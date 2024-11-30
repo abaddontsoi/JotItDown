@@ -89,25 +89,24 @@ export default function TransactionsTableCard(
         setFiltered(
             transactions
                 .filter(t => {
-                    return !startDate || t.createdAt >= startDate;
+                    if (!startDate) return true;
+                    const compareDate = t.recordDate || t.createdAt;
+                    return compareDate >= startDate;
                 })
                 .filter(t => {
-                    return !endDate || t.createdAt <= endDate;
+                    if (!endDate) return true;
+                    const compareDate = t.recordDate || t.createdAt;
+                    return compareDate <= endDate;
                 })
-                .filter(t => {
-                    return !fromAccountId || t.from.accountid == fromAccountId;
-                })
-                .filter(t => {
-                    return !toAccountId || t.to.accountid == toAccountId;
+                .filter(t => !fromAccountId || t.from.accountid === fromAccountId)
+                .filter(t => !toAccountId || t.to.accountid === toAccountId)
+                .sort((a, b) => {
+                    const dateA = a.recordDate || a.createdAt;
+                    const dateB = b.recordDate || b.createdAt;
+                    return dateB.getTime() - dateA.getTime();
                 })
         );
-    }, [
-        startDate,
-        endDate,
-        fromAccountId,
-        toAccountId,
-        transactions,
-    ]);
+    }, [startDate, endDate, fromAccountId, toAccountId, transactions]);
     return (
         <Table>
             <TableHeader>
@@ -126,7 +125,7 @@ export default function TransactionsTableCard(
                         .map(t => (
                             <TableRow key={t.id} className="hover:bg-gray-200 duration-300">
                                 <TableCell className="text-center">
-                                    {t.createdAt.toDateString()}
+                                    {t.recordDate?.toDateString() || t.createdAt.toDateString()}
                                 </TableCell>
                                 <TableCell className="text-center">
                                     {t.from.account?.title}
