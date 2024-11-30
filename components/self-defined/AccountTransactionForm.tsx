@@ -35,6 +35,8 @@ const formSchema = z.object({
 
     fromCash: z.string().optional(),
     toCash: z.string().optional(),
+
+    recordDate: z.date().optional(),
 })
 
 const AccountTransactionForm = (
@@ -60,6 +62,8 @@ const AccountTransactionForm = (
 
             fromCash: transaction?.fromId,
             toCash: transaction?.toId,
+
+            recordDate: transaction?.recordDate || new Date(),
         }
     });
     const router = useRouter();
@@ -167,24 +171,6 @@ const AccountTransactionForm = (
                             }
                         }
                     />
-
-                    {/* category input */}
-                    {/* <FormField
-                        name="category"
-                        control={form.control}
-                        render={
-                            ({ field }) => {
-                                return (
-                                    <FormItem className="w-full">
-                                        <FormLabel>Category</FormLabel>
-                                        <FormControl>
-                                            <Input {...field} />
-                                        </FormControl>
-                                    </FormItem>
-                                )
-                            }
-                        }
-                    /> */}
                 </div>
 
                 {/* title */}
@@ -249,6 +235,24 @@ const AccountTransactionForm = (
                             )
                         }
                     }
+                />
+
+                {/* Record Date */}
+                <FormField
+                    name="recordDate"
+                    control={form.control}
+                    render={({ field }) => (
+                        <FormItem className="w-full">
+                            <FormLabel>Record Date</FormLabel>
+                            <FormControl>
+                                <Input
+                                    type="datetime-local"
+                                    value={field.value ? new Date(field.value).toISOString().split('T')[0] : ''}
+                                    onChange={(e) => field.onChange(e.target.value ? new Date(e.target.value) : null)}
+                                />
+                            </FormControl>
+                        </FormItem>
+                    )}
                 />
 
                 {/* confirm or cancel */}
