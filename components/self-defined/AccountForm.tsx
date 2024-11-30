@@ -12,6 +12,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
+import { Checkbox } from "../ui/checkbox";
 
 interface AccountFormProp {
     mode: Modes;
@@ -24,15 +25,11 @@ const formSchema = z.object({
     title: z.string(),
     description: z.string().optional(),
     originalCapital: z.number().optional(),
+    isPersonalSpending: z.boolean().default(false),
+    isIncomeSource: z.boolean().default(false),
 })
 
-const AccountForm = (
-    {
-        mode,
-        account,
-        setMode,
-    }: AccountFormProp
-) => {
+export default function AccountForm({ mode, account, setMode }: AccountFormProp) {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -40,6 +37,8 @@ const AccountForm = (
             title: account?.title || 'New Account',
             description: account?.description || undefined,
             originalCapital: account?.originalCapital || undefined,
+            isPersonalSpending: account?.isPersonalSpending || false,
+            isIncomeSource: account?.isIncomeSource || false,
         }
     });
     const router = useRouter();
@@ -69,89 +68,116 @@ const AccountForm = (
     }
 
     return (
-        <>
-            <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)}>
-                    <div className="flex items-center gap-2">
-                        {/* title */}
-                        <FormField
-                            name="title"
-                            control={form.control}
-                            render={
-                                ({ field }) => {
-                                    return (
-                                        <FormItem className="w-full">
-                                            <FormLabel>Title</FormLabel>
-                                            <FormControl>
-                                                <Input
-                                                    // type="number"
-                                                    {...field}
-                                                />
-                                            </FormControl>
-                                        </FormItem>
-                                    )
-                                }
-                            }
-                        />
-                        {/* Basic capital */}
-                        <FormField
-                            name="originalCapital"
-                            control={form.control}
-                            render={
-                                ({ field }) => {
-                                    return (
-                                        <FormItem className="w-full">
-                                            <FormLabel>Basic capital in {"$"} {"(Optional)"}</FormLabel>
-                                            <FormControl>
-                                                <Input
-                                                    type="number"
-                                                    onChange={(event) => {
-                                                        form.setValue("originalCapital", parseFloat(event.target.value) || 0);
-                                                    }}
-                                                />
-                                            </FormControl>
-                                        </FormItem>
-                                    )
-                                }
-                            }
-                        />
-                    </div>
-
-                    {/* Description */}
+        <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                {/* Title and Capital Section */}
+                <div className="grid gap-4 md:grid-cols-2">
                     <FormField
-                        name="description"
+                        name="title"
                         control={form.control}
-                        render={
-                            ({ field }) => {
-                                return (
-                                    <FormItem className="w-full">
-                                        <FormLabel>Description</FormLabel>
-                                        <FormControl>
-                                            <Textarea
-                                                {...field}
-                                            />
-                                        </FormControl>
-                                    </FormItem>
-                                )
-                            }
-                        }
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Account Title</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="Enter account title" {...field} />
+                                </FormControl>
+                            </FormItem>
+                        )}
                     />
 
-                    {/* confirm or cancel */}
-                    <div className="w-full flex flex-row-reverse mt-3 gap-1">
-                        <Button className="basis-1/2" type="submit">Save</Button>
-                        <Button className="basis-1/2 border-2 border-gray-900 bg-white text-red-500 hover:bg-slate-100"
-                            type='reset'
-                            onClick={() => {
-                                setMode('Close');
-                            }}
-                        >Cancel</Button>
+                    <FormField
+                        name="originalCapital"
+                        control={form.control}
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Initial Balance ($)</FormLabel>
+                                <FormControl>
+                                    <Input
+                                        type="number"
+                                        placeholder="0.00"
+                                        onChange={(e) => form.setValue("originalCapital", parseFloat(e.target.value) || 0)}
+                                    />
+                                </FormControl>
+                            </FormItem>
+                        )}
+                    />
+                </div>
+
+                {/* Description Section */}
+                <FormField
+                    name="description"
+                    control={form.control}
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Description</FormLabel>
+                            <FormControl>
+                                <Textarea
+                                    placeholder="Enter account description"
+                                    className="resize-none"
+                                    {...field}
+                                />
+                            </FormControl>
+                        </FormItem>
+                    )}
+                />
+
+                {/* Account Type Section */}
+                <div className="space-y-4 border rounded-lg p-4 bg-muted/50">
+                    <h3 className="font-medium">Account Type</h3>
+                    <div className="grid gap-4 md:grid-cols-2">
+                        <FormField
+                            control={form.control}
+                            name="isPersonalSpending"
+                            render={({ field }) => (
+                                <FormItem className="flex items-center space-x-3 space-y-0">
+                                    <FormControl>
+                                        <Checkbox
+                                            checked={field.value}
+                                            onCheckedChange={field.onChange}
+                                        />
+                                    </FormControl>
+                                    <div className="leading-none">
+                                        <FormLabel>Personal Spending Account</FormLabel>
+                                    </div>
+                                </FormItem>
+                            )}
+                        />
+
+                        <FormField
+                            control={form.control}
+                            name="isIncomeSource"
+                            render={({ field }) => (
+                                <FormItem className="flex items-center space-x-3 space-y-0">
+                                    <FormControl>
+                                        <Checkbox
+                                            checked={field.value}
+                                            onCheckedChange={field.onChange}
+                                        />
+                                    </FormControl>
+                                    <div className="leading-none">
+                                        <FormLabel>Income Source</FormLabel>
+                                    </div>
+                                </FormItem>
+                            )}
+                        />
                     </div>
+                </div>
 
-                </form>
-            </Form>
-        </>
-    )
+                {/* Action Buttons */}
+                <div className="flex gap-2">
+                    <Button
+                        type="reset"
+                        className="flex-1"
+                        variant={'cancel'}
+                        onClick={() => setMode('Close')}
+                    >
+                        Cancel
+                    </Button>
+                    <Button type="submit" className="flex-1">
+                        Save
+                    </Button>
+                </div>
+            </form>
+        </Form>
+    );
 }
-
-export default AccountForm;
