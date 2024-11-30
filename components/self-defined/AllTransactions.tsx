@@ -10,7 +10,7 @@ import { Label } from "../ui/label";
 import { Combobox } from "../ui/combobox";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
-import { Download } from "lucide-react";
+import { Download, FileText } from "lucide-react";
 import axios from "axios";
 import { ToastError } from "./toast-object";
 import { toast } from "../ui/use-toast";
@@ -77,6 +77,29 @@ export default function AllTransactions(
         }
     };
 
+    const handlePdfDownload = async () => {
+        try {
+            const response = await axios.post('/api/accounting/transaction/download/pdf', {
+                startDate,
+                endDate,
+                fromAccountId,
+                toAccountId
+            }, {
+                responseType: 'blob'
+            });
+
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'TransactionsSummary.pdf');
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+        } catch (error) {
+            toast(ToastError);
+        }
+    };
+
     return (
         <Card className="my-2">
             <CardHeader className="flex flex-col items-start">
@@ -90,6 +113,14 @@ export default function AllTransactions(
                             title="Download as CSV"
                         >
                             <Download className="h-4 w-4" />
+                        </Button>
+                        <Button
+                            variant="outline"
+                            size="icon"
+                            onClick={handlePdfDownload}
+                            title="Download Summary PDF"
+                        >
+                            <FileText className="h-4 w-4" />
                         </Button>
                         <Button
                             variant={quickSumMode ? 'secondary' : 'ghost'}
