@@ -9,9 +9,19 @@ import { Suspense } from "react";
 
 export default async function Transactions() {
     const user = await getUser();
+    if (!user) {
+        return (
+            <>
+                Please <Link href={'/login'}>sign in</Link>
+            </>
+        )
+    }
 
     const transactions: PromiseDetailedTransaction = db.transaction.findMany(
         {
+            where: {
+                belongToId: user.id
+            },
             include: {
                 from: {
                     include: {
@@ -29,13 +39,6 @@ export default async function Transactions() {
 
     const itemAccounts: Promise<ItemAccount[]> = db.itemAccount.findMany();
 
-    if (!user) {
-        return (
-            <>
-                Please <Link href={'/login'}>sign in</Link>
-            </>
-        )
-    }
     return (
         <>
             <Suspense fallback={<ContextCardFallBack />}>
