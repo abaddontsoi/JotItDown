@@ -1,5 +1,5 @@
 import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
-import { Transaction } from '@prisma/client';
+import { DetailedTransaction } from '@/components/self-defined/types';
 
 const styles = StyleSheet.create({
     page: {
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
 });
 
 interface Props {
-    transactions: any[];  // Replace 'any' with your transaction type
+    transactions: DetailedTransaction[];
 }
 
 export function TransactionPDF({ transactions }: Props) {
