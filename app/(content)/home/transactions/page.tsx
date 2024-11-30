@@ -24,9 +24,6 @@ export default async function Transactions() {
                     }
                 }
             },
-            orderBy: {
-                createdAt: 'desc'
-            }
         }
     )
 
