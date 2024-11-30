@@ -41,6 +41,11 @@ const GroupPage = async (
         } | null> = db.group.findFirstOrThrow({
             where: {
                 id: params.groupId,
+                GroupUser: {
+                    some: {
+                        userId: user.id
+                    }
+                }
             },
             include: {
                 GroupUser: {

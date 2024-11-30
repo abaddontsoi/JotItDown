@@ -46,7 +46,15 @@ const NoteViewPage = async ({ params }: {
         }
     });
 
-    const groups: Promise<Group[]> = db.group.findMany();
+    const groups: Promise<Group[]> = db.group.findMany({
+        where: {
+            GroupUser: {
+                some: {
+                    userId: user.id
+                }
+            }
+        }
+    });
 
     return (
         <Suspense fallback={<ContextCardFallBack />}>
