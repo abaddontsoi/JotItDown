@@ -21,7 +21,7 @@ export default function StatisticsPageBody({ transactions }: StatisticsPageBodyP
         if (transactions.length === 0) return null;
         const personalTransactions = transactions.filter(t => t.from.account?.isPersonalSpending);
         if (personalTransactions.length === 0) return null;
-        return personalTransactions[0];  // Initialize with first transaction
+        return personalTransactions.reduce((max, t) => t.from.value > max.from.value ? t : max, personalTransactions[0]);
     }
 
     const maxTransaction = findMaxValueTransaction();
