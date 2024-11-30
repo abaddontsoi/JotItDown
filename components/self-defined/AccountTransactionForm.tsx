@@ -14,6 +14,7 @@ import { toast } from "../ui/use-toast";
 import { ToastDone, ToastError, ToastLoading } from "./toast-object";
 import { useRouter } from "next/navigation";
 import { ItemAccount } from "@prisma/client";
+import { Save, X } from "lucide-react";
 
 interface AccountTransactionFormProp {
     mode: Modes;
@@ -256,7 +257,12 @@ const AccountTransactionForm = (
 
                 {/* confirm or cancel */}
                 <div className="w-full flex flex-row-reverse mt-3 gap-1">
-                    <Button className="basis-1/2" type="submit">Save</Button>
+                    <Button className="basis-1/2" type="submit">
+                        <div className="flex items-center gap-2">
+                            Save
+                            <Save className="w-4 h-4" />
+                        </div>
+                    </Button>
                     <Button 
                         variant={'cancel'}
                         className="basis-1/2"
@@ -264,7 +270,12 @@ const AccountTransactionForm = (
                         onClick={() => {
                             setMode('Close');
                         }}
-                    >Cancel</Button>
+                    >
+                        <div className="flex items-center gap-2">
+                            Cancel
+                            <X className="w-4 h-4" />
+                        </div>
+                    </Button>
                 </div>
 
             </form>

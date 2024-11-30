@@ -10,6 +10,7 @@ import axios from "axios";
 import { toast } from "../ui/use-toast";
 import { ToastDone, ToastError, ToastLoading } from "./toast-object";
 import { useState } from "react";
+import { Save, X } from "lucide-react";
 
 interface GroupInviteFormProp {
     mode: Modes;
@@ -79,12 +80,25 @@ export default function GroupInviteForm(
 
                     {/* Submit buttons */}
                     <div className="flex flex-row items-center gap-2 mt-4">
-                        <Button type="button" className="flex w-full text-red-400 hover:text-red-400 border-2 border-gray-900" variant={'outline'}
+                        <Button 
+                            type="button" 
+                            className="flex w-full text-red-400 hover:text-red-400 border-2 border-gray-900" 
+                            variant={'outline'}
                             onClick={() => {
                                 setMode('Close');
                             }}
-                        >Cancel</Button>
-                        <Button type="submit" className="flex w-full">Save</Button>
+                        >
+                            <div className="flex items-center gap-2">
+                                Cancel
+                                <X className="w-4 h-4" />
+                            </div>
+                        </Button>
+                        <Button type="submit" className="flex w-full">
+                            <div className="flex items-center gap-2">
+                                Save
+                                <Save className="w-4 h-4" />
+                            </div>
+                        </Button>
                     </div>
                 </form>
             </Form>

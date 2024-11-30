@@ -18,6 +18,7 @@ import { useRouter } from "next/navigation";
 import { DetailedTaskInfo, Modes } from "./types";
 import { toast } from "../ui/use-toast";
 import { ToastDone, ToastError, ToastLoading } from "./toast-object";
+import { Save, X } from "lucide-react";
 
 const formSchema = z.object({
     title: z.string().optional(),
@@ -180,11 +181,22 @@ const TaskInfoForm = ({
                         type={'button'}
                         onClick={() => {
                             setMode('Close');
-                        }}>Cancel</Button>
+                        }}
+                    >
+                        <div className="flex items-center gap-2">
+                            Cancel
+                            <X className="w-4 h-4" />
+                        </div>
+                    </Button>
                     <Button
                         className="basis-1/2"
                         type="submit"
-                        >Submit</Button>
+                    >
+                        <div className="flex items-center gap-2">
+                            Save
+                            <Save className="w-4 h-4" />
+                        </div>
+                    </Button>
                 </div>
             </form>
         </Form>
