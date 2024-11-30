@@ -16,7 +16,7 @@ export default function StatisticsPage(
 ) {
 
     const context = useStatistics();
-    
+
     context.setTransactions(transactions);
 
     return (
@@ -27,7 +27,9 @@ export default function StatisticsPage(
             <StatisticsPageHeader />
 
             {/* Body */}
-            <StatisticsPageBody />
+            <StatisticsPageBody
+                transactions={transactions}
+            />
         </>
     )
 }
