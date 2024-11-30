@@ -10,6 +10,10 @@ import { Label } from "../ui/label";
 import { Combobox } from "../ui/combobox";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
+import { Download } from "lucide-react";
+import axios from "axios";
+import { ToastError } from "./toast-object";
+import { toast } from "../ui/use-toast";
 
 interface TransactionsPageContentProp {
     transactions: DetailedTransaction[];
@@ -48,12 +52,45 @@ export default function AllTransactions(
     const handleQuickSum = () => {
         setQuickSumMode(prev => !prev);
     }
+
+    const handleDownload = async () => {
+        try {
+            const response = await axios.post('/api/accounting/transaction/download', {
+                startDate,
+                endDate,
+                fromAccountId,
+                toAccountId
+            }, {
+                responseType: 'blob'  // Important for file download
+            });
+
+            // Create download link
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'TransactionsLog.csv');
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+        } catch (error) {
+            toast(ToastError);
+        }
+    };
+
     return (
         <Card className="my-2">
             <CardHeader className="flex flex-col items-start">
                 <CardTitle className="w-full flex justify-between items-center">
                     All transactions
                     <div className="flex gap-1">
+                        <Button
+                            variant="outline"
+                            size="icon"
+                            onClick={handleDownload}
+                            title="Download as CSV"
+                        >
+                            <Download className="h-4 w-4" />
+                        </Button>
                         <Button
                             variant={quickSumMode ? 'secondary' : 'ghost'}
                             onClick={handleQuickSum}

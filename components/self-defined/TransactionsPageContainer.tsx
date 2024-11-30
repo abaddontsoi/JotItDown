@@ -3,6 +3,7 @@ import { DetailedTransaction, PromiseDetailedTransaction } from "./types"
 import ContextCardFallBack from "./ContextCardFallBack";
 import TransactionsPage from "./TransactionsPage";
 import { ItemAccount } from "@prisma/client";
+import { Toaster } from "../ui/toaster";
 
 interface TransactionsPageContainerProp {
     transactions: PromiseDetailedTransaction;
@@ -23,6 +24,7 @@ export default async function TransactionsPageContainer(
                     transactions={await transactions}
                     accounts={await accounts}
                 />
+                <Toaster />
             </Suspense>
         </>
     )
