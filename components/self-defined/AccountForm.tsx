@@ -13,6 +13,7 @@ import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
+import { Save, X } from "lucide-react";
 
 interface AccountFormProp {
     mode: Modes;
@@ -171,10 +172,16 @@ export default function AccountForm({ mode, account, setMode }: AccountFormProp)
                         variant={'cancel'}
                         onClick={() => setMode('Close')}
                     >
-                        Cancel
+                        <div className="flex items-center gap-2">
+                            Cancel
+                            <X className="w-4 h-4" />
+                        </div>
                     </Button>
                     <Button type="submit" className="flex-1">
-                        Save
+                        <div className="flex items-center gap-2">
+                            Save
+                            <Save className="w-4 h-4" />
+                        </div>
                     </Button>
                 </div>
             </form>

@@ -13,7 +13,7 @@ import { Textarea } from "../ui/textarea";
 import { Switch } from "../ui/switch";
 import axios from "axios";
 import { useToast } from "../ui/use-toast";
-import { Check, TicketCheck, X } from "lucide-react";
+import { Check, TicketCheck, X, Save } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 interface CashFlowRecordFormProp {
@@ -235,13 +235,24 @@ const CashFlowRecordForm = (
 
                     {/* Submit Button */}
                     <div className="w-full flex flex-row-reverse mt-3 gap-1">
-                        <Button className="basis-1/2" type="submit">Save</Button>
-                        <Button className="basis-1/2 border-2 border-gray-900 bg-white text-red-500 hover:bg-slate-100"
+                        <Button className="basis-1/2" type="submit">
+                            <div className="flex items-center gap-2">
+                                Save
+                                <Save className="w-4 h-4" />
+                            </div>
+                        </Button>
+                        <Button 
+                            className="basis-1/2 border-2 border-gray-900 bg-white text-red-500 hover:bg-slate-100"
                             type='reset'
                             onClick={() => {
                                 setMode('Close');
                             }}
-                        >Cancel</Button>
+                        >
+                            <div className="flex items-center gap-2">
+                                Cancel
+                                <X className="w-4 h-4" />
+                            </div>
+                        </Button>
                     </div>
                 </form>
             </Form>

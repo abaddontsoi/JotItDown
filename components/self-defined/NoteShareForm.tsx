@@ -11,6 +11,7 @@ import { Group, Note } from "@prisma/client";
 import { Combobox } from "../ui/combobox";
 import { Button } from "../ui/button";
 import axios from "axios";
+import { Save, X } from "lucide-react";
 
 interface NoteShareFormProp {
     note: Note;
@@ -88,13 +89,19 @@ export default function NoteShareForm(
                             className="basis-1/2"
                             variant={'cancel'}
                         >
-                            Cancel
+                            <div className="flex items-center gap-2">
+                                Cancel
+                                <X className="w-4 h-4" />
+                            </div>
                         </Button>
                         <Button
                             type="submit"
                             className="basis-1/2"
                         >
-                            Submit
+                            <div className="flex items-center gap-2">
+                                Save
+                                <Save className="w-4 h-4" />
+                            </div>
                         </Button>
                     </div>
                 </form>
