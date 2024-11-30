@@ -14,8 +14,11 @@ interface StatisticsPageBodyProp {
 export default function StatisticsPageBody({ transactions }: StatisticsPageBodyProp) {
     const ctx = useStatistics();
 
-    // Calculate total value
-    const totalValue = transactions.reduce((sum, t) => sum + t.from.value, 0);
+    // Calculate total spending value
+    const totalSpendingValue = transactions
+        .filter(t => t.from.account?.isPersonalSpending)
+        .reduce((sum, t) => sum + t.from.value, 0);
+
 
     const findMaxValueTransaction = () => {
         if (transactions.length === 0) return null;
@@ -42,10 +45,10 @@ export default function StatisticsPageBody({ transactions }: StatisticsPageBodyP
 
                     <Card>
                         <CardHeader>
-                            <CardTitle className="text-sm font-medium">Total Value</CardTitle>
+                            <CardTitle className="text-sm font-medium">Total Spending Value</CardTitle>
                         </CardHeader>
                         <CardContent>
-                            <div className="text-2xl font-bold">${totalValue.toFixed(2)}</div>
+                            <div className="text-2xl font-bold">${totalSpendingValue.toFixed(2)}</div>
                         </CardContent>
                     </Card>
 
@@ -55,7 +58,7 @@ export default function StatisticsPageBody({ transactions }: StatisticsPageBodyP
                         </CardHeader>
                         <CardContent>
                             <div className="text-2xl font-bold">
-                                ${(totalValue / transactions.length || 0).toFixed(2)}
+                                ${(totalSpendingValue / transactions.length || 0).toFixed(2)}
                             </div>
                         </CardContent>
                     </Card>
