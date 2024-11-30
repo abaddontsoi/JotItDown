@@ -1,5 +1,5 @@
 import { db } from "@/lib/db";
-import { DetailedTransaction } from "@/app/features/transactions/types";
+import { DetailedTransaction } from "@/components/self-defined/types";
 
 export async function getTransactions(): Promise<DetailedTransaction[]> {
     return db.transaction.findMany({
