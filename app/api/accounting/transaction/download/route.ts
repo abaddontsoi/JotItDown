@@ -43,7 +43,7 @@ export async function POST(req: Request) {
                 t.from.account?.title || 'Unknown',
                 t.to.account?.title || 'Unknown',
                 t.from.value,
-                t.remark || ''
+                (t.remark || '').replace(/[\n\r]+/g, ' ')
             ].join(","))
         ].join("\n");
 
