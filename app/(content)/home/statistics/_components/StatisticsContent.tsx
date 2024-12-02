@@ -128,10 +128,6 @@ export function StatisticsContent({
     ];
 
     const [cards, setCards] = useState(initialCards);
-    const goToStatistics = () => {
-        router.push(`/home/statistics/${year}/${month}`);
-    }
-
     // DnD sensors
     const sensors = useSensors(
         useSensor(PointerSensor),
@@ -154,6 +150,9 @@ export function StatisticsContent({
 
     const [year, setYear] = useState<number | undefined>(selectedYear || new Date().getFullYear());
     const [month, setMonth] = useState<number | undefined>(selectedMonth);
+    const goToStatistics = () => {
+        router.push(`/home/statistics/${year}/${month}`);
+    }
 
     return (
         <div className="grid gap-6">
