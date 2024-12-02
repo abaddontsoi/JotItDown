@@ -1,7 +1,4 @@
 import { DetailedTransaction, PromiseDetailedTransaction } from "@/components/self-defined/types"
-import StatisticsPage from "./StatisticsPage";
-import { Suspense } from "react";
-import ContextCardFallBack from "@/components/self-defined/ContextCardFallBack";
 import StatisticsPageBody from "./StatisticsPageBody";
 import StatisticsPageHeader from "./StatisticsPageHeader";
 
@@ -9,12 +6,14 @@ interface StatisticsPageContainerProps {
     transactions: Promise<DetailedTransaction[]>;
     year?: number;
     month?: number;
+    overall?: boolean;
 }
 
 export default async function StatisticsPageContainer({ 
     transactions,
     year,
-    month
+    month,
+    overall
 }: StatisticsPageContainerProps) {
     const transactionsData = await transactions;
 
@@ -25,6 +24,7 @@ export default async function StatisticsPageContainer({
                 transactions={transactionsData} 
                 year={year}
                 month={month}
+                overall={overall}
             />
         </div>
     );
