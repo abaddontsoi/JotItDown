@@ -26,9 +26,16 @@ import { useRouter } from "next/navigation";
 interface StatisticsContentProps {
     transactions: DetailedTransaction[];
     isMonthly?: boolean;
+    selectedYear?: number;
+    selectedMonth?: number;
 }
 
-export function StatisticsContent({ transactions, isMonthly = false }: StatisticsContentProps) {
+export function StatisticsContent({ 
+    transactions, 
+    isMonthly = false,
+    selectedYear,
+    selectedMonth
+}: StatisticsContentProps) {
 
     // Router
     const router = useRouter();
@@ -145,8 +152,8 @@ export function StatisticsContent({ transactions, isMonthly = false }: Statistic
         }
     };
 
-    const [year, setYear] = useState<number>();
-    const [month, setMonth] = useState<number>();
+    const [year, setYear] = useState<number | undefined>(selectedYear || new Date().getFullYear());
+    const [month, setMonth] = useState<number | undefined>(selectedMonth);
 
     return (
         <div className="grid gap-6">

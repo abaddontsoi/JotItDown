@@ -21,7 +21,11 @@ export default async function StatisticsPageContainer({
     return (
         <div className="space-y-4">
             <StatisticsPageHeader year={year} month={month} />
-            <StatisticsPageBody transactions={transactionsData} />
+            <StatisticsPageBody 
+                transactions={transactionsData} 
+                year={year}
+                month={month}
+            />
         </div>
     );
 }
