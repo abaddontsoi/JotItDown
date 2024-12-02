@@ -78,6 +78,7 @@ export function StatisticsContent({
     const selectedPeriodTotalTransactions = selectedPeriodTransactions.length;
 
     const selectedPeriodMaxTransaction = selectedPeriodTransactions
+        .filter(t => t.from.account?.isPersonalSpending)
         .reduce((max, t) => t.from.value > max.from.value ? t : max, selectedPeriodTransactions[0]);    
 
     const selectedPeriodDailyAverage = selectedPeriodSpending / new Date(selectedYear || now.getFullYear(), (selectedMonth || now.getMonth() + 1), 0).getDate();
