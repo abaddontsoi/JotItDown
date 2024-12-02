@@ -3,7 +3,6 @@ import TransactionsPageContainer from "@/components/self-defined/TransactionsPag
 import { PromiseDetailedTransaction } from "@/components/self-defined/types";
 import { db } from "@/lib/db";
 import { getUser } from "@/lib/getUser"
-import { ItemAccount } from "@prisma/client";
 import Link from "next/link";
 import { Suspense } from "react";
 
@@ -38,7 +37,8 @@ export default async function Transactions() {
 
     const itemAccounts = db.itemAccount.findMany({
         where: {
-            belongToId: user.id
+            belongToId: user.id,
+            isDisabled: false,
         }
     });
 
