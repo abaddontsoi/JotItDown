@@ -13,7 +13,9 @@ export const ExpensesSection = async ({ expenses }: ExpensesSectionProps) => {
     const data = await expenses;
     
     // Calculate total expenses
-    const totalExpenses = data.reduce((acc, transaction) => acc + transaction.from.value, 0);
+    const totalExpenses = data
+        .filter(transaction => transaction.from.account?.isPersonalSpending)
+        .reduce((acc, transaction) => acc + transaction.from.value, 0);
 
     // Group expenses by account
     const expensesByAccount = data.reduce((acc, transaction) => {
