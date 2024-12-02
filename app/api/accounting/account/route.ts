@@ -74,9 +74,9 @@ export async function PATCH(req: Request) {
         // Ensure boolean fields are properly typed
         const accountData = {
             ...updateData,
-            isPersonalSpending: Boolean(updateData.isPersonalSpending),
-            isIncomeSource: Boolean(updateData.isIncomeSource),
-            isDisabled: Boolean(isDisabled),
+            isPersonalSpending: updateData.isPersonalSpending && true,
+            isIncomeSource: updateData.isIncomeSource && true,
+            isDisabled: isDisabled && true,
             originalCapital: updateData.originalCapital ? Number(updateData.originalCapital) : null,
         };
 
