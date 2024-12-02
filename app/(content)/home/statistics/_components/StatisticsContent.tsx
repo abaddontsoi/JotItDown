@@ -140,7 +140,7 @@ export function StatisticsContent({
         },
         {
             id: 'daily-average',
-            title: 'Daily Average',
+            title: `Daily Average (for ${new Date(selectedYear || now.getFullYear(), (selectedMonth || now.getMonth() + 1), 0).getDate()} days)`,
             content: `$${selectedPeriodDailyAverage.toFixed(2)}`,
         }
     ];
