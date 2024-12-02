@@ -59,3 +59,5 @@ export default async function MonthlyStatistics() {
         </StatisticsProvider>
     )
 } 
+
+export const dynamic = 'force-dynamic'; 
