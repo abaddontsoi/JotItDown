@@ -4,14 +4,24 @@ import { useStatistics } from "@/app/contexts/statistics/StatisticsContext";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-export default function StatisticsPageHeader() {
+interface StatisticsPageHeaderProps {
+    year?: number;
+    month?: number;
+}
+
+export default function StatisticsPageHeader({ year, month }: StatisticsPageHeaderProps) {
     const context = useStatistics();
     const pathname = usePathname();
     const isMonthly = pathname.includes('/thismonth');
     
-    const title = isMonthly 
-        ? `Statistics for ${new Date().toLocaleString('default', { month: 'long', year: 'numeric' })}`
-        : 'Overall Statistics';
+    let title = 'Overall Statistics';
+    
+    if (year && month) {
+        const date = new Date(year, month - 1);
+        title = `Statistics for ${date.toLocaleString('default', { month: 'long', year: 'numeric' })}`;
+    } else if (isMonthly) {
+        title = `Statistics for ${new Date().toLocaleString('default', { month: 'long', year: 'numeric' })}`;
+    }
 
     return (
         <div className="w-full px-4 md:px-6 py-4">
