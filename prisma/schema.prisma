@@ -243,6 +243,7 @@ model ItemAccount {
     belongToId String @db.ObjectId
     belongTo   User   @relation(fields: [belongToId], references: [id])
 
+    isDisabled         Boolean @default(false)
     isPersonalSpending Boolean @default(false)
     isIncomeSource     Boolean @default(false)
 
