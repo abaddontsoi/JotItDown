@@ -2,23 +2,26 @@ import { DetailedTransaction, PromiseDetailedTransaction } from "@/components/se
 import StatisticsPage from "./StatisticsPage";
 import { Suspense } from "react";
 import ContextCardFallBack from "@/components/self-defined/ContextCardFallBack";
+import StatisticsPageBody from "./StatisticsPageBody";
+import StatisticsPageHeader from "./StatisticsPageHeader";
 
-interface StatisticsPageContainerProp {
-    transactions: PromiseDetailedTransaction;
+interface StatisticsPageContainerProps {
+    transactions: Promise<DetailedTransaction[]>;
+    year?: number;
+    month?: number;
 }
 
-export default async function StatisticsPageContainer(
-    {
-        transactions,
-    }: StatisticsPageContainerProp
-) {
-    const t: DetailedTransaction[] = await transactions;
+export default async function StatisticsPageContainer({ 
+    transactions,
+    year,
+    month
+}: StatisticsPageContainerProps) {
+    const transactionsData = await transactions;
 
     return (
-        <Suspense fallback={<ContextCardFallBack />}>
-            <StatisticsPage 
-                transactions={t}
-            />
-        </Suspense>
-    )
+        <div className="space-y-4">
+            <StatisticsPageHeader year={year} month={month} />
+            <StatisticsPageBody transactions={transactionsData} />
+        </div>
+    );
 }

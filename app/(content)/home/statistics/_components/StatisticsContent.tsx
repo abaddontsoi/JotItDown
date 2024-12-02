@@ -18,6 +18,10 @@ import {
     sortableKeyboardCoordinates,
 } from '@dnd-kit/sortable';
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { getMonthName } from "@/app/lib/date-utils";
+import { useRouter } from "next/navigation";
 
 interface StatisticsContentProps {
     transactions: DetailedTransaction[];
@@ -25,6 +29,10 @@ interface StatisticsContentProps {
 }
 
 export function StatisticsContent({ transactions, isMonthly = false }: StatisticsContentProps) {
+
+    // Router
+    const router = useRouter();
+
     // Get dates
     const now = new Date();
     const lastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
@@ -113,6 +121,9 @@ export function StatisticsContent({ transactions, isMonthly = false }: Statistic
     ];
 
     const [cards, setCards] = useState(initialCards);
+    const goToStatistics = () => {
+        router.push(`/home/statistics/${year}/${month}`);
+    }
 
     // DnD sensors
     const sensors = useSensors(
@@ -134,8 +145,67 @@ export function StatisticsContent({ transactions, isMonthly = false }: Statistic
         }
     };
 
+    const [year, setYear] = useState<number>();
+    const [month, setMonth] = useState<number>();
+
     return (
         <div className="grid gap-6">
+            <div className="w-full grid grid-cols-3 gap-4">
+                {/* Select month and year */}
+                <Select
+                    value={year?.toString()}
+                    onValueChange={(value) => setYear(parseInt(value))}
+                >
+                    <SelectTrigger>
+                        <SelectValue placeholder="Select year" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        {Array.from({ length: 50 }, (_, i) => {
+                            const year = 1975 + i;
+                            return (
+                                <SelectItem key={year} value={year.toString()}>
+                                    {year}
+                                </SelectItem>
+                            );
+                        })}
+                    </SelectContent>
+                </Select>
+
+                <Select
+                    value={month?.toString()}
+                    onValueChange={(value) => setMonth(parseInt(value))}
+                >
+                    <SelectTrigger>
+                        <SelectValue placeholder="Select month" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        {Array.from({ length: 12 }, (_, i) => {
+                            const monthIndex = i;
+                            const monthNumber = monthIndex + 1;
+                            return (
+                                <SelectItem
+                                    key={monthNumber}
+                                    value={monthNumber.toString()}
+                                >
+                                    {getMonthName(monthIndex)}
+                                </SelectItem>
+                            );
+                        })}
+                    </SelectContent>
+                </Select>
+
+                <Button
+                    disabled={!year || !month}
+                    onClick={goToStatistics}
+                >
+                    {
+                        year && month ?
+                            `Check ${year}/${month}` :
+                            'Select month and year'
+                    }
+                </Button>
+            </div>
+
             <DndContext
                 sensors={sensors}
                 collisionDetection={closestCenter}
