@@ -11,14 +11,16 @@ interface ExpensesSectionProps {
 
 export const ExpensesSection = async ({ expenses }: ExpensesSectionProps) => {
     const data = await expenses;
-    
+
+    // Filter out transactions that are personal spending
+    const personalSpendingTransactions = data.filter(transaction => transaction.from.account?.isPersonalSpending);
+
     // Calculate total expenses
-    const totalExpenses = data
-        .filter(transaction => transaction.from.account?.isPersonalSpending)
+    const totalExpenses = personalSpendingTransactions
         .reduce((acc, transaction) => acc + transaction.from.value, 0);
 
     // Group expenses by account
-    const expensesByAccount = data.reduce((acc, transaction) => {
+    const expensesByAccount = personalSpendingTransactions.reduce((acc, transaction) => {
         const accountName = transaction.from.account?.title || 'Uncategorized';
         acc[accountName] = (acc[accountName] || 0) + transaction.from.value;
         return acc;
