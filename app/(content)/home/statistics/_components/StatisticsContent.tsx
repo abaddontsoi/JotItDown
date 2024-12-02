@@ -29,7 +29,7 @@ interface StatisticsContentProps {
 }
 
 export function StatisticsContent({ transactions, isMonthly = false }: StatisticsContentProps) {
-    
+
     // Router
     const router = useRouter();
 
@@ -153,6 +153,25 @@ export function StatisticsContent({ transactions, isMonthly = false }: Statistic
             <div className="w-full grid grid-cols-3 gap-4">
                 {/* Select month and year */}
                 <Select
+                    value={year?.toString()}
+                    onValueChange={(value) => setYear(parseInt(value))}
+                >
+                    <SelectTrigger>
+                        <SelectValue placeholder="Select year" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        {Array.from({ length: 50 }, (_, i) => {
+                            const year = 1975 + i;
+                            return (
+                                <SelectItem key={year} value={year.toString()}>
+                                    {year}
+                                </SelectItem>
+                            );
+                        })}
+                    </SelectContent>
+                </Select>
+
+                <Select
                     value={month?.toString()}
                     onValueChange={(value) => setMonth(parseInt(value))}
                 >
@@ -169,25 +188,6 @@ export function StatisticsContent({ transactions, isMonthly = false }: Statistic
                                     value={monthNumber.toString()}
                                 >
                                     {getMonthName(monthIndex)}
-                                </SelectItem>
-                            );
-                        })}
-                    </SelectContent>
-                </Select>
-
-                <Select
-                    value={year?.toString()}
-                    onValueChange={(value) => setYear(parseInt(value))}
-                >
-                    <SelectTrigger>
-                        <SelectValue placeholder="Select year" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        {Array.from({ length: 50 }, (_, i) => {
-                            const year = 1975 + i;
-                            return (
-                                <SelectItem key={year} value={year.toString()}>
-                                    {year}
                                 </SelectItem>
                             );
                         })}
