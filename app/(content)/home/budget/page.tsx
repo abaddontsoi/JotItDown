@@ -41,6 +41,7 @@ const BudgetPage = async () => {
     const allAccountsRecords: PromiseDetailedAccountRecords = db.itemAccount.findMany({
         where: {
             belongToId: user.id,
+            isDisabled: false,
         },
         include: {
             CashFlow: {
