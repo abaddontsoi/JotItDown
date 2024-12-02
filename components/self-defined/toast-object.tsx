@@ -21,8 +21,13 @@ export const ToastDone = {
 export const ToastError = {
     description: (
         <div className="flex flex-row items-center gap-1">
-            <X className="transition ease-in-out  w-4 h-4"/>
+            <X className="transition ease-in-out  w-4 h-4" />
             {'Something went wrong'}
         </div>
     )
 }
+
+export const ToastErrorWithMessage = (message: string) => ({
+    title: "Error",
+    description: message || "Failed to disable account",
+})

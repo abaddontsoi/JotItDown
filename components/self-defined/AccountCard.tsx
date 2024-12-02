@@ -6,13 +6,17 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from ".
 import { DetailedAccountRecord, DetailedCashFlowRecord, Modes } from "./types";
 import { toDDMMYYYY } from "@/utils/formatters/date-formatter";
 import clsx from "clsx";
-import { Settings, CalendarIcon, X, FilterIcon } from "lucide-react";
+import { Settings, CalendarIcon, X, FilterIcon, Ban } from "lucide-react";
 import { Button } from "../ui/button";
 import { useState } from "react";
 import { Calendar } from "../ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
+import { toast } from "../ui/use-toast";
+import { ToastDone, ToastErrorWithMessage } from "./toast-object";
+import axios from "axios";
 
 interface AccountCardProp {
     record: DetailedAccountRecord;
@@ -21,6 +25,7 @@ interface AccountCardProp {
 }
 
 const AccountCard = ({ record, setAccount, setMode }: AccountCardProp) => {
+    const router = useRouter();
     const [collapse, setCollapse] = useState<boolean>(true);
     const [showFilter, setShowFilter] = useState<boolean>(false);
     const [startDate, setStartDate] = useState<Date | undefined>(undefined);
@@ -71,6 +76,24 @@ const AccountCard = ({ record, setAccount, setMode }: AccountCardProp) => {
 
     const toggleFilter = () => setShowFilter(prev => !prev);
 
+    const handleDisable = async () => {
+        try {
+            axios.patch('/api/accounting/account', {
+                id: record.id,
+                isDisabled: true
+            }).then(response => {
+                if (response.status === 200) {
+                    router.refresh();
+                    toast(ToastDone);
+                }
+            }).catch(error => {
+                toast(ToastErrorWithMessage(error.response?.data?.message || "Failed to disable account"));
+            }); 
+        } catch (error: any) {
+            toast(ToastErrorWithMessage(error.response?.data?.message || "Failed to disable account"));
+        }
+    };
+
     return (
         <Card>
             <CardHeader>
@@ -83,13 +106,6 @@ const AccountCard = ({ record, setAccount, setMode }: AccountCardProp) => {
                             )}
                         </div>
                         <div className="flex items-center gap-1">
-                            {/* {(startDate || endDate) && (
-                                <span className="text-sm text-muted-foreground">
-                                    {startDate && format(startDate, "MM/dd/yyyy")}
-                                    {startDate && endDate && " - "}
-                                    {endDate && format(endDate, "MM/dd/yyyy")}
-                                </span>
-                            )} */}
                             <Button 
                                 variant="ghost" 
                                 size="sm" 
@@ -103,6 +119,14 @@ const AccountCard = ({ record, setAccount, setMode }: AccountCardProp) => {
                             </Button>
                             <Button variant="ghost" size="sm" onClick={handleSettingsClick}>
                                 <Settings className="h-4 w-4" />
+                            </Button>
+                            <Button
+                                variant="ghost"
+                                size="icon"
+                                onClick={handleDisable}
+                                title="Disable Account"
+                            >
+                                <Ban className="h-4 w-4" />
                             </Button>
                         </div>
                     </div>
