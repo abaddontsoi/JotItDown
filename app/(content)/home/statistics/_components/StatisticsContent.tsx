@@ -25,16 +25,16 @@ import { useRouter } from "next/navigation";
 
 interface StatisticsContentProps {
     transactions: DetailedTransaction[];
-    isMonthly?: boolean;
     selectedYear?: number;
     selectedMonth?: number;
+    overall?: boolean;
 }
 
-export function StatisticsContent({ 
-    transactions, 
-    isMonthly = false,
+export function StatisticsContent({
+    transactions,
     selectedYear,
-    selectedMonth
+    selectedMonth,
+    overall,
 }: StatisticsContentProps) {
 
     // Router
@@ -46,7 +46,7 @@ export function StatisticsContent({
     const lastMonthEnd = new Date(now.getFullYear(), now.getMonth(), 0);
     const currentMonthStart = new Date(now.getFullYear(), now.getMonth(), 1);
 
-    // Filter transactions
+    // Filter transactions (for both overall and selected period)
     const lastMonthTransactions = transactions.filter(t => {
         const date = t.recordDate || t.createdAt;
         return date >= lastMonth && date <= lastMonthEnd;
@@ -57,7 +57,32 @@ export function StatisticsContent({
         return date >= currentMonthStart;
     });
 
-    // Calculate statistics
+    const selectedPeriodTransactions = transactions
+        .filter(t => {
+            // If selectedYear or selectedMonth are not provided, return all transactions
+            if (!selectedYear || !selectedMonth) return true;
+            const date = t.recordDate || t.createdAt;
+            const selectedMonthStart = new Date(selectedYear, selectedMonth - 1, 1);
+            const selectedMonthEnd = new Date(selectedYear, selectedMonth, 0);
+
+            return date >= selectedMonthStart && date <= selectedMonthEnd;
+        });
+
+    // Calculate statistics for both overall and selected period
+
+    // Calculate statistics for selected period 
+    const selectedPeriodSpending = selectedPeriodTransactions
+        .filter(t => t.from.account?.isPersonalSpending)
+        .reduce((sum, t) => sum + t.from.value, 0); 
+    
+    const selectedPeriodTotalTransactions = selectedPeriodTransactions.length;
+
+    const selectedPeriodMaxTransaction = selectedPeriodTransactions
+        .reduce((max, t) => t.from.value > max.from.value ? t : max, selectedPeriodTransactions[0]);    
+
+    const selectedPeriodDailyAverage = selectedPeriodSpending / new Date(selectedYear || now.getFullYear(), (selectedMonth || now.getMonth() + 1), 0).getDate();
+
+    // Calculate statistics for overall
     const lastMonthSpending = lastMonthTransactions
         .filter(t => t.from.account?.isPersonalSpending)
         .reduce((sum, t) => sum + t.from.value, 0);
@@ -66,7 +91,7 @@ export function StatisticsContent({
         .filter(t => t.from.account?.isPersonalSpending)
         .reduce((sum, t) => sum + t.from.value, 0);
 
-    const totalSpending = transactions
+    const overallTotalSpending = transactions
         .filter(t => t.from.account?.isPersonalSpending)
         .reduce((sum, t) => sum + t.from.value, 0);
 
@@ -82,29 +107,7 @@ export function StatisticsContent({
     const maxTransaction = findMaxValueTransaction();
 
     // Define cards based on view type
-    const initialCards = isMonthly ? [
-        {
-            id: 'current-month-spending',
-            title: `This Month`,
-            content: `$${currentMonthSpending.toFixed(2)}`,
-        },
-        {
-            id: 'total-transactions',
-            title: 'Total Transactions',
-            content: currentMonthTransactions.length.toString(),
-        },
-        {
-            id: 'max-transaction',
-            title: 'Transaction with largest amount',
-            content: maxTransaction ? `$${maxTransaction.from.value.toFixed(2)}` : 'N/A',
-            subContent: maxTransaction ? `${maxTransaction.from.account?.title} → ${maxTransaction.to.account?.title}` : undefined,
-        },
-        {
-            id: 'daily-average',
-            title: 'Daily Average',
-            content: `$${currentMonthAverage.toFixed(2)}`,
-        }
-    ] : [
+    const initialCards = overall ? [
         {
             id: 'last-month-spending',
             title: `Last Month (${lastMonth.toLocaleString('default', { month: 'short' })})`,
@@ -123,8 +126,31 @@ export function StatisticsContent({
         {
             id: 'total-spending',
             title: 'Total Spending',
-            content: `$${totalSpending.toFixed(2)}`,
+            content: `$${overallTotalSpending.toFixed(2)}`,
         },
+
+    ] : [
+        {
+            id: 'current-month-spending',
+            title: `This Month`,
+            content: `$${selectedPeriodSpending.toFixed(2)}`,
+        },
+        {
+            id: 'total-transactions',
+            title: 'Total Transactions',
+            content: selectedPeriodTotalTransactions.toString(),
+        },
+        {
+            id: 'max-transaction',
+            title: 'Transaction with largest amount',
+            content: selectedPeriodMaxTransaction ? `$${selectedPeriodMaxTransaction.from.value.toFixed(2)}` : 'N/A',
+            subContent: selectedPeriodMaxTransaction ? `${selectedPeriodMaxTransaction.from.account?.title} → ${selectedPeriodMaxTransaction.to.account?.title}` : undefined,
+        },
+        {
+            id: 'daily-average',
+            title: 'Daily Average',
+            content: `$${selectedPeriodDailyAverage.toFixed(2)}`,
+        }
     ];
 
     const [cards, setCards] = useState(initialCards);

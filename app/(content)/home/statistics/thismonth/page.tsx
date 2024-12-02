@@ -25,10 +25,10 @@ export default async function MonthlyStatistics() {
     const transactions = db.transaction.findMany({
         where: {
             belongToId: user.id,
-            createdAt: {
-                gte: startOfMonth,
-                lte: endOfMonth
-            }
+            // createdAt: {
+            //     gte: startOfMonth,
+            //     lte: endOfMonth
+            // }
         },
         include: {
             from: {
@@ -50,7 +50,11 @@ export default async function MonthlyStatistics() {
     return (
         <StatisticsProvider>
             <Suspense fallback={<ContextCardFallBack />}>
-                <StatisticsPageContainer transactions={transactions} />
+                <StatisticsPageContainer 
+                    transactions={transactions} 
+                    year={now.getFullYear()}
+                    month={now.getMonth() + 1}
+                />
             </Suspense>
         </StatisticsProvider>
     )

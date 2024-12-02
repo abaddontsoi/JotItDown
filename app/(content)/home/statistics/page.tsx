@@ -41,7 +41,10 @@ export default async function Statistics() {
     return (
         <StatisticsProvider>
             <Suspense fallback={<ContextCardFallBack />}>
-                <StatisticsPageContainer transactions={transactions} />
+                <StatisticsPageContainer
+                    transactions={transactions}
+                    overall={true}
+                />
             </Suspense>
         </StatisticsProvider>
     )

@@ -7,20 +7,22 @@ interface StatisticsPageBodyProp {
     transactions: DetailedTransaction[];
     year?: number;
     month?: number;
+    overall?: boolean;
 }
 
 export default function StatisticsPageBody({ 
     transactions, 
     year, 
-    month 
+    month,
+    overall,
 }: StatisticsPageBodyProp) {
     return (
         <div className="space-y-6 px-4 md:px-6 py-4">
             <StatisticsContent 
                 transactions={transactions} 
-                isMonthly={!!month && !!year}
                 selectedYear={year}
                 selectedMonth={month}
+                overall={overall}
             />
         </div>
     );

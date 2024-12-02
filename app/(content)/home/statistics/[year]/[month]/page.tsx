@@ -6,7 +6,7 @@ import StatisticsPageContainer from "../../_components/StatisticsPageContainer";
 import { db } from "@/lib/db";
 import ContextCardFallBack from "@/components/self-defined/ContextCardFallBack";
 
-export default async function StatisticsByYearMonth({ params }: { params: { year: string, month: string } }) {
+export default async function StatisticsByYearMonth({ params }: { params: { year: number, month: number } }) {
     const user = await getUser();
 
     if (!user) {
@@ -65,8 +65,8 @@ export default async function StatisticsByYearMonth({ params }: { params: { year
             <Suspense fallback={<ContextCardFallBack />}>
                 <StatisticsPageContainer 
                     transactions={transactions}
-                    year={parseInt(params.year)}
-                    month={parseInt(params.month)}
+                    year={params.year}
+                    month={params.month}
                 />
             </Suspense>
         </StatisticsProvider>
