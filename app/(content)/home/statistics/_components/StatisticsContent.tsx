@@ -95,16 +95,7 @@ export function StatisticsContent({
         .filter(t => t.from.account?.isPersonalSpending)
         .reduce((sum, t) => sum + t.from.value, 0);
 
-    const currentMonthAverage = currentMonthSpending / now.getDate();
-
-    const findMaxValueTransaction = () => {
-        if (transactions.length === 0) return null;
-        const personalTransactions = transactions.filter(t => t.from.account?.isPersonalSpending);
-        if (personalTransactions.length === 0) return null;
-        return personalTransactions.reduce((max, t) => t.from.value > max.from.value ? t : max, personalTransactions[0]);
-    }
-
-    const maxTransaction = findMaxValueTransaction();
+    const overalTotalTransaction = transactions.length;
 
     // Define cards based on view type
     const initialCards = overall ? [
@@ -121,7 +112,7 @@ export function StatisticsContent({
         {
             id: 'total-transactions',
             title: 'Total Transactions',
-            content: transactions.length.toString(),
+            content: overalTotalTransaction.toString(),
         },
         {
             id: 'total-spending',
