@@ -49,3 +49,5 @@ export default async function Statistics() {
         </StatisticsProvider>
     )
 }
+
+export const dynamic = 'force-dynamic';
