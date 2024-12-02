@@ -49,23 +49,34 @@ export async function POST(req: Request) {
 export async function PATCH(req: Request) {
     try {
         const user = await getUser();
-
         if (!user) {
-            return new NextResponse(JSON.stringify({
-                message: 'Unauthorized',
-            }), {
-                status: 401,
-            })
+            return new NextResponse(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
         }
 
         const data = await req.json();
-        const { id, ...updateData } = data;
+        const { id, isDisabled, ...updateData } = data;
+
+        // If trying to disable, check for dependent transactions
+        if (isDisabled) {
+            const dependentTransactions = await db.cashFlow.findFirst({
+                where: {
+                    accountid: id,
+                }
+            });
+
+            if (dependentTransactions) {
+                return new NextResponse(JSON.stringify({
+                    message: 'Cannot disable account with existing transactions'
+                }), { status: 400 });
+            }
+        }
 
         // Ensure boolean fields are properly typed
         const accountData = {
             ...updateData,
             isPersonalSpending: Boolean(updateData.isPersonalSpending),
             isIncomeSource: Boolean(updateData.isIncomeSource),
+            isDisabled: Boolean(isDisabled),
             originalCapital: updateData.originalCapital ? Number(updateData.originalCapital) : null,
         };
 
@@ -77,16 +88,12 @@ export async function PATCH(req: Request) {
         return new NextResponse(JSON.stringify({
             message: 'OK',
             account: updatedAccount
-        }), {
-            status: 200,
-        });
+        }), { status: 200 });
     } catch (error) {
         console.log(error);
         return new NextResponse(JSON.stringify({
             message: 'Error',
             error: error instanceof Error ? error.message : 'Unknown error'
-        }), {
-            status: 500,
-        });
+        }), { status: 500 });
     }
 }

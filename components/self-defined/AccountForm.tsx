@@ -28,6 +28,7 @@ const formSchema = z.object({
     originalCapital: z.number().optional(),
     isPersonalSpending: z.boolean().default(false),
     isIncomeSource: z.boolean().default(false),
+    isDisabled: z.boolean().default(false),
 })
 
 export default function AccountForm({ mode, account, setMode }: AccountFormProp) {
@@ -40,6 +41,7 @@ export default function AccountForm({ mode, account, setMode }: AccountFormProp)
             originalCapital: account?.originalCapital || undefined,
             isPersonalSpending: account?.isPersonalSpending || false,
             isIncomeSource: account?.isIncomeSource || false,
+            isDisabled: account?.isDisabled || false,
         }
     });
     const router = useRouter();
@@ -163,6 +165,25 @@ export default function AccountForm({ mode, account, setMode }: AccountFormProp)
                         />
                     </div>
                 </div>
+
+                {/* Disable Account Section */}
+                <FormField
+                    control={form.control}
+                    name="isDisabled"
+                    render={({ field }) => (
+                        <FormItem className="flex items-center space-x-3 space-y-0">
+                            <FormControl>
+                                <Checkbox
+                                    checked={field.value}
+                                    onCheckedChange={field.onChange}
+                                />
+                            </FormControl>
+                            <div className="leading-none">
+                                <FormLabel>Disable Account</FormLabel>
+                            </div>
+                        </FormItem>
+                    )}
+                />
 
                 {/* Action Buttons */}
                 <div className="flex gap-2">
