@@ -23,7 +23,7 @@ import { Save, X } from "lucide-react";
 const formSchema = z.object({
     title: z.string().optional(),
     description: z.string(),
-    deadline: z.date(),
+    deadline: z.date().or(z.string()),
     status: z.enum(Object.values(TaskInfoStatus) as [string, ...string[]]),
     parentContentBlockid: z.string().optional(),
 
@@ -50,17 +50,19 @@ const TaskInfoForm = ({
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            parentContentBlockid: existingTaskInfo?.parentContentBlockid || parentContentBlockid, 
+            parentContentBlockid: existingTaskInfo?.parentContentBlockid || parentContentBlockid,
             groupId: groupId,
         }
     });
+
+    const { isSubmitting, isValid } = form.formState;
 
     const statuses: string[] = Object.values(TaskInfoStatus);
     const router = useRouter();
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
             if (mode == 'Create') {
-                const response = axios.post('/api/task', values).then(response => {
+                const response = await axios.post('/api/task', values).then(response => {
                     if (response.status == 200) {
                         toast(ToastDone);
                         setTargetTaskInfo(undefined);
@@ -94,6 +96,7 @@ const TaskInfoForm = ({
                             <FormItem>
                                 <Label>Title</Label>
                                 <Input
+                                    disabled={isSubmitting}
                                     {...field}
                                 />
                             </FormItem>
@@ -111,6 +114,7 @@ const TaskInfoForm = ({
                             <FormItem>
                                 <Label>Description</Label>
                                 <Textarea
+                                    disabled={isSubmitting}
                                     {...field}
                                 />
                             </FormItem>
@@ -129,8 +133,8 @@ const TaskInfoForm = ({
                                 <Label>Deadline</Label>
                                 <Input
                                     type="datetime-local"
+                                    disabled={isSubmitting}
                                     onChange={(event) => {
-                                        
                                         // console.log(event.target.value);
                                         form.setValue('deadline', new Date(event.target.value));
                                     }}
@@ -155,6 +159,7 @@ const TaskInfoForm = ({
                                         value: status,
                                         label: status.toUpperCase(),
                                     }))}
+                                    disabled={isSubmitting}
                                     {...field}
                                 />
                             </FormItem>
@@ -182,6 +187,7 @@ const TaskInfoForm = ({
                         onClick={() => {
                             setMode('Close');
                         }}
+                        disabled={isSubmitting}
                     >
                         <div className="flex items-center gap-2">
                             Cancel
@@ -191,6 +197,7 @@ const TaskInfoForm = ({
                     <Button
                         className="basis-1/2"
                         type="submit"
+                        disabled={!isValid || isSubmitting}
                     >
                         <div className="flex items-center gap-2">
                             Save

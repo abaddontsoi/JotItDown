@@ -7,6 +7,8 @@ import ContextCardFallBack from "./ContextCardFallBack";
 import TaskInfoViewModeDialog from "./TaskInfoViewModeDialog";
 import AllTasksContextCard from "./AllTasksContextCard";
 import TasksMainPageHeader from "@/app/(content)/home/tasks/_components/TasksMainPageHeader";
+import { useRouter } from "next/navigation";
+import TaskInfoDialog from "./TaskInfoDialog";
 
 interface TasksMainPageProp {
     allNotes: DetailedNote[],
@@ -22,8 +24,19 @@ const TasksMainPage = (
         fiveMostUrgentTaskInfo
     }: TasksMainPageProp
 ) => {
+    const router = useRouter();
     const [viewMode, setViewMode] = useState<boolean>(false);
     const [taskInfoInView, setTaskInfoInView] = useState<DetailedTaskInfo | undefined>();
+    const [taskDialogMode, setTaskDialogMode] = useState<'Create' | 'Edit' | 'Close'>('Close');
+
+    const handleAddOneTask = () => {       
+        setTaskInfoInView(undefined);
+        setTaskDialogMode('Create');
+    }
+
+    const handleAddMultipleTasks = () => {
+        router.push('/home/tasks/create');
+    }
 
     return (
         <>
@@ -33,8 +46,16 @@ const TasksMainPage = (
                 task={taskInfoInView}
                 setTaskInfoInView={setTaskInfoInView}
             />
+            <TaskInfoDialog
+                mode={taskDialogMode}
+                setTargetTaskInfo={setTaskInfoInView}
+                setMode={setTaskDialogMode}
+            />
 
-            <TasksMainPageHeader />
+            <TasksMainPageHeader
+                onAddOneTask={handleAddOneTask}
+                onAddMultipleTasks={handleAddMultipleTasks}
+            />
             <div className="flex flex-col gap-2 px-[40px]">
                 <Suspense fallback={<ContextCardFallBack />}>
                     <UrgentTasksContextCard
