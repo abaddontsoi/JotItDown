@@ -83,6 +83,10 @@ model User {
     FromInvitation Invitation[] @relation("InvitationFromRelation")
 
     ToInvitation Invitation[] @relation("InvitationToRelation")
+
+    RoutineCheckRecord RoutineCheckRecord[]
+
+    Routine Routine[]
 }
 
 model Account {
@@ -150,6 +154,38 @@ model TaskInfo {
     createdAt DateTime @default(now()) // also used as the start date if the task
     updatedAt DateTime @updatedAt
 }
+
+// Currently is everyday
+// Can be set to interval later
+model Routine {
+    id String @id @default(auto()) @map("_id") @db.ObjectId
+
+    title String
+    description String
+
+    belongToId String @db.ObjectId
+    belongTo   User   @relation(fields: [belongToId], references: [id])
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    RoutineCheckRecord RoutineCheckRecord[]
+}
+
+model RoutineCheckRecord {
+    id String @id @default(auto()) @map("_id") @db.ObjectId
+
+    routineId String @db.ObjectId
+    routine   Routine @relation(fields: [routineId], references: [id])
+
+    checkById String @db.ObjectId
+    checkBy   User   @relation(fields: [checkById], references: [id])
+
+    checkAt DateTime @default(now())
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}   
 
 model ContentBlock {
     id String @id @default(auto()) @map("_id") @db.ObjectId
