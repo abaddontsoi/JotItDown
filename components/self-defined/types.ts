@@ -1,4 +1,4 @@
-import { ItemAccount, CashFlow, CashFlowCategory, CashFlowMtoMCategory, Category, ContentBlock, Group, GroupUser, Invitation, Note, TaskInfo, Transaction, User } from "@prisma/client";
+import { ItemAccount, CashFlow, CashFlowCategory, CashFlowMtoMCategory, Category, ContentBlock, Group, GroupUser, Invitation, Note, TaskInfo, Transaction, User, Routine, RoutineCheckRecord } from "@prisma/client";
 
 export type Modes = 'Create' | 'Edit' | 'Close';
 
@@ -82,3 +82,13 @@ export type DetailedTransaction = Transaction & {
 }
 
 export type PromiseDetailedTransaction = Promise<DetailedTransaction[]>
+
+export type DetailedRoutineCheckRecord = RoutineCheckRecord & {
+    routine?: Routine;
+    checkBy: User;
+}
+export type DetailedRoutine = Routine & {
+    RoutineCheckRecord: DetailedRoutineCheckRecord[];
+}
+
+export type PromiseDetailedRoutine = Promise<DetailedRoutine[]>
