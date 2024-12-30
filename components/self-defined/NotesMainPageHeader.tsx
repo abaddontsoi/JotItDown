@@ -2,7 +2,6 @@
 
 import { Plus } from "lucide-react";
 import { Button } from "../ui/button";
-import NoteDialog from "./NoteDialog";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 

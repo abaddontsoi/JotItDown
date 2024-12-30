@@ -83,6 +83,7 @@ export type DetailedTransaction = Transaction & {
 
 export type PromiseDetailedTransaction = Promise<DetailedTransaction[]>
 
+// Routines
 export type DetailedRoutineCheckRecord = RoutineCheckRecord & {
     routine?: Routine;
     checkBy: User;
@@ -90,5 +91,5 @@ export type DetailedRoutineCheckRecord = RoutineCheckRecord & {
 export type DetailedRoutine = Routine & {
     RoutineCheckRecord: DetailedRoutineCheckRecord[];
 }
-
 export type PromiseDetailedRoutine = Promise<DetailedRoutine[]>
+export type PromiseLatest5RoutineRecords = Promise<DetailedRoutineCheckRecord[]>
