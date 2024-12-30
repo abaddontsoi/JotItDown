@@ -222,7 +222,7 @@ model Note {
     parentNoteId String? @db.ObjectId
     parentNote   Note?   @relation(name: "ParentChildrenNoteRelation", fields: [parentNoteId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
-    status NoteStatus @default(Draft)
+    status NoteStatus? @default(Draft)
 
     stared Boolean
 
