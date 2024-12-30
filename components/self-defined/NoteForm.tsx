@@ -28,7 +28,7 @@ function extractLevelOneKeys<T extends object>(obj: T): Array<keyof T> {
 const formSchema = z.object({
     id: z.string().optional(),
     title: z.string(),
-    status: z.enum(['Draft', 'Pending', 'Running', 'Done']),
+    // status: z.enum(['Draft', 'Pending', 'Running', 'Done']).optional(),
 
     description: z.string().optional(),
 
@@ -60,7 +60,7 @@ const NoteForm = ({
         defaultValues: {
             id: existingNote?.id,
             title: existingNote?.title,
-            status: existingNote?.status || 'Draft',
+            // status: existingNote?.status || undefined,
 
             description: existingNote?.description || '',
             
@@ -210,7 +210,7 @@ const NoteForm = ({
                         />
                     </motion.div>
 
-                    <motion.div
+                    {/* <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.5 }}
@@ -232,7 +232,7 @@ const NoteForm = ({
                                 </FormItem>
                             )}
                         />
-                    </motion.div>
+                    </motion.div> */}
 
                     <motion.div
                         className="space-y-4"
