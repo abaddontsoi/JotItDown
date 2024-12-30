@@ -3,12 +3,14 @@ import { createContext, useContext } from "react";
 
 type RoutineContextType = {
     pageTitle: string;
+    createPageTitle: string;
     routines: DetailedRoutine[];
     selectedRoutine?: DetailedRoutine;
 }
 
 const defaultValues: RoutineContextType = {
     pageTitle: "Routines",
+    createPageTitle: "Create Routine",
     routines: [],
 };
 
