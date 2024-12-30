@@ -1,3 +1,5 @@
+'use client';
+
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "@/components/ui/select";
@@ -25,7 +27,7 @@ export default function TasksMainPageHeader({
         <div className="text-5xl px-[20px] py-4 flex justify-between">
             <span className="font-normal">Tasks</span>
 
-            <DropdownMenu>
+            {/* <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                     <Button className="flex items-center gap-1 px-6">
                         <PlusIcon className="w-4 h-4" />
@@ -40,7 +42,11 @@ export default function TasksMainPageHeader({
                         <Files className="w-4 h-4" /> Add Multiple
                     </DropdownMenuItem>
                 </DropdownMenuContent>
-            </DropdownMenu>
+            </DropdownMenu> */}
+            <Button className="flex flex-row items-center gap-1" onClick={handleAddMultipleTasks}>
+                <PlusIcon className="w-5 h-5" />
+                Task
+            </Button>
         </div>
     )
 }

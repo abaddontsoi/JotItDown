@@ -48,11 +48,11 @@ const TasksPage = async () => {
     });
 
     const tasks = db.taskInfo.findMany({
-        orderBy: {
-            deadline: 'asc'
-        },
         where: {
             belongToId: user.id,
+        },
+        orderBy: {
+            deadline: 'asc'
         },
         include: {
             parentContentBlock: {
@@ -64,10 +64,6 @@ const TasksPage = async () => {
     });
 
     const fiveMostUrgentTaskInfo: PromiseUrgentTasks = db.taskInfo.findMany({
-        orderBy: {
-            // sort by ascending date
-            deadline: 'asc'
-        },
         where: {
             belongToId: user.id,
             deadline: {
@@ -76,6 +72,10 @@ const TasksPage = async () => {
             status: {
                 not: TaskInfoStatus.Done,
             },
+        },
+        orderBy: {
+            // sort by ascending date
+            deadline: 'asc'
         },
         include: {
             parentContentBlock: {
@@ -88,10 +88,6 @@ const TasksPage = async () => {
     });
 
     const overduedTasksInfo = db.taskInfo.findMany({
-        orderBy: {
-            // sort by ascending date
-            deadline: 'asc'
-        },
         where: {
             belongToId: user.id,
             deadline: {
@@ -100,6 +96,10 @@ const TasksPage = async () => {
             status: {
                 not: TaskInfoStatus.Done
             }
+        },
+        orderBy: {
+            // sort by ascending date
+            deadline: 'asc'
         },
         include: {
             parentContentBlock: {

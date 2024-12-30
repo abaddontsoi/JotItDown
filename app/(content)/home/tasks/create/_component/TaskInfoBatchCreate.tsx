@@ -1,7 +1,8 @@
 'use client';
 
-import { ToastDone, ToastError } from "@/components/self-defined/toast-object";
+import { ToastDone, ToastError, ToastLoading } from "@/components/self-defined/toast-object";
 import { DetailedNote } from "@/components/self-defined/types";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardTitle, CardHeader } from "@/components/ui/card";
 import { Form, FormField, FormItem, FormLabel } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -11,6 +12,7 @@ import { toast } from "@/components/ui/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ContentBlock, Group, TaskInfoStatus } from "@prisma/client";
 import { format } from "date-fns";
+import { CheckIcon, MinusIcon, PlusIcon, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
@@ -58,6 +60,9 @@ export default function TaskInfoBatchCreate({ notes, groups }: TaskInfoBatchCrea
         setContentBlocks(note?.contentBlocks || []);
     }
 
+    const handleCancel = () => {
+        router.push('/home/tasks');
+    }
 
     const { fields, append, remove } = useFieldArray({
         control: form.control,
@@ -66,7 +71,8 @@ export default function TaskInfoBatchCreate({ notes, groups }: TaskInfoBatchCrea
 
     const onSubmit = async (data: FormSchema) => {
         try {
-            console.log(data);
+            // console.log(data);
+            toast(ToastLoading);
             const response = await fetch('/api/task/create-batch', {
                 method: 'POST',
                 body: JSON.stringify(data),
@@ -74,6 +80,7 @@ export default function TaskInfoBatchCreate({ notes, groups }: TaskInfoBatchCrea
             const result = await response.json();
             if (response.status === 200) {
                 router.push('/home/tasks');
+                router.refresh();
                 toast(ToastDone);
             } else {
                 throw new Error(result.message);
@@ -91,16 +98,18 @@ export default function TaskInfoBatchCreate({ notes, groups }: TaskInfoBatchCrea
                     <div className="w-full h-[1px] bg-gray-200 my-2"></div>
                     <div className="flex gap-2 mb-2 w-full justify-between items-center">
                         <div className="flex gap-2">
-                            <button
+                            <Button
                                 type="button"
-                                className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700"
+                                variant={'outline'}
+                                className="border-2 border-slate-500"
                                 onClick={() => fields.length > 1 && remove(fields.length - 1)}
                             >
-                                Remove Last Task
-                            </button>
-                            <button
+                                <MinusIcon className="w-4 h-4" />
+                            </Button>
+                            <Button
                                 type="button"
-                                className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700"
+                                variant={'outline'}
+                                className="border-2 border-slate-500"
                                 onClick={() => append({
                                     title: "",
                                     description: "",
@@ -108,15 +117,29 @@ export default function TaskInfoBatchCreate({ notes, groups }: TaskInfoBatchCrea
                                     status: TaskInfoStatus.Draft,
                                 })}
                             >
-                                Add Task
-                            </button>
+                                <PlusIcon className="w-4 h-4" />
+                            </Button>
                         </div>
-                        <button
-                            type="submit"
-                            className="px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-md hover:bg-green-700"
-                        >
-                            Submit
-                        </button>
+
+                        <div className="flex flex-row gap-2">
+                            <Button
+                                type="button"
+                                variant={'cancel'}
+                                className="flex flex-row items-center gap-1"
+                                onClick={handleCancel}
+                            >
+                                <X className="w-5 h-5" />
+                                Cancel
+                            </Button>
+                            <Button
+                                type="submit"
+                                variant={'default'}
+                                className="flex flex-row items-center gap-1"
+                            >
+                                <CheckIcon className="w-5 h-5" />
+                                Submit
+                            </Button>
+                        </div>
                     </div>
                     <div className="flex flex-col gap-3">
                         {
