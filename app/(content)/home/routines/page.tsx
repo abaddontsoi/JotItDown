@@ -2,6 +2,7 @@ import { RoutineProvider, useRoutineContext } from "@/app/contexts/routine/Routi
 import { db } from "@/lib/db";
 import { getUser } from "@/lib/getUser";
 import { redirect } from "next/navigation";
+import RoutinesContainer from "./_components/RoutinesContainer";
 
 export default async function RoutinePage() {
     const user = await getUser();
@@ -23,16 +24,7 @@ export default async function RoutinePage() {
         },
     });
 
-    const ctx = useRoutineContext();
-    ctx.routines = routines;
-
     return (
-        <RoutineProvider>
-            <div>
-                <h1>{ctx.pageTitle}</h1>
-
-
-            </div>
-        </RoutineProvider>
+        <RoutinesContainer routines={routines} />
     );
 }

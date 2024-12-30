@@ -1,4 +1,4 @@
-import { ArrowRightLeft, ChartLine, DollarSign, FilePen, Home, Inbox, NotebookText, UsersRound } from "lucide-react";
+import { ArrowRightLeft, ChartLine, Clock, DollarSign, FilePen, Home, Inbox, NotebookText, UsersRound } from "lucide-react";
 
 const navRoutes = [
     {
@@ -36,6 +36,11 @@ const routes = [
                 label: 'Tasks',
                 route: '/home/tasks',
                 icon: FilePen,
+            },
+            {
+                label: 'Routines',
+                route: '/home/routines',
+                icon: Clock,
             },
         ]
     },
