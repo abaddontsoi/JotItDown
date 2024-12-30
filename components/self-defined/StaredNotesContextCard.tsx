@@ -26,7 +26,7 @@ const StaredNotesContextCard = (
     }
 ) => {
     const router = useRouter();
-    const [accordionOpen, setOpen] = useState<boolean>(false);
+    const [accordionOpen, setOpen] = useState<boolean>(true);
 
     const [mode, setMode] = useState<'Edit' | 'Create' | 'Close'>('Close');
     const [targetNote, setTargetNote] = useState<DetailedNote | undefined>();
@@ -40,7 +40,7 @@ const StaredNotesContextCard = (
             />
 
             <Card>
-                <Accordion type="multiple">
+                <Accordion type="multiple" value={[accordionOpen ? 'list' : '']}>
                     <AccordionItem value="list">
                         <AccordionTrigger className="w-full" onClick={() => setOpen(!accordionOpen)}>
                             <CardHeader>
