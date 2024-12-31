@@ -146,10 +146,10 @@ model TaskInfo {
     parentContentBlock   ContentBlock? @relation(fields: [parentContentBlockid], references: [id], onDelete: SetNull, onUpdate: Cascade)
 
     belongToId String? @db.ObjectId
-    belongTo   User?   @relation(fields: [belongToId], references: [id])
+    belongTo   User?   @relation(fields: [belongToId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
     groupId String? @db.ObjectId
-    group   Group?  @relation(fields: [groupId], references: [id])
+    group   Group?  @relation(fields: [groupId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
     createdAt DateTime @default(now()) // also used as the start date if the task
     updatedAt DateTime @updatedAt
@@ -162,9 +162,13 @@ model Routine {
 
     title String
     description String
+    startDate DateTime @default(now())
+    endDate DateTime?
+    intervalInDays Int? @default(1)
+    targetCount Int? @default(1)
 
     belongToId String @db.ObjectId
-    belongTo   User   @relation(fields: [belongToId], references: [id])
+    belongTo   User   @relation(fields: [belongToId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
@@ -176,10 +180,10 @@ model RoutineCheckRecord {
     id String @id @default(auto()) @map("_id") @db.ObjectId
 
     routineId String @db.ObjectId
-    routine   Routine @relation(fields: [routineId], references: [id])
+    routine   Routine @relation(fields: [routineId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
     checkById String @db.ObjectId
-    checkBy   User   @relation(fields: [checkById], references: [id])
+    checkBy   User   @relation(fields: [checkById], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
     checkAt DateTime @default(now())
 
@@ -217,7 +221,7 @@ model Note {
     description String?
 
     categoryId String?   @db.ObjectId
-    category   Category? @relation(fields: [categoryId], references: [id])
+    category   Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull, onUpdate: Cascade)
 
     parentNoteId String? @db.ObjectId
     parentNote   Note?   @relation(name: "ParentChildrenNoteRelation", fields: [parentNoteId], references: [id], onDelete: NoAction, onUpdate: NoAction)
@@ -234,10 +238,10 @@ model Note {
     hidden Boolean
 
     belongToId String? @db.ObjectId
-    belongTo   User?   @relation(fields: [belongToId], references: [id])
+    belongTo   User?   @relation(fields: [belongToId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
     groupId String? @db.ObjectId
-    group   Group?  @relation(fields: [groupId], references: [id])
+    group   Group?  @relation(fields: [groupId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
     contentBlocks ContentBlock[]
 
@@ -258,7 +262,7 @@ model Category {
     category Category[] @relation(name: "CategoryParentChildrenRelation")
 
     belongToId String @db.ObjectId
-    belongTo   User   @relation(fields: [belongToId], references: [id])
+    belongTo   User   @relation(fields: [belongToId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
     Note Note[]
 
@@ -277,7 +281,7 @@ model ItemAccount {
     originalCapital Float?
 
     belongToId String @db.ObjectId
-    belongTo   User   @relation(fields: [belongToId], references: [id])
+    belongTo   User   @relation(fields: [belongToId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
     isDisabled         Boolean @default(false)
     isPersonalSpending Boolean @default(false)
@@ -304,10 +308,10 @@ model CashFlow {
     isLongTermUsage Boolean @default(false)
 
     accountid String?      @db.ObjectId
-    account   ItemAccount? @relation(fields: [accountid], references: [id])
+    account   ItemAccount? @relation(fields: [accountid], references: [id], onDelete: SetNull, onUpdate: Cascade)
 
     belongToId String @db.ObjectId
-    belongTo   User   @relation(fields: [belongToId], references: [id])
+    belongTo   User   @relation(fields: [belongToId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
@@ -322,7 +326,7 @@ model CashFlowCategory {
     id String @id @default(auto()) @map("_id") @db.ObjectId
 
     belongToId String @db.ObjectId
-    belongTo   User   @relation(fields: [belongToId], references: [id])
+    belongTo   User   @relation(fields: [belongToId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
@@ -334,7 +338,7 @@ model CashFlowMtoMCategory {
     id String @id @default(auto()) @map("_id") @db.ObjectId
 
     belongToId String @db.ObjectId
-    belongTo   User   @relation(fields: [belongToId], references: [id])
+    belongTo   User   @relation(fields: [belongToId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
     cashFlowRecordId String   @db.ObjectId
     cashFlowRecord   CashFlow @relation(fields: [cashFlowRecordId], references: [id], onDelete: Cascade, onUpdate: Cascade)
@@ -350,15 +354,15 @@ model Transaction {
     id String @id @default(auto()) @map("_id") @db.ObjectId
 
     fromId String   @map("fromid") @db.ObjectId
-    from   CashFlow @relation("CashFlowFromRelation", fields: [fromId], references: [id])
+    from   CashFlow @relation("CashFlowFromRelation", fields: [fromId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
     toId String   @db.ObjectId
-    to   CashFlow @relation("CashFlowToRelation", fields: [toId], references: [id])
+    to   CashFlow @relation("CashFlowToRelation", fields: [toId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
     remark String?
 
     belongToId String @db.ObjectId
-    belongTo   User   @relation(fields: [belongToId], references: [id])
+    belongTo   User   @relation(fields: [belongToId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
     recordDate DateTime?
 
@@ -370,10 +374,10 @@ model Property {
     id String @id @default(auto()) @map("_id") @db.ObjectId
 
     itemAccountId String      @db.ObjectId
-    itemAccount   ItemAccount @relation(fields: [itemAccountId], references: [id])
+    itemAccount   ItemAccount @relation(fields: [itemAccountId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
     belongToId String @db.ObjectId
-    belongTo   User   @relation(fields: [belongToId], references: [id])
+    belongTo   User   @relation(fields: [belongToId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
@@ -392,7 +396,7 @@ model Group {
     Note         Note[]
 
     updatedById String?  @db.ObjectId
-    updatedBy   User?    @relation(fields: [updatedById], references: [id])
+    updatedBy   User?    @relation(fields: [updatedById], references: [id], onDelete: SetNull, onUpdate: Cascade)
     createdAt   DateTime @default(now())
     updatedAt   DateTime @updatedAt
 }
@@ -401,10 +405,10 @@ model GroupUser {
     id String @id @default(auto()) @map("_id") @db.ObjectId
 
     userId String @db.ObjectId
-    user   User   @relation(fields: [userId], references: [id])
+    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
     groupId String @db.ObjectId
-    group   Group  @relation(fields: [groupId], references: [id])
+    group   Group  @relation(fields: [groupId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
@@ -416,16 +420,16 @@ model Invitation {
     id String @id @default(auto()) @map("_id") @db.ObjectId
 
     fromid String @db.ObjectId
-    from   User   @relation("InvitationFromRelation", fields: [fromid], references: [id])
+    from   User   @relation("InvitationFromRelation", fields: [fromid], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
     toid String @db.ObjectId
-    to   User   @relation("InvitationToRelation", fields: [fromid], references: [id])
+    to   User   @relation("InvitationToRelation", fields: [fromid], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
     type InvitationType
     read Boolean        @default(false)
 
     groupId String? @db.ObjectId
-    group   Group?  @relation(fields: [groupId], references: [id])
+    group   Group?  @relation(fields: [groupId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
