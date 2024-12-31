@@ -18,3 +18,5 @@ export default async function RoutinePage({ params }: { params: { routineId: str
         </div>
     );
 }
+
+export const dynamic = 'force-dynamic';

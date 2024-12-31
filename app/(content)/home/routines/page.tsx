@@ -28,3 +28,5 @@ export default async function RoutinePage() {
         <RoutinesContainer routines={routines} />
     );
 }
+
+export const dynamic = 'force-dynamic';
