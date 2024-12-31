@@ -32,7 +32,7 @@ export default function UncheckedRoutines() {
         <Card>
             <CardHeader>
                 <CardTitle>Unchecked Routines</CardTitle>
-                <CardDescription>Routines you haven't checked today</CardDescription>
+                <CardDescription>{`Routines you haven't checked today`}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
                 {filteredRoutines.length === 0 ? (
