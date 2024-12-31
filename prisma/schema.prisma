@@ -164,7 +164,7 @@ model Routine {
     description String
     startDate DateTime @default(now())
     endDate DateTime?
-    intervalInDays Int? @default(1)
+    intervalInDays Int? 
     targetCount Int? @default(1)
 
     belongToId String @db.ObjectId
