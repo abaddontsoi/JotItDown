@@ -3,6 +3,7 @@
 import { RoutineProvider, useRoutineContext } from "@/app/contexts/routine/RoutineContext";
 import RoutineCreateHeader from "./RoutineCreateHeader";
 import RoutineCreateBody from "./RoutineCreateBody";
+import { Toaster } from "@/components/ui/toaster";
 
 export default function RoutineCreateContainer() {
     return (
@@ -11,6 +12,7 @@ export default function RoutineCreateContainer() {
                 <RoutineCreateHeader />
                 <RoutineCreateBody />
             </div>
+            <Toaster />
         </RoutineProvider>
     );
 }
