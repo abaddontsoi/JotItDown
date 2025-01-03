@@ -9,12 +9,24 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { format } from "date-fns";
 import { z } from "zod";
-import { Minus, Plus, Save } from "lucide-react";
+import { Minus, Plus, Save, Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { toast } from "@/components/ui/use-toast";
 import { ToastDone, ToastError } from "@/components/self-defined/toast-object";
 import axios from "axios";
 import { useRoutineContext } from "@/app/contexts/routines/routine/RoutineContext";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import DeleteRoutineDialog from "./DeleteRoutineDialog";
 
 const formSchema = z.object({
     title: z.string().min(1, "Title is required"),
@@ -195,7 +207,15 @@ export default function RoutineEditFormSingle() {
                 </div>
 
                 {/* Action Button */}
-                <div className="flex justify-end pt-4">
+                <div className="flex justify-end pt-4 gap-4">
+                    <DeleteRoutineDialog routine={routine}>
+                        <Button type="button" variant="destructive" className="w-full">
+                            <span className="flex items-center gap-2">
+                                <Trash className="w-4 h-4" /> Delete Routine
+                            </span>
+                        </Button>
+                    </DeleteRoutineDialog>
+
                     <Button type="submit" className="w-full">
                         <span className="flex items-center gap-2">
                             <Save className="w-4 h-4" /> Save Changes

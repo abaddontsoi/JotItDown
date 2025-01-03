@@ -6,6 +6,7 @@ import RoutinesPageHeader from "./RoutinesPageHeader";
 import UncheckedRoutines from "./UncheckedRoutines";
 import LatestRoutineRecords from "./LatestRoutineRecords";
 import AllRoutines from "./AllRoutines";
+import { Toaster } from "@/components/ui/toaster";
 
 interface RoutinesContainerProp {
     routines: DetailedRoutine[];
@@ -23,6 +24,7 @@ export default function RoutinesContainer(prop: RoutinesContainerProp) {
                     <AllRoutines />
                 </div>
             </div>
+            <Toaster />
         </RoutinesProvider>
     );
 }
