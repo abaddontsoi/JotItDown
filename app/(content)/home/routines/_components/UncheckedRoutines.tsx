@@ -19,7 +19,7 @@ export default function UncheckedRoutines() {
         // Check whether routine is checked targetCount times
         const checkedCount = routine.RoutineCheckRecord.length;
         const notMeetTarget = !routine.targetCount || checkedCount < routine.targetCount;
-        
+
         // Check whether day difference between last record and today is less than interval
         const lastRecordDate = lastRecord?.checkAt;
         const dayDifference = (now.getTime() - lastRecordDate.getTime()) / (1000 * 60 * 60 * 24);
@@ -41,7 +41,11 @@ export default function UncheckedRoutines() {
                     </p>
                 ) : (
                     filteredRoutines.map(routine => (
-                        <RoutineCard key={routine.id} routine={routine} />
+                        <RoutineCard
+                            key={routine.id}
+                            routine={routine}
+                            option={{ showCheckButton: true }}
+                        />
                     ))
                 )}
             </CardContent>
