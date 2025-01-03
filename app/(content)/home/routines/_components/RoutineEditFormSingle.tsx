@@ -28,20 +28,19 @@ const formSchema = z.object({
 export default function RoutineEditFormSingle() {
     const router = useRouter();
     const { routine, setIsEditing } = useRoutineContext();
-
-    if (!routine) return null;
-
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            title: routine.title,
-            description: routine.description,
-            startDate: routine.startDate,
-            endDate: routine.endDate || undefined,  
-            targetCount: routine.targetCount || undefined,
-            intervalInDays: routine.intervalInDays || 1,
+            title: routine?.title || "",
+            description: routine?.description || "",
+            startDate: routine?.startDate || new Date(),
+            endDate: routine?.endDate || undefined,  
+            targetCount: routine?.targetCount || undefined,
+            intervalInDays: routine?.intervalInDays || 1,
         },
     });
+    if (!routine) return null;
+
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
