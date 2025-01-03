@@ -1,4 +1,4 @@
-import { RoutineProvider, useRoutineContext } from "@/app/contexts/routine/RoutineContext";
+import { RoutineProvider, useRoutineContext } from "@/app/contexts/routines/RoutinesContext";
 import { db } from "@/lib/db";
 import { getUser } from "@/lib/getUser";
 import { redirect } from "next/navigation";

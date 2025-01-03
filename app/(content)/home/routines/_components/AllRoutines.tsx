@@ -1,7 +1,7 @@
 'use client';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { useRoutineContext } from "@/app/contexts/routine/RoutineContext";
+import { useRoutineContext } from "@/app/contexts/routines/RoutinesContext";
 import RoutineCard from "./RoutineCard";
 
 export default function AllRoutines() {

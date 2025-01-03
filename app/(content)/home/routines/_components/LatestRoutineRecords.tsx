@@ -1,7 +1,7 @@
 'use client';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { useRoutineContext } from "@/app/contexts/routine/RoutineContext";
+import { useRoutinesContext } from "@/app/contexts/routines/RoutinesContext";
 import { format } from "date-fns";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 
 export default function LatestRoutineRecords() {
-    const ctx = useRoutineContext();
+    const ctx = useRoutinesContext();
     const routines = ctx.routines;
     const [open, setOpen] = useState(true);
 
