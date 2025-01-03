@@ -14,8 +14,8 @@ export default function RoutinePageContainer({ routine }: RoutinePageContainerPr
     }
 
     return (
-        <RoutineProvider>
-            <RoutinePage routine={routine} />
+        <RoutineProvider initialRoutine={routine}>
+            <RoutinePage />
         </RoutineProvider>
     );
 }

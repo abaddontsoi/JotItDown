@@ -6,14 +6,12 @@ import RoutinePageContent from "./RoutinePageContent";
 import RoutinePageHeader from "./RoutinePageHeader";
 
 interface RoutinePageProp {
-    routine: DetailedRoutine
+    // routine: DetailedRoutine
 }
 
 export default function RoutinePage(prop: RoutinePageProp) {
-    const routine = prop.routine;
     const ctx = useRoutineContext();
-    ctx.setRoutine(routine);
-    
+    const routine = ctx.routine;
     if (!routine) {
         return null;
     }

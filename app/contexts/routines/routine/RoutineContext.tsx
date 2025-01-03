@@ -12,8 +12,8 @@ type RoutineContextType = {
 
 const RoutineContext = createContext<RoutineContextType | undefined>(undefined);
 
-export const RoutineProvider = ({ children }: { children: React.ReactNode }) => {
-    const [routine, setRoutine] = useState<DetailedRoutine | undefined>(undefined);
+export const RoutineProvider = ({ children, initialRoutine }: { children: React.ReactNode, initialRoutine?: DetailedRoutine }) => {
+    const [routine, setRoutine] = useState<DetailedRoutine | undefined>(initialRoutine);
     const [isEditing, setIsEditing] = useState(false);
 
     const value: RoutineContextType = {
