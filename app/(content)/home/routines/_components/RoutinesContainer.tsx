@@ -1,6 +1,6 @@
 'use client';
 
-import { RoutineProvider, useRoutineContext } from "@/app/contexts/routines/RoutinesContext";
+import { RoutinesProvider } from "@/app/contexts/routines/RoutinesContext";
 import { DetailedRoutine } from "@/components/self-defined/types";
 import RoutinesPageHeader from "./RoutinesPageHeader";
 import UncheckedRoutines from "./UncheckedRoutines";
@@ -12,12 +12,8 @@ interface RoutinesContainerProp {
 }
 
 export default function RoutinesContainer(prop: RoutinesContainerProp) {
-    const { routines } = prop;
-    const ctx = useRoutineContext();
-    ctx.routines = routines;
-
     return (
-        <RoutineProvider>
+        <RoutinesProvider initialRoutines={prop.routines}>
             <div className="p-6 space-y-6">
                 <RoutinesPageHeader />
 
@@ -27,6 +23,6 @@ export default function RoutinesContainer(prop: RoutinesContainerProp) {
                     <AllRoutines />
                 </div>
             </div>
-        </RoutineProvider>
+        </RoutinesProvider>
     );
 }

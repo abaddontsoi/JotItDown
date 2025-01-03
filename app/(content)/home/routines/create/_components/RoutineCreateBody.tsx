@@ -1,10 +1,10 @@
 'use client';
 
-import { useRoutineContext } from "@/app/contexts/routines/RoutinesContext";
+import { useRoutinesContext } from "@/app/contexts/routines/RoutinesContext";
 import RoutineCreateForm from "../../_components/RoutinesCreateForm";
 
 export default function RoutineCreateBody() {
-    const ctx = useRoutineContext();
+    const ctx = useRoutinesContext();
 
     return (
         <div className="p-6">

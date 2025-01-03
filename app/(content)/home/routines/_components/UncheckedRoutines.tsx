@@ -1,12 +1,11 @@
 'use client';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { useRoutineContext } from "@/app/contexts/routines/RoutinesContext";
+import { useRoutinesContext } from "@/app/contexts/routines/RoutinesContext";
 import RoutineCard from "./RoutineCard";
 
 export default function UncheckedRoutines() {
-    const ctx = useRoutineContext();
-    const routines = ctx.routines;
+    const { routines } = useRoutinesContext();
 
     const filteredRoutines = routines.filter(routine => {
         const lastRecord = routine.RoutineCheckRecord.findLast(record => record.checkAt);
