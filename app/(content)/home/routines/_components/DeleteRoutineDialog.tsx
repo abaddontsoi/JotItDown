@@ -48,7 +48,7 @@ export default function DeleteRoutineDialog({ routine, children }: DeleteRoutine
                     <AlertDialogTitle>Are you sure?</AlertDialogTitle>
                     <AlertDialogDescription>
                         This action cannot be undone. This will permanently delete the routine
-                        "{routine.title}" and all its check records.
+                        {`\"${routine.title}\"`} and all its check records.
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
