@@ -1,10 +1,10 @@
-import { useRoutineContext } from "@/app/contexts/routines/RoutinesContext";
+import { useRoutinesContext } from "@/app/contexts/routines/RoutinesContext";
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 
 export default function RoutinesPageHeader() {
-    const ctx = useRoutineContext();
+    const ctx = useRoutinesContext();
     const router = useRouter();
     const handleCreateRoutine = () => {
         router.push('/home/routines/create');

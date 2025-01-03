@@ -1,8 +1,6 @@
 'use client';
 
 import { useRoutineContext } from "@/app/contexts/routines/routine/RoutineContext";
-import { DetailedRoutine } from "@/components/self-defined/types";
-import { Card, CardContent } from "@/components/ui/card";
 import RoutinePageViewContent from "./RoutinePageViewContent";
 import RoutinePageEditContent from "./RoutinePageEditContent";
 

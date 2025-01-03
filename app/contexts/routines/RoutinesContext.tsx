@@ -1,33 +1,50 @@
+'use client';
+
 import { DetailedRoutine } from "@/components/self-defined/types";
-import { createContext, useContext } from "react";
+import { createContext, useContext, useState } from "react";
 
 type RoutinesContextType = {
-    pageTitle: string;
-    createPageTitle: string;
     routines: DetailedRoutine[];
-    selectedRoutine?: DetailedRoutine;
+    setRoutines: (routines: DetailedRoutine[]) => void;
+    pageTitle: string;
 }
 
 const defaultValues: RoutinesContextType = {
-    pageTitle: "Routines",
-    createPageTitle: "Create Routine",
     routines: [],
+    setRoutines: () => {},
+    pageTitle: 'Routines',
 };
 
-export const RoutinesContext = createContext<RoutinesContextType>(defaultValues);
+const RoutinesContext = createContext<RoutinesContextType>(defaultValues);
 
-export const RoutinesProvider = ({ children }: { children: React.ReactNode }) => {
+export const RoutinesProvider = ({ 
+    children,
+    initialRoutines = []
+}: { 
+    children: React.ReactNode;
+    initialRoutines?: DetailedRoutine[];
+}) => {
+    const [routines, setRoutines] = useState<DetailedRoutine[]>(initialRoutines);
+
+    const value = {
+        routines,
+        setRoutines,
+        pageTitle: 'Routines',
+    };
+
     return (
-        <RoutinesContext.Provider value={defaultValues}>
+        <RoutinesContext.Provider value={value}>
             {children}
         </RoutinesContext.Provider>
     );
 };
 
 export const useRoutinesContext = () => {
-    const ctx = useContext(RoutinesContext);
-    if (!ctx) {
+    const context = useContext(RoutinesContext);
+    
+    if (!context) {
         throw new Error("useRoutinesContext must be used within a RoutinesProvider");
     }
-    return ctx;
+    
+    return context;
 };
