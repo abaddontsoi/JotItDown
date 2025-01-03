@@ -142,11 +142,11 @@ export default function RoutineEditFormSingle() {
                             <FormItem>
                                 <FormLabel>Interval (Days)</FormLabel>
                                 <FormControl>
-                                    <div className="flex gap-2">
+                                    <div className="flex items-stretch gap-2">
                                         <Button
                                             type="button"
                                             variant="outline"
-                                            size="icon"
+                                            className="h-9"
                                             onClick={() => field.onChange(Math.max(1, field.value - 1))}
                                         >
                                             <Minus className="h-4 w-4" />
@@ -154,13 +154,13 @@ export default function RoutineEditFormSingle() {
                                         <Input
                                             type="number"
                                             min={1}
-                                            className="text-center"
+                                            className="text-center h-9"
                                             {...field}
                                         />
                                         <Button
                                             type="button"
                                             variant="outline"
-                                            size="icon"
+                                            className="h-9"
                                             onClick={() => field.onChange(field.value + 1)}
                                         >
                                             <Plus className="h-4 w-4" />
