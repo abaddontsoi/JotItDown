@@ -1,11 +1,20 @@
 import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
+import RoutinePageContainer from "./_components/RoutinePageContainer";
+import { Suspense } from "react";
 
 export default async function RoutinePage({ params }: { params: { routineId: string } }) {
     const routine = await db.routine.findUnique({
         where: {
             id: params.routineId,
         },
+        include: {
+            RoutineCheckRecord: {
+                include: {
+                    checkBy: true,
+                }
+            },
+        }
     });
 
     if (!routine) {
@@ -13,9 +22,9 @@ export default async function RoutinePage({ params }: { params: { routineId: str
     }
 
     return (
-        <div>
-            <h1>{routine.title}</h1>
-        </div>
+        <Suspense fallback={<div>Loading...</div>}>
+            <RoutinePageContainer routine={routine} />
+        </Suspense>
     );
 }
 

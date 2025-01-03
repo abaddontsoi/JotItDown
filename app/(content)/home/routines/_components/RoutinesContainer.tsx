@@ -1,6 +1,6 @@
 'use client';
 
-import { RoutineProvider, useRoutineContext } from "@/app/contexts/routine/RoutineContext";
+import { RoutineProvider, useRoutineContext } from "@/app/contexts/routines/RoutinesContext";
 import { DetailedRoutine } from "@/components/self-defined/types";
 import RoutinesPageHeader from "./RoutinesPageHeader";
 import UncheckedRoutines from "./UncheckedRoutines";

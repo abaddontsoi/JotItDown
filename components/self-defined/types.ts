@@ -92,4 +92,3 @@ export type DetailedRoutine = Routine & {
     RoutineCheckRecord: DetailedRoutineCheckRecord[];
 }
 export type PromiseDetailedRoutine = Promise<DetailedRoutine[]>
-export type PromiseLatest5RoutineRecords = Promise<DetailedRoutineCheckRecord[]>

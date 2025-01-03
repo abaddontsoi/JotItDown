@@ -1,6 +1,6 @@
 'use client';
 
-import { RoutineProvider, useRoutineContext } from "@/app/contexts/routine/RoutineContext";
+import { RoutineProvider, useRoutineContext } from "@/app/contexts/routines/RoutinesContext";
 import RoutineCreateHeader from "./RoutineCreateHeader";
 import RoutineCreateBody from "./RoutineCreateBody";
 import { Toaster } from "@/components/ui/toaster";
