@@ -25,3 +25,23 @@ export async function PATCH(req: Request, { params }: { params: { routineId: str
         return NextResponse.json({ message: 'Failed to update routine' }, { status: 500 });
     }
 }
+
+export async function DELETE(req: Request, { params }: { params: { routineId: string } }) {
+    try {
+        const user = await getUser();
+        if (!user) {
+            return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+        }
+
+        const { routineId } = params;
+        const routine = await db.routine.delete({
+            where: {
+                id: routineId,
+            },
+        });
+
+        return NextResponse.json({ message: 'Routine deleted successfully' }, { status: 200 });
+    } catch (error) {
+        return NextResponse.json({ message: 'Failed to delete routine' }, { status: 500 });
+    }
+}

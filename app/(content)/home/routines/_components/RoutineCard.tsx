@@ -28,6 +28,7 @@ export default function RoutineCard({ routine, option }: RoutineCardProps) {
             const response = await axios.post(`/api/routine/${routine.id}/check`);
             if (response.status === 200) {
                 toast(ToastDone);
+                router.push(`/home/routines`);
                 router.refresh();
             }
         } catch (error) {

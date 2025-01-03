@@ -80,6 +80,7 @@ export default function RoutineCreateForm() {
             if (response.status === 200) {
                 toast(ToastDone);
                 router.push('/home/routines');
+                router.refresh();
             }
         } catch (error) {
             toast(ToastError);
