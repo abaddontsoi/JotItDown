@@ -11,12 +11,12 @@ interface RoutinePageProp {
 
 export default function RoutinePage(prop: RoutinePageProp) {
     const routine = prop.routine;
+    const ctx = useRoutineContext();
+    ctx.setRoutine(routine);
+    
     if (!routine) {
         return null;
     }
-    const ctx = useRoutineContext();
-    ctx.setRoutine(routine);
-
     return (
         <div className="p-6 space-y-6">
             {/* Header */}
