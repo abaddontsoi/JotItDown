@@ -7,6 +7,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { AnimatePresence, motion } from "framer-motion";
 
 export default function LatestRoutineRecords() {
     const ctx = useRoutineContext();
@@ -36,42 +37,66 @@ export default function LatestRoutineRecords() {
                     variant="ghost" 
                     size="icon"
                     onClick={() => setOpen(!open)}
+                    className="transition-transform duration-200"
                 >
-                    {open ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                    <motion.div
+                        animate={{ rotate: open ? 180 : 0 }}
+                        transition={{ duration: 0.2 }}
+                    >
+                        <ChevronDown className="w-4 h-4" />
+                    </motion.div>
                 </Button>
             </CardHeader>
-            {open && (
-                <CardContent className="space-y-4">
-                    {latestRecords.length === 0 ? (
-                        <p className="text-center text-muted-foreground">
-                            No records yet
-                        </p>
-                    ) : (
-                        latestRecords.map(({ routine, lastRecord }) => (
-                            <div 
-                                key={routine.id} 
-                                className="flex flex-row justify-between items-center p-3 rounded-lg hover:bg-slate-100"
-                            >
-                                <div className="flex flex-col">
-                                    <h3 className="font-medium">{routine.title}</h3>
-                                    <p className="text-sm text-muted-foreground">
-                                        {routine.description}
-                                    </p>
-                                </div>
-                                <div className={cn(
-                                    "text-sm",
-                                    lastRecord ? "text-muted-foreground" : "text-red-500 italic"
-                                )}>
-                                    {lastRecord 
-                                        ? format(new Date(lastRecord.checkAt), 'MMM dd, yyyy - HH:mm')
-                                        : 'Never checked'
-                                    }
-                                </div>
-                            </div>
-                        ))
-                    )}
-                </CardContent>
-            )}
+
+            <AnimatePresence initial={false}>
+                {open && (
+                    <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.2, ease: "easeInOut" }}
+                        style={{ overflow: "hidden" }}
+                    >
+                        <CardContent className="space-y-4">
+                            {latestRecords.length === 0 ? (
+                                <motion.p
+                                    initial={{ opacity: 0, y: -10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    className="text-center text-muted-foreground"
+                                >
+                                    No records yet
+                                </motion.p>
+                            ) : (
+                                latestRecords.map(({ routine, lastRecord }, index) => (
+                                    <motion.div
+                                        key={routine.id}
+                                        initial={{ opacity: 0, y: -10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ delay: 0.15 - 0.1 / (index + 1) }}
+                                        className="flex flex-row justify-between items-center p-3 rounded-lg hover:bg-slate-100"
+                                    >
+                                        <div className="flex flex-col">
+                                            <h3 className="font-medium">{routine.title}</h3>
+                                            <p className="text-sm text-muted-foreground">
+                                                {routine.description}
+                                            </p>
+                                        </div>
+                                        <div className={cn(
+                                            "text-sm",
+                                            lastRecord ? "text-muted-foreground" : "text-red-500 italic"
+                                        )}>
+                                            {lastRecord 
+                                                ? format(new Date(lastRecord.checkAt), 'MMM dd, yyyy - HH:mm')
+                                                : 'Never checked'
+                                            }
+                                        </div>
+                                    </motion.div>
+                                ))
+                            )}
+                        </CardContent>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </Card>
     );
 } 
