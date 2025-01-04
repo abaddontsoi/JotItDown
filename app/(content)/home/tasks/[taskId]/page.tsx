@@ -47,12 +47,36 @@ export default async function Task({
             belongTo: true,
             group: true,
         }
-    })
+    });
+
+    const notes = await db.note.findMany({
+        where: {
+            belongToId: user.id
+        },
+        include: {
+            category: true,
+            contentBlocks: {
+                include: {
+                    taskInfo: true
+                }
+            }
+        }
+    });
+
+    const groups = await db.group.findMany({
+        where: {
+            GroupUser: {
+                some: {
+                    userId: user.id
+                }
+            }
+        }
+    });
 
     return (
         <>
             <Suspense fallback={<ContextCardFallBack />}>
-                <TaskInfoPageContainer task={task} />
+                <TaskInfoPageContainer task={task} notes={notes} groups={groups} />
             </Suspense>
         </>
     )
