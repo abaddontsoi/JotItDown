@@ -16,6 +16,7 @@ import { ToastDone, ToastError } from "@/components/self-defined/toast-object";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { DetailedRoutine } from "@/components/self-defined/types";
+import ConfirmDeleteModal from "@/components/self-defined/modal/confirm-delete-modal";
 
 interface DeleteRoutineDialogProps {
     routine: DetailedRoutine;
@@ -37,30 +38,14 @@ export default function DeleteRoutineDialog({ routine, children }: DeleteRoutine
             toast(ToastError);
         }
     };
-
+    const deleteDescription = `This action cannot be undone. This will permanently delete the routine
+                        ${`\"${routine.title}\"`} and all its check records.`
     return (
-        <AlertDialog>
-            <AlertDialogTrigger asChild>
-                {children}
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-                <AlertDialogHeader>
-                    <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-                    <AlertDialogDescription>
-                        This action cannot be undone. This will permanently delete the routine
-                        {`\"${routine.title}\"`} and all its check records.
-                    </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction
-                        onClick={handleDelete}
-                        className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-                    >
-                        Delete
-                    </AlertDialogAction>
-                </AlertDialogFooter>
-            </AlertDialogContent>
-        </AlertDialog>
+        <ConfirmDeleteModal
+            deleteDescription={deleteDescription}
+            onConfirmDelete={handleDelete}
+        >
+            {children}
+        </ConfirmDeleteModal>   
     );
 } 
