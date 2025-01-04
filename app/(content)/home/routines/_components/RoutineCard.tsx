@@ -11,6 +11,7 @@ import axios from "axios";
 import { toast } from "@/components/ui/use-toast";
 import { ToastDone, ToastError } from "@/components/self-defined/toast-object";
 import { useRouter } from "next/navigation";
+import { useRoutinesContext } from "@/app/contexts/routines/RoutinesContext";
 
 interface RoutineCardProps {
     routine: DetailedRoutine;
@@ -22,7 +23,6 @@ interface RoutineCardProps {
 export default function RoutineCard({ routine, option }: RoutineCardProps) {
     const router = useRouter();
     const lastRecord = routine.RoutineCheckRecord.findLast(record => record.checkAt);
-    
     const handleCheck = async () => {
         try {
             const response = await axios.post(`/api/routine/${routine.id}/check`);
