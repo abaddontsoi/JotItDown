@@ -8,11 +8,15 @@ export default function UncheckedRoutines() {
     const { routines } = useRoutinesContext();
 
     const filteredRoutines = routines.filter(routine => {
+        const now = new Date();
+
+        // User cannot check routine before its start date
+        if (now < routine.startDate) return false;
+
         const lastRecord = routine.RoutineCheckRecord.findLast(record => record.checkAt);
         if (!lastRecord) return true;
 
         // Check whether routine end date is less or equal than today
-        const now = new Date();
         const withinPeriod = routine.startDate <= now && (!routine.endDate || now <= routine.endDate);
 
         // Check whether routine is checked targetCount times
@@ -21,7 +25,7 @@ export default function UncheckedRoutines() {
 
         // Check whether day difference between last record and today is less than interval
         const lastRecordDate = lastRecord?.checkAt;
-        const dayDifference = (now.getTime() - lastRecordDate.getTime()) / (1000 * 60 * 60 * 24);
+        const dayDifference = (now.getTime() / (1000 * 60 * 60 * 24) - lastRecordDate.getTime() / (1000 * 60 * 60 * 24));
         const greaterThanInterval = !routine.intervalInDays || dayDifference >= routine.intervalInDays;
 
         return withinPeriod && notMeetTarget && greaterThanInterval;

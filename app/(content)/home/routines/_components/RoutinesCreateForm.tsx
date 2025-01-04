@@ -1,19 +1,17 @@
 'use client';
 
-import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { optional, z } from "zod";
+import { z } from "zod";
 import { useRouter } from "next/navigation";
 import { toast } from "@/components/ui/use-toast";
 import { Minus, Plus, Save, X } from "lucide-react";
 import axios from "axios";
-import { Switch } from "@/components/ui/switch";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { DatePicker } from "@/components/ui/date-picker";
 import { format } from "date-fns";
 import { ToastDone, ToastError } from "@/components/self-defined/toast-object";
 
@@ -31,6 +29,16 @@ const formSchema = z.object({
         .max(5, "At most 5 routines are allowed"),
 });
 
+// Update the helper component for inline alignment
+function RequiredLabel({ children }: { children: React.ReactNode }) {
+    return (
+        <div className="inline-flex items-baseline">
+            <span>{children}</span>
+            <span className="text-destructive ml-1 leading-none">*</span>
+        </div>
+    );
+}
+
 export default function RoutineCreateForm() {
     const router = useRouter();
     const form = useForm<z.infer<typeof formSchema>>({
@@ -39,7 +47,7 @@ export default function RoutineCreateForm() {
             routines: [{
                 title: "",
                 description: "",
-                targetCount: 1,
+                targetCount: undefined,
                 startDate: new Date(),
                 intervalInDays: 1,
             }]
@@ -49,30 +57,7 @@ export default function RoutineCreateForm() {
     const { fields, append, remove } = useFieldArray({
         control: form.control,
         name: "routines",
-        rules: {
-            minLength: 1,
-            maxLength: 5,
-        }
     });
-
-    const handleRemove = () => {
-        if (fields.length > 1) {
-            // Remove the last routine
-            remove(fields.length - 1);
-        }
-    }
-
-    const handleAppend = () => {
-        if (fields.length < 5) {
-            append({
-                title: "",
-                description: "",
-                targetCount: 1,
-                startDate: new Date(),
-                intervalInDays: 1,
-            });
-        }
-    }
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
@@ -90,184 +75,212 @@ export default function RoutineCreateForm() {
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                <div className="flex justify-between">
-                    <div className="flex gap-2">
-                        <Button variant="outline" onClick={() => handleRemove()}>
+                {/* Header Actions */}
+                <div className="flex justify-between items-center">
+                    <div className="flex items-center gap-2">
+                        <Button
+                            type="button"
+                            variant="outline"
+                            onClick={() => fields.length > 1 && remove(fields.length - 1)}
+                            disabled={fields.length <= 1}
+                            className="transition-colors"
+                        >
                             <Minus className="w-4 h-4" />
                         </Button>
-                        <Button variant="outline" onClick={() => handleAppend()}>
+                        <Button
+                            type="button"
+                            variant="outline"
+                            onClick={() => fields.length < 5 && append({
+                                title: "",
+                                description: "",
+                                targetCount: undefined,
+                                startDate: new Date(),
+                                intervalInDays: 1,
+                            })}
+                            disabled={fields.length >= 5}
+                            className="transition-colors"
+                        >
                             <Plus className="w-4 h-4" />
                         </Button>
+                        <span className="text-sm text-muted-foreground">
+                            {fields.length} {fields.length === 1 ? 'routine' : 'routines'}
+                        </span>
                     </div>
 
-                    <div className="flex gap-2">
-                        <Button type="button" variant="cancel" className="flex items-center gap-2">
+                    <div className="flex items-center gap-2">
+                        <Button
+                            type="button"
+                            variant="outline"
+                            onClick={() => router.push('/home/routines')}
+                            className="flex items-center gap-2"
+                        >
                             <X className="w-4 h-4" /> Cancel
                         </Button>
                         <Button type="submit" className="flex items-center gap-2">
-                            <Save className="w-4 h-4" /> Submit
+                            <Save className="w-4 h-4" /> Create
                         </Button>
                     </div>
                 </div>
 
-                <div className="grid gap-4 grid-cols-1">
+                {/* Routine Forms */}
+                <div className="grid gap-6">
                     {fields.map((field, index) => (
-                        <Card key={field.id} className="p-4">
+                        <Card key={field.id}>
                             <CardHeader>
-                                <CardTitle>
-                                    New Routine {index + 1}
+                                <CardTitle className="flex items-center gap-2">
+                                    Routine {index + 1}
+                                    {fields.length > 1 && (
+                                        <span className="text-sm text-muted-foreground font-normal">
+                                            of {fields.length}
+                                        </span>
+                                    )}
                                 </CardTitle>
                             </CardHeader>
-                            <CardContent>
-                                <div>
-                                    {/* Title */}
+                            <CardContent className="space-y-4">
+                                {/* Title */}
+                                <FormField
+                                    control={form.control}
+                                    name={`routines.${index}.title`}
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>
+                                                <RequiredLabel>Title</RequiredLabel>
+                                            </FormLabel>
+                                            <FormControl>
+                                                <Input placeholder="Enter routine title" {...field} />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+
+                                {/* Description */}
+                                <FormField
+                                    control={form.control}
+                                    name={`routines.${index}.description`}
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Description</FormLabel>
+                                            <FormControl>
+                                                <Textarea 
+                                                    placeholder="Enter routine description"
+                                                    className="resize-none h-20"
+                                                    {...field}
+                                                />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    {/* Start Date */}
                                     <FormField
                                         control={form.control}
-                                        name={`routines.${index}.title`}
+                                        name={`routines.${index}.startDate`}
                                         render={({ field }) => (
                                             <FormItem>
-                                                <FormLabel>Title</FormLabel>
+                                                <FormLabel>
+                                                    <RequiredLabel>Start Date</RequiredLabel>
+                                                </FormLabel>
                                                 <FormControl>
-                                                    <Input {...field} />
+                                                    <Input
+                                                        type="datetime-local"
+                                                        value={format(field.value, "yyyy-MM-dd'T'HH:mm")}
+                                                        onChange={(e) => field.onChange(new Date(e.target.value))}
+                                                    />
                                                 </FormControl>
+                                                <FormMessage />
                                             </FormItem>
                                         )}
                                     />
 
-                                    {/* Description */}
+                                    {/* End Date */}
                                     <FormField
                                         control={form.control}
-                                        name={`routines.${index}.description`}
+                                        name={`routines.${index}.endDate`}
                                         render={({ field }) => (
                                             <FormItem>
-                                                <FormLabel>Description</FormLabel>
+                                                <FormLabel>End Date</FormLabel>
                                                 <FormControl>
-                                                    <Textarea className="max-h-[200px]" {...field} />
+                                                    <Input
+                                                        type="datetime-local"
+                                                        value={field.value ? format(field.value, "yyyy-MM-dd'T'HH:mm") : ""}
+                                                        onChange={(e) => field.onChange(e.target.value ? new Date(e.target.value) : undefined)}
+                                                    />
                                                 </FormControl>
+                                                <FormMessage />
                                             </FormItem>
                                         )}
                                     />
+                                </div>
 
-                                    <div className="flex gap-2 w-full">
-                                        {/* Start Date */}
-                                        <FormField
-                                            control={form.control}
-                                            name={`routines.${index}.startDate`}
-                                            render={({ field }) => (
-                                                <FormItem className="w-full">
-                                                    <FormLabel>Start Date</FormLabel>
-                                                    <FormControl>
-                                                        <Input
-                                                            type="datetime-local"
-                                                            value={format(field.value, "yyyy-MM-dd'T'HH:mm")}
-                                                            onChange={(e) => field.onChange(new Date(e.target.value))}
-                                                        />
-                                                    </FormControl>
-                                                </FormItem>
-                                            )}
-                                        />
-
-                                        {/* End Date */}
-                                        <FormField
-                                            control={form.control}
-                                            name={`routines.${index}.endDate`}
-                                            render={({ field }) => (
-                                                <FormItem className="w-full">
-                                                    <FormLabel>End Date</FormLabel>
-                                                    <FormControl>
-                                                        <Input
-                                                            type="datetime-local"
-                                                            value={field.value ? format(field.value, "yyyy-MM-dd'T'HH:mm") : ""}
-                                                            onChange={(e) => field.onChange(new Date(e.target.value))}
-                                                        />
-                                                    </FormControl>
-                                                </FormItem>
-                                            )}
-                                        />
-                                    </div>
-
-                                    <div className="flex gap-2 w-full">
-                                        {/* Interval */}
-                                        <FormField
-                                            control={form.control}
-                                            name={`routines.${index}.intervalInDays`}
-                                            render={({ field }) => (
-                                                <FormItem className="w-full">
-                                                    <FormLabel>Interval in Days</FormLabel>
-                                                    <FormControl>
-                                                        <div className="flex gap-2 h-9">
-                                                            <Button 
-                                                                type="button"
-                                                                variant="outline"
-                                                                onClick={() => field.onChange(Math.max(1, Number(field.value) - 1))}
-                                                                className="h-full"
-                                                            >
-                                                                <Minus className="w-4 h-4" />
-                                                            </Button>
-                                                            <Input 
-                                                                type="number" 
-                                                                value={field.value}
-                                                                onChange={(e) => field.onChange(Number(e.target.value))}
-                                                                className="text-center h-full"
-                                                            />
-                                                            <Button
-                                                                type="button"
-                                                                variant="outline"
-                                                                onClick={() => field.onChange(Number(field.value) + 1)}
-                                                                className="h-full"
-                                                            >
-                                                                <Plus className="w-4 h-4" />
-                                                            </Button>
-                                                        </div>
-                                                    </FormControl>
-                                                </FormItem>
-                                            )}
-                                        />
-
-                                        {/* Target Count */}
-                                        <FormField
-                                            control={form.control}
-                                            name={`routines.${index}.targetCount`}
-                                            render={({ field }) => (
-                                                <FormItem className="w-full">
-                                                    <FormLabel>Target Count</FormLabel>
-                                                    <FormControl>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    {/* Interval */}
+                                    <FormField
+                                        control={form.control}
+                                        name={`routines.${index}.intervalInDays`}
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>
+                                                    <RequiredLabel>Interval (Days)</RequiredLabel>
+                                                </FormLabel>
+                                                <FormControl>
+                                                    <div className="flex items-center gap-2">
+                                                        <Button
+                                                            type="button"
+                                                            variant="outline"
+                                                            className="h-9"
+                                                            onClick={() => field.onChange(Math.max(1, field.value - 1))}
+                                                        >
+                                                            <Minus className="w-4 h-4" />
+                                                        </Button>
                                                         <Input
                                                             type="number"
-                                                            value={field.value}
-                                                            onChange={(e) => field.onChange(Number(e.target.value))}
+                                                            min={1}
+                                                            className="text-center h-9"
+                                                            {...field}
                                                         />
-                                                    </FormControl>
-                                                </FormItem>
-                                            )}
-                                        />
-                                    </div>
+                                                        <Button
+                                                            type="button"
+                                                            variant="outline"
+                                                            className="h-9"
+                                                            onClick={() => field.onChange(field.value + 1)}
+                                                        >
+                                                            <Plus className="w-4 h-4" />
+                                                        </Button>
+                                                    </div>
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+
+                                    {/* Target Count */}
+                                    <FormField
+                                        control={form.control}
+                                        name={`routines.${index}.targetCount`}
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Target Count</FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        type="number"
+                                                        min={1}
+                                                        placeholder="Enter target count"
+                                                        onChange={e => field.onChange(e.target.value ? parseInt(e.target.value) : undefined)}
+                                                        value={field.value || ''}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
                                 </div>
                             </CardContent>
                         </Card>
                     ))}
                 </div>
-
-                {/* Action Buttons */}
-                {/* <div className="flex gap-2">
-                    <Button
-                        type="button"
-                        variant="outline"
-                        className="flex-1"
-                        onClick={() => router.back()}
-                    >
-                        <div className="flex items-center gap-2">
-                            Cancel
-                            <X className="w-4 h-4" />
-                        </div>
-                    </Button>
-                    <Button type="submit" className="flex-1">
-                        <div className="flex items-center gap-2">
-                            Save
-                            <Save className="w-4 h-4" />
-                        </div>
-                    </Button>
-                </div> */}
             </form>
         </Form>
     );
