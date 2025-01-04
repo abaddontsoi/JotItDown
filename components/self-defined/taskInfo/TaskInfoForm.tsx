@@ -108,31 +108,33 @@ const TaskInfoForm = ({
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
-                <div className="flex flex-row gap-2 justify-end mb-4">
-                    <Button
-                        type="button"
-                        variant={'cancel'}
-                        className="flex flex-row items-center gap-1"
-                        onClick={() => setMode('Close')}
-                    >
-                        <X className="w-5 h-5" />
-                        Cancel
-                    </Button>
-                    <Button
-                        type="submit"
-                        variant={'default'}
-                        className="flex flex-row items-center gap-1"
-                    >
-                        <CheckIcon className="w-5 h-5" />
-                        {mode === 'Create' ? 'Create' : 'Save'}
-                    </Button>
+                <div className="flex flex-row items-center justify-between mb-4">
+                    <h2 className="text-2xl font-semibold">
+                        {mode === 'Create' ? 'New Task' : 'Edit Task'}
+                    </h2>
+                    <div className="flex flex-row gap-2">
+                        <Button
+                            type="button"
+                            variant={'cancel'}
+                            className="flex flex-row items-center gap-1"
+                            onClick={() => setMode('Close')}
+                        >
+                            <X className="w-5 h-5" />
+                            Cancel
+                        </Button>
+                        <Button
+                            type="submit"
+                            variant={'default'}
+                            className="flex flex-row items-center gap-1"
+                        >
+                            <CheckIcon className="w-5 h-5" />
+                            {mode === 'Create' ? 'Create' : 'Save'}
+                        </Button>
+                    </div>
                 </div>
 
                 <Card>
-                    <CardHeader>
-                        <CardTitle>{mode === 'Create' ? 'New Task' : 'Edit Task'}</CardTitle>
-                    </CardHeader>
-                    <CardContent className="flex flex-col gap-4">
+                    <CardContent className="flex flex-col gap-4 pt-6">
                         <FormField
                             control={form.control}
                             name="title"
