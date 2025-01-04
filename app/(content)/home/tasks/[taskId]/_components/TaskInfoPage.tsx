@@ -1,24 +1,27 @@
 'use client';
 
 import { useTaskInfo } from "@/app/contexts/taskinfo/TaskInfoContext";
-import { DetailedTaskInfo, Modes } from "@/components/self-defined/types";
+import { DetailedNote, DetailedTaskInfo, Modes } from "@/components/self-defined/types";
 import { Button } from "@/components/ui/button";
-import { TaskInfoStatus } from "@prisma/client";
+import { Group, TaskInfoStatus } from "@prisma/client";
 import { Pen } from "lucide-react";
 import TaskInfoDisplay from "./TaskInfoDisplay";
 import TaskInfoForm from "@/components/self-defined/taskInfo/TaskInfoForm";
 
 interface TaskInfoPageProps {
-    task: DetailedTaskInfo;
+    task?: DetailedTaskInfo;
+    notes: DetailedNote[];
+    groups: Group[];
 }
 
 export default function TaskInfoPage({
-    task
+    task,
+    notes,
+    groups
 }: TaskInfoPageProps) {
 
     // use context to set task
     const ctx = useTaskInfo();
-    ctx.setTask(task);
 
     if (!ctx.task) {
         return (
@@ -42,6 +45,8 @@ export default function TaskInfoPage({
                         setTargetTaskInfo={ctx.setTask}
                         setMode={ctx.setMode}
                         existingTaskInfo={ctx.task}
+                        notes={notes}
+                        groups={groups}
                     />
                 )
             }

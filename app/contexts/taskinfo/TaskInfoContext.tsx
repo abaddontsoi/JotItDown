@@ -15,13 +15,15 @@ export const TaskInfoContext = createContext<TaskInfoContextType | undefined>(un
 
 export function TaskInfoProvider(
     {
-        children
+        children,
+        initialTask
     }: {
-        children: React.ReactNode
+        children: React.ReactNode,
+        initialTask?: DetailedTaskInfo
     }
 ) {
     const [mode, setMode] = useState<Modes>('Close');
-    const [task, setTask] = useState<DetailedTaskInfo>();
+    const [task, setTask] = useState<DetailedTaskInfo | undefined>(initialTask);
 
     return (
         <TaskInfoContext.Provider
