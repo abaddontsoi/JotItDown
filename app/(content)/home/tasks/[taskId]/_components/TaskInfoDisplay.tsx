@@ -83,9 +83,32 @@ export default function TaskInfoDisplay({ task }: TaskInfoDisplayProps) {
             {/* Belong to group or user */}
             <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
                 <h2 className="text-sm font-semibold text-gray-700">Belong To</h2>
-                <p className="mt-1 text-gray-600">
-                    {task.group?.name || task.belongTo?.name}
-                </p>
+                <div className="mt-2 space-y-2">
+                    {/* User Information */}
+                    {task.belongTo && (
+                        <div className="flex items-center gap-2">
+                            <span className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                                User
+                            </span>
+                            <span className="text-gray-600">{task.belongTo.name}</span>
+                        </div>
+                    )}
+
+                    {/* Group Information */}
+                    {task.group && (
+                        <div className="flex items-center gap-2">
+                            <span className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                Group
+                            </span>
+                            <span className="text-gray-600">{task.group.name}</span>
+                        </div>
+                    )}
+
+                    {/* Show message if neither exists */}
+                    {!task.belongTo && !task.group && (
+                        <span className="text-gray-500 italic">No assignment</span>
+                    )}
+                </div>
             </div>
         </div>
     );
