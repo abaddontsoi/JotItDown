@@ -27,7 +27,7 @@ export const RoutinesProvider = ({
     const [routines, setRoutines] = useState<DetailedRoutine[]>(initialRoutines);
 
     const value = {
-        routines,
+        routines: initialRoutines || routines,
         setRoutines,
         pageTitle: 'Routines',
     };
