@@ -25,7 +25,9 @@ export default function UncheckedRoutines() {
 
         // Check whether day difference between last record and today is less than interval
         const lastRecordDate = lastRecord?.checkAt;
-        const dayDifference = (now.getTime() / (1000 * 60 * 60 * 24) - lastRecordDate.getTime() / (1000 * 60 * 60 * 24));
+        const dayDifference = (
+            Math.floor(now.getTime() / (1000 * 60 * 60 * 24)) - Math.floor(lastRecordDate.getTime() / (1000 * 60 * 60 * 24))
+        );
         const greaterThanInterval = !routine.intervalInDays || dayDifference >= routine.intervalInDays;
 
         return withinPeriod && notMeetTarget && greaterThanInterval;
