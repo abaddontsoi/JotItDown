@@ -55,8 +55,10 @@ export async function POST(
         const lastRecord = routine.RoutineCheckRecord[0];
         if (lastRecord) {
             const lastCheckDate = new Date(lastRecord.checkAt);
-            const dayDifference = (now.getTime() / (1000 * 60 * 60 * 24) - lastCheckDate.getTime() / (1000 * 60 * 60 * 24));
-            if (!routine.intervalInDays || dayDifference < routine.intervalInDays) {
+            const dayDifference = (
+                Math.floor(now.getTime() / (1000 * 60 * 60 * 24)) - Math.floor(lastCheckDate.getTime() / (1000 * 60 * 60 * 24))
+            );
+                if (!routine.intervalInDays || dayDifference < routine.intervalInDays) {
                 return new NextResponse("Interval requirement not met", { status: 400 });
             }
         }
