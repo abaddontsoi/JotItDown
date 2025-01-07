@@ -105,6 +105,13 @@ export default async function DashboardPage() {
         }
     });
 
+
+    const routines = db.routine.findMany({
+        where: {
+            belongToId: user.id
+        }
+    });
+
     return (
         <Suspense fallback={<ContextCardFallBack />}>
             <DashboardContainer 
@@ -112,6 +119,7 @@ export default async function DashboardPage() {
                 upcomingTasks={upcomingTasks}
                 recentTransactions={recentTransactions}
                 monthlyExpenses={monthlyExpenses}
+                routines={routines}
             />
         </Suspense>
     )
