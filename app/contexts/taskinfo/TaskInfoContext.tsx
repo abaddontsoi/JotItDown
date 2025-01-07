@@ -1,7 +1,7 @@
 'use client';
 
 import { DetailedTaskInfo, Modes } from "@/components/self-defined/types";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 type TaskInfoContextType = {
     task?: DetailedTaskInfo
@@ -24,7 +24,10 @@ export function TaskInfoProvider(
 ) {
     const [mode, setMode] = useState<Modes>('Close');
     const [task, setTask] = useState<DetailedTaskInfo | undefined>(initialTask);
-
+    useEffect(() => {
+        setTask(initialTask);
+    }, [initialTask]);
+    
     return (
         <TaskInfoContext.Provider
             value={{
