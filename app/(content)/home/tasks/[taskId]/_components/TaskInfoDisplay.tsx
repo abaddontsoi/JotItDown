@@ -4,9 +4,9 @@ import { useTaskInfo } from "@/app/contexts/taskinfo/TaskInfoContext";
 import { DetailedTaskInfo } from "@/components/self-defined/types";
 import { Button } from "@/components/ui/button";
 import { TaskInfoStatus } from "@prisma/client";
-import { Pen } from "lucide-react";
+import { ChevronLeft, Pen } from "lucide-react";
 import Link from "next/link";
-
+import { useRouter } from "next/navigation";
 interface TaskInfoDisplayProps {
     task: DetailedTaskInfo;
 }
@@ -14,6 +14,7 @@ interface TaskInfoDisplayProps {
 export default function TaskInfoDisplay({ task }: TaskInfoDisplayProps) {
 
     const ctx = useTaskInfo();
+    const router = useRouter();
     const handleEditMode = () => {
         if (ctx.mode == 'Edit') {
             ctx.setMode('Close');
@@ -23,11 +24,21 @@ export default function TaskInfoDisplay({ task }: TaskInfoDisplayProps) {
         }
     }
 
+    const handleBack = () => {
+        router.back();
+    }
+
     return (
         <div className="space-y-6">
             {/* Location and title */}
             <div className="flex items-center justify-between">
                 <div className="text-sm text-gray-600 flex items-center space-x-2">
+                    <Button
+                        variant={'ghost'}
+                        onClick={handleBack}
+                    >
+                        <ChevronLeft className="w-4 h-4" /> 
+                    </Button>
                     {
                         task.parentContentBlock && (
                             <>
